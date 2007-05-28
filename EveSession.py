@@ -117,7 +117,10 @@ class EveChar:
             datenode = node.getElementsByTagName('trainingEndTime')
 
             if len(datenode) == 1:
-                to_date = datetime.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S") - datetime.utcnow()
+                # python2.4 hackery, no datetime.datetime.strptime available there
+                _ts = time.mktime(time.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S"))
+                to_date = datetime.fromtimestamp(_ts) - datetime.utcnow()
+               #to_date = time.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S") - datetime.utcnow()
             else:
                 return None
 

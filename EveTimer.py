@@ -131,7 +131,7 @@ class AddChar(gtk.Dialog):
 
 
 
-class EveStatusIcon():
+class EveStatusIcon:
     """ The GUI thread """
 
     def __init__(self, parent=None):
@@ -342,6 +342,11 @@ if __name__ == "__main__":
     icon = EveStatusIcon()
     gobject.timeout_add(1000, icon.wakeup)
     gtk.gdk.threads_init()
-    gtk.main()
+
+    try:
+        gtk.main()
+    except KeyboardInterrupt:
+        pass
+
 
 
