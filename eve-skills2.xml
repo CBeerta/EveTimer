@@ -1,0 +1,1330 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<skills>
+ <c n="Corporation Management" g="266">
+  <s n="Anchoring" i="11584" d="Skill at Anchoring Deployables. Can not be trained on Trial Accounts." a1="memory" a2="charisma" r="3"  c="67500" />
+  <s n="CFO Training" i="3369" d="Skill at managing corp finances. 5% discount on all fees at non-hostile NPC station if acting as CFO of a corp." a1="memory" a2="charisma" r="3" c="100000">
+   <p n="Retail" l="3" />
+   <p n="Corporation Management" l="2" />
+  </s>
+  <s p="false" n="Chief Science Officer" i="3370" d="Skill at managing corp research." a1="memory" a2="charisma" r="6" c="100000">
+   <p n="Research" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Corporation Management" i="3363" d="Basic corporation operation. +10 corporation members allowed per level.&#xD;&#xA;&#xD;&#xA;Notice:  the CEO must update his corporation through the corporation user interface before the skill takes effect" a1="memory" a2="charisma" r="1"  c="18000" />
+  <s n="Empire Control" i="3732" d="Advanced corporation operation. +200 corporation members allowed per level.&#xD;&#xA;&#xD;&#xA;Notice:  the CEO must update his corporation through the corporation user interface before the skill takes effect" a1="memory" a2="charisma" r="5" c="7200000">
+   <p n="Megacorp Management" l="5" />
+  </s>
+  <s n="Ethnic Relations" i="3368" d="Skill at operating multiracial corporations. Extra 20% corporation members of other race than CEO allowed per skill level. Percentage is based on CEO's corporation management skills, not the number of people in the corporation.&#xD;&#xA;&#xD;&#xA;Note: the CEO must update his corporation through the corporation user interface before the skill takes effect." a1="memory" a2="charisma" r="2" c="36000">
+   <p n="Corporation Management" l="2" />
+   <p n="Social" l="3" />
+  </s>
+  <s p="false" n="Factory Management" i="3366" d="Skill at factory operation." a1="memory" a2="charisma" r="5" c="75000">
+   <p n="Corporation Management" l="5" />
+   <p n="Industry" l="3" />
+  </s>
+  <s p="false" n="Intelligence Analyst" i="3372" d="Skill at directing a corporation's espionage division." a1="memory" a2="charisma" r="4" c="2000000">
+   <p n="Corporation Management" l="5" />
+   <p n="Astrometrics" l="4" />
+  </s>
+  <s n="Megacorp Management" i="3731" d="Advanced corporation operation. +50 members per level.&#xD;&#xA;&#xD;&#xA;Notice:  the CEO must update his corporation through the corporation user interface before the skill takes effect" a1="memory" a2="charisma" r="3" c="360000">
+   <p n="Corporation Management" l="5" />
+  </s>
+  <s p="false" n="Public Relations" i="3371" d="Skill at managing corporation offices." a1="memory" a2="charisma" r="3" c="50000">
+   <p n="Corporation Management" l="3" />
+   <p n="Connections" l="2" />
+  </s>
+  <s p="false" n="Refinery Management" i="3367" d="Skill at managing station refineries. Increases mineral yield of refinery by 5% if acting as station manager." a1="memory" a2="charisma" r="3" c="75000">
+   <p n="Corporation Management" l="3" />
+   <p n="Refining" l="3" />
+  </s>
+  <s n="Sovereignty" i="12241" d="Advanced corporation operation. +1000 corporation members allowed per level.&#xD;&#xA;&#xD;&#xA;Notice:  the CEO must update his corporation through the corporation user interface before the skill takes effect" a1="memory" a2="charisma" r="8" c="500000000">
+   <p n="Empire Control" l="5" />
+  </s>
+  <s p="false" n="Starbase Management" i="3365" d="Skill at setting up Starbases" a1="memory" a2="charisma" r="4" c="200000">
+   <p n="Corporation Management" l="4" />
+   <p n="Mechanic" l="3" />
+  </s>
+  <s p="false" n="Starbase Defense Management" i="3373" d="Skill at using starbase weapon systems. Allows control of one array per level. Arrays must be placed outside of the forcefield to be controlled.&#xD;&#xA;&#xD;&#xA;Can not be trained on Trial Accounts." a1="memory" a2="charisma" r="7" c="0">
+   <p n="Starbase Management" l="5" />
+  </s>
+  <s p="false" n="Station Management" i="3364" d="The operation and management of spacestations." a1="memory" a2="charisma" r="4" c="200000">
+   <p n="Corporation Management" l="4" />
+   <p n="Leadership" l="2" />
+  </s>
+ </c>
+ <c n="Drones" g="273">
+  <s n="Advanced Drone Interfacing" i="24613" d="Allows operation of drone control units. 1 extra drone control unit per level." a1="memory" a2="perception" r="8" c="15000000">
+   <p n="Drone Interfacing" l="5" />
+  </s>
+  <s n="Amarr Drone Specialization" i="12484" d="Specialization in the operation of advanced Amarr drones. 2% bonus to advanced Amarr drone damage per level." a1="memory" a2="perception" r="5" c="9000000">
+   <p n="Drones" l="5" />
+  </s>
+  <s n="Caldari Drone Specialization" i="12487" d="Specialization in the operation of advanced Caldari drones. 2% bonus to advanced Caldari drone damage per level." a1="memory" a2="perception" r="5" c="9000000">
+   <p n="Drones" l="5" />
+  </s>
+  <s n="Combat Drone Operation" i="24241" d="Skill at controlling scout drones. 5% Bonus to drone damage of light and medium drones per level." a1="memory" a2="perception" r="2" c="50000">
+   <p n="Drones" l="3" />
+  </s>
+  <s n="Drone Durability" i="23618" d="Increases drone hit points. 5% bonus to drone shield, armor and hull hit points per level." a1="memory" a2="perception" r="5" c="50000">
+   <p n="Drones" l="4" />
+  </s>
+  <s n="Drone Interfacing" i="3442" d="Allows a captain to better maintain its drones. 20% bonus to drone damage, drone mining yield per level." a1="memory" a2="perception" r="5" c="500000">
+   <p n="Drones" l="5" />
+  </s>
+  <s n="Drone Navigation" i="12305" d="Increases drone max velocity." a1="memory" a2="perception" r="1" c="100000">
+   <p n="Drones" l="4" />
+  </s>
+  <s n="Drone Sharpshooting" i="23606" d="Increases drone optimal range." a1="memory" a2="perception" r="1" c="150000">
+   <p n="Drones" l="5" />
+  </s>
+  <s n="Drones" i="3436" d="Skill at remote controlling drones. Can operate 1 drone per skill level." a1="memory" a2="perception" r="1"  c="20000" />
+  <s n="Electronic Warfare Drone Interfacing" i="23566" d="Allows operation of electronic warfare drones. 3000m drone control range bonus per level." a1="memory" a2="perception" r="5" c="400000">
+   <p n="Drones" l="5" />
+   <p n="Electronic Warfare" l="4" />
+  </s>
+  <s n="Fighters" i="23069" d="Allows operation of fighter drones. 20% increase in fighter damage per level." a1="memory" a2="perception" r="12" c="50000000">
+   <p n="Drone Interfacing" l="5" />
+   <p n="Leadership" l="5" />
+  </s>
+  <s n="Gallente Drone Specialization" i="12486" d="Specialization in the operation of advanced Gallente drones. 2% bonus to advanced Gallente drone damage per level." a1="memory" a2="perception" r="5" c="9000000">
+   <p n="Drones" l="5" />
+  </s>
+  <s n="Heavy Drone Operation" i="3441" d="Skill at controlling heavy combat drones. 5% Bonus to drone damage per level." a1="memory" a2="perception" r="5" c="380000">
+   <p n="Drones" l="5" />
+  </s>
+  <s n="Mining Drone Operation" i="3438" d="Skill at controlling mining drones. 5% Bonus to mining drone yield per skill level." a1="memory" a2="perception" r="2" c="40000">
+   <p n="Mining" l="2" />
+   <p n="Drones" l="1" />
+  </s>
+  <s n="Minmatar Drone Specialization" i="12485" d="Specialization in the operation of advanced Minmatar drones. 2% bonus to advanced Minmatar drone damage per level." a1="memory" a2="perception" r="5" c="9000000">
+   <p n="Drones" l="5" />
+  </s>
+  <s n="Repair Drone Operation" i="3439" d="Allows operation of logistic drones. 5% increased repair amount per level." a1="memory" a2="perception" r="3" c="200000">
+   <p n="Drones" l="5" />
+   <p n="Drone Durability" l="1" />
+  </s>
+  <s p="false" n="Salvage Drone Operation" i="3440" d="Skill at controlling salvage drones. 5% increased salvage chance per level." a1="memory" a2="perception" r="4" c="0">
+   <p n="Drones" l="4" />
+  </s>
+  <s n="Scout Drone Operation" i="3437" d="Skill at controlling scout combat drones.&#xD;&#xA;&#xD;&#xA;Bonus: drone range increased by 5000 meters per skill level." a1="memory" a2="perception" r="1" c="40000">
+   <p n="Drones" l="1" />
+  </s>
+  <s n="Sentry Drone Interfacing" i="23594" d="Skill at controlling sentry drones.  5% bonus to Sentry Drone damage per level." a1="memory" a2="perception" r="5" c="450000">
+   <p n="Drone Interfacing" l="4" />
+   <p n="Drone Sharpshooting" l="4" />
+  </s>
+ </c>
+ <c n="Electronics" g="272">
+  <s n="Cloaking" i="11579" d="Skill at using Cloaking devices. 10% per level reduction in targeting delay after uncloaking per skill level." a1="intelligence" a2="memory" r="6" c="3500000">
+   <p n="Electronics" l="5" />
+  </s>
+  <s n="Cynosural Field Theory" i="21603" d="Skill at creating effective cynosural fields. 50-unit reduction in liquid ozone consumption for module activation per skill level." a1="intelligence" a2="memory" r="5" c="10000000">
+   <p n="Electronics" l="5" />
+  </s>
+  <s n="Electronic Warfare" i="3427" d="Operation of ECM/ECCM jamming systems. 5% less capacitor need for ECM systems per skill level." a1="intelligence" a2="memory" r="2" c="120000">
+   <p n="Electronics" l="1" />
+  </s>
+  <s n="Electronics" i="3426" d="Basic understanding of spaceship sensory and computer systems. 5% Bonus to ship CPU output per skill level." a1="intelligence" a2="memory" r="1"  c="20000" />
+  <s n="Electronics Upgrades" i="3432" d="Skill at installing Electronic upgrades, e.g. signal amplifier, Co-Processors and backup sensor array. 5% reduction of sensor upgrade CPU needs per skill level." a1="intelligence" a2="memory" r="2" c="100000">
+   <p n="Electronics" l="2" />
+   <p n="Engineering" l="2" />
+  </s>
+  <s n="Frequency Modulation" i="19760" d="Advanced understanding of signal waves. 10% bonus to falloff for ECM, Remote Sensor Dampeners, Tracking Disruptors and Target Painters per skill level." a1="intelligence" a2="memory" r="3" c="160000">
+   <p n="Electronics" l="3" />
+   <p n="Electronic Warfare" l="2" />
+  </s>
+  <s n="Long Distance Jamming" i="19759" d="Skill at the long-range operation of electronic warfare systems.  10% bonus to optimal range of ECM, Remote Sensor Dampers, Tracking Disruptors and Target Painters per skill level." a1="intelligence" a2="memory" r="4" c="200000">
+   <p n="Electronics" l="4" />
+   <p n="Electronic Warfare" l="3" />
+  </s>
+  <s n="Long Range Targeting" i="3428" d="Skill at long range targeting. 5% Bonus to targeting range per skill level." a1="intelligence" a2="memory" r="2" c="88000">
+   <p n="Electronics" l="2" />
+  </s>
+  <s n="Multitasking" i="3430" d="Skill at targeting multiple targets. +1 extra target per skill level, up to the ship's maximum allowed number of targets locked." a1="intelligence" a2="memory" r="3" c="500000">
+   <p n="Targeting" l="5" />
+  </s>
+  <s p="false" n="Projected Electronic Counter Measures" i="27911" d="Operation of projected ECM jamming systems. 5% decreased duration per skill level." a1="intelligence" a2="memory" r="8" c="0">
+   <p n="Electronic Warfare" l="5" />
+  </s>
+  <s n="Propulsion Jamming" i="3435" d="Skill at using propulsion/warpdrive jammers. 5% Reduction to warp scrambler and stasis web capacitor need per skill level. " a1="intelligence" a2="memory" r="3" c="150000">
+   <p n="Electronics" l="3" />
+   <p n="Navigation" l="2" />
+  </s>
+  <s n="Sensor Linking" i="3433" d="Skill at using remote sensor booster/damper. 5% less capacitor need for sensor link per skill level." a1="intelligence" a2="memory" r="3" c="100000">
+   <p n="Electronics" l="3" />
+  </s>
+  <s n="Signal Dispersion" i="19761" d="Skill at the operation of target jamming equipment.  5% bonus to scan strength of all ECM jammers per skill level." a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Electronics" l="5" />
+   <p n="Electronic Warfare" l="4" />
+  </s>
+  <s n="Signal Suppression" i="19766" d="Skill at the operation of remote sensor dampers. 5% bonus to remote sensor dampers' scan resolution and targeting range suppression per skill level." a1="intelligence" a2="memory" r="5" c="800000">
+   <p n="Electronics" l="5" />
+   <p n="Sensor Linking" l="4" />
+  </s>
+  <s n="Signature Analysis" i="3431" d="Skill at operating Targeting systems. 5% improved targeting speed per skill level." a1="intelligence" a2="memory" r="1" c="75000">
+   <p n="Electronics" l="1" />
+  </s>
+  <s n="Signature Focusing" i="19922" d="Advanced understanding of target painting technology. 5% bonus to target painter modules' signature radius multiplier per skill level." a1="intelligence" a2="memory" r="5" c="600000">
+   <p n="Electronics" l="5" />
+   <p n="Target Painting" l="4" />
+  </s>
+  <s n="Survey" i="3551" d="Skill at operating scanners. 5% improvement in scanner speeds per skill level." a1="intelligence" a2="memory" r="1" c="36000">
+   <p n="Electronics" l="1" />
+  </s>
+  <s n="Target Painting" i="19921" d="Skill at using target painters. 5% less capacitor need for target painters per skill level." a1="intelligence" a2="memory" r="3" c="90000">
+   <p n="Electronics" l="3" />
+  </s>
+  <s n="Targeting" i="3429" d="Skill at targeting multiple targets. +1 extra target per skill level, up to the ship's maximum allowed number of targets locked." a1="intelligence" a2="memory" r="1" c="100000">
+   <p n="Electronics" l="1" />
+  </s>
+  <s n="Turret Destabilization" i="19767" d="Advanced understanding of tracking disruption technology.  5% bonus to Tracking Disruptor modules’ tracking speed and optimal range disruption per skill level." a1="intelligence" a2="memory" r="5" c="400000">
+   <p n="Electronics" l="5" />
+   <p n="Weapon Disruption" l="4" />
+  </s>
+  <s n="Weapon Disruption" i="3434" d="Skill at using remote weapon disruptors. 5% less capacitor need for weapon disruptors per skill level." a1="intelligence" a2="memory" r="3" c="80000">
+   <p n="Electronics" l="3" />
+  </s>
+ </c>
+ <c n="Engineering" g="271">
+  <s n="Capital Energy Emission Systems" i="24572" d="Operation of capital sized energy transfer array and other energy emission systems. 5% reduced capacitor need of capital energy emission systems per skill level." a1="intelligence" a2="memory" r="10" c="10000000">
+   <p n="Engineering" l="5" />
+   <p n="Energy Emission Systems" l="5" />
+  </s>
+  <s n="Capital Shield Emission Systems" i="24571" d="Operation of capital sized shield transfer array and other shield emission systems. 5% reduced capacitor need for capital shield emission system modules per skill level." a1="intelligence" a2="memory" r="10" c="10000000">
+   <p n="Engineering" l="5" />
+   <p n="Shield Emission Systems" l="5" />
+  </s>
+  <s n="Capital Shield Operation" i="21802" d="Operation of capital shield boosters and other shield modules. 2% reduction in capacitor need for capital shield boosters per skill level." a1="intelligence" a2="memory" r="8" c="25000000">
+   <p n="Tactical Shield Manipulation" l="5" />
+   <p n="Shield Operation" l="5" />
+  </s>
+  <s n="EM Shield Compensation" i="12365" d="To active shield hardeners: 3% bonus per skill level to Shield EM resistance when the modules are not active &#xD;&#xA;To passive shield hardeners: 5% bonus per skill level to Shield EM resistance" a1="intelligence" a2="memory" r="2" c="120000">
+   <p n="Shield Operation" l="4" />
+  </s>
+  <s n="Energy Emission Systems" i="3423" d="Operation of energy transfer array and other energy emission systems. 5% reduced capacitor need of energy emission weapons per skill level." a1="intelligence" a2="memory" r="2" c="75000">
+   <p n="Science" l="2" />
+   <p n="Engineering" l="3" />
+  </s>
+  <s n="Energy Grid Upgrades" i="3424" d="Skill at installing power upgrades e.g. capacitor battery and power diagnostic units. 5% reduction in CPU needs of modules requiring Energy Grid Upgrades per skill level." a1="intelligence" a2="memory" r="2" c="79000">
+   <p n="Science" l="1" />
+   <p n="Engineering" l="2" />
+  </s>
+  <s n="Energy Management" i="3418" d="Skill at regulating your ship's overall energy capacity. 5% bonus to capacitor capacity per skill level." a1="intelligence" a2="memory" r="3" c="170000">
+   <p n="Engineering" l="3" />
+  </s>
+  <s n="Energy Pulse Weapons" i="3421" d="Skill at using smartbombs. 5% decrease in smartbomb duration per skill level." a1="intelligence" a2="memory" r="2" c="130000">
+   <p n="Science" l="2" />
+   <p n="Engineering" l="2" />
+  </s>
+  <s n="Energy Systems Operation" i="3417" d="Skill at operating your ship's capacitor, including the use of capacitor boosters and other basic energy modules. 5% reduction in capacitor recharge time per skill level." a1="intelligence" a2="memory" r="1" c="40000">
+   <p n="Engineering" l="1" />
+  </s>
+  <s n="Engineering" i="3413" d="Basic understanding of spaceship energy grid systems. 5% Bonus to ship's powergrid output per skill level." a1="intelligence" a2="memory" r="1"  c="20000" />
+  <s n="Explosive Shield Compensation" i="12367" d="To active shield hardeners: 3% bonus per skill level to Shield Explosive resistance when the modules are not active&#xD;&#xA;To passive shield hardeners: 5% bonus per skill level to Shield Explosive resistance" a1="intelligence" a2="memory" r="2" c="120000">
+   <p n="Shield Operation" l="4" />
+  </s>
+  <s n="Kinetic Shield Compensation" i="12366" d="To active shield hardeners: 3% bonus per skill level to Shield Kinetic resistance when the modules are not active&#xD;&#xA;To passive shield hardeners: 5% bonus per skill level to Shield Kinetic resistance" a1="intelligence" a2="memory" r="2" c="120000">
+   <p n="Shield Operation" l="4" />
+  </s>
+  <s n="Shield Compensation" i="21059" d="Improved skill for regulating energy flow to shields. 2% less capacitor need for shield boosters per skill level." a1="intelligence" a2="memory" r="2" c="120000">
+   <p n="Shield Operation" l="3" />
+  </s>
+  <s n="Shield Emission Systems" i="3422" d="Operation of shield transfer array and other shield emission systems. 5% reduced capacitor need for shield emission system modules per skill level." a1="intelligence" a2="memory" r="2" c="80000">
+   <p n="Science" l="2" />
+   <p n="Engineering" l="3" />
+  </s>
+  <s n="Shield Management" i="3419" d="Skill at regulating a spaceship's shield systems. 5% bonus to shield capacity per skill level." a1="intelligence" a2="memory" r="3" c="170000">
+   <p n="Engineering" l="3" />
+  </s>
+  <s n="Shield Operation" i="3416" d="Skill at operating a spaceship's shield systems, including the use of shield boosters and other basic shield modules. 5% reduction in shield recharge time per skill level." a1="intelligence" a2="memory" r="1" c="35000">
+   <p n="Engineering" l="1" />
+  </s>
+  <s n="Shield Upgrades" i="3425" d="Skill at installing shield upgrades e.g. shield extenders and shield rechargers. 5% reduction in shield upgrade power needs." a1="intelligence" a2="memory" r="2" c="84000">
+   <p n="Science" l="1" />
+   <p n="Engineering" l="2" />
+  </s>
+  <s n="Tactical Shield Manipulation" i="3420" d="Skill at preventing damage from penetrating the shield, including the use of shield hardeners and other advanced shield modules. Reduces the chance of damage penetrating the shield when it falls below 25% by 5% per skill level, with 0% chance at level 5" a1="intelligence" a2="memory" r="4" c="210000">
+   <p n="Engineering" l="4" />
+  </s>
+  <s n="Thermic Shield Compensation" i="11566" d="To active shield hardeners: 3% bonus per skill level to Shield Thermal resistance when the modules are not active&#xD;&#xA;To passive shield hardeners: 5% bonus per skill level to Shield Thermal resistance" a1="intelligence" a2="memory" r="2" c="210000">
+   <p n="Shield Operation" l="4" />
+  </s>
+ </c>
+ <c n="Gunnery" g="255">
+  <s n="Advanced Weapon Upgrades" i="11207" d="Reduces the powergrid needs of weapon turrets and launchers by 2% per skill level." a1="perception" a2="willpower" r="6" c="500000">
+   <p n="Weapon Upgrades" l="5" />
+  </s>
+  <s n="Capital Energy Turret" i="20327" d="Operation of capital energy turrets. 5% Bonus to capital energy turret damage per level." a1="perception" a2="willpower" r="7" c="15000000">
+   <p n="Large Energy Turret" l="5" />
+   <p n="Gunnery" l="5" />
+  </s>
+  <s n="Capital Hybrid Turret" i="21666" d="Operation of capital hybrid turrets. 5% Bonus to capital hybrid turret damage per level." a1="perception" a2="willpower" r="7" c="15000000">
+   <p n="Large Hybrid Turret" l="5" />
+   <p n="Gunnery" l="5" />
+  </s>
+  <s n="Capital Projectile Turret" i="21667" d="Operation of capital projectile turrets. 5% Bonus to capital projectile turret damage per level." a1="perception" a2="willpower" r="7" c="15000000">
+   <p n="Large Projectile Turret" l="5" />
+   <p n="Gunnery" l="5" />
+  </s>
+  <s n="Controlled Bursts" i="3316" d="Allows better control over the capacitor use of weapon turrets. 5% reduction in capacitor need of weapon turrets per skill level." a1="perception" a2="willpower" r="2" c="70000">
+   <p n="Gunnery" l="2" />
+  </s>
+  <s n="Gunnery" i="3300" d="Basic turret operation skill. 2% Bonus to weapon turrets' rate of fire per skill level." a1="perception" a2="willpower" r="1"  c="20000" />
+  <s n="Large Artillery Specialization" i="12203" d="Specialist training in the operation of advanced Large Artillery. 2% bonus per skill level to the damage of large turrets requiring Large Artillery Specialization." a1="perception" a2="willpower" r="8" c="9000000">
+   <p n="Medium Artillery Specialization" l="4" />
+   <p n="Sharpshooter" l="5" />
+   <p n="Large Projectile Turret" l="5" />
+  </s>
+  <s n="Large Autocannon Specialization" i="12209" d="Specialist training in the operation of advanced large autocannons. 2% Bonus per skill level to the damage of large turrets requiring Large Autocannon Specialization." a1="perception" a2="willpower" r="8" c="9000000">
+   <p n="Medium Autocannon Specialization" l="4" />
+   <p n="Motion Prediction" l="5" />
+   <p n="Large Projectile Turret" l="5" />
+  </s>
+  <s n="Large Beam Laser Specialization" i="12205" d="Specialist training in the operation of advanced large beam lasers. 2% Bonus per skill level to the damage of large turrets requiring Large Beam Laser Specialization." a1="perception" a2="willpower" r="8" c="9000000">
+   <p n="Medium Beam Laser Specialization" l="4" />
+   <p n="Sharpshooter" l="5" />
+   <p n="Large Energy Turret" l="5" />
+  </s>
+  <s n="Large Blaster Specialization" i="12212" d="Specialist training in the operation of advanced large blasters. 2% Bonus per skill level to the damage of large turrets requiring Large Blaster Specialization." a1="perception" a2="willpower" r="8" c="9000000">
+   <p n="Medium Blaster Specialization" l="4" />
+   <p n="Motion Prediction" l="5" />
+   <p n="Large Hybrid Turret" l="5" />
+  </s>
+  <s n="Large Energy Turret" i="3309" d="Operation of large energy turrets. 5% Bonus to large energy turret damage per level." a1="perception" a2="willpower" r="5" c="2000000">
+   <p n="Medium Energy Turret" l="3" />
+   <p n="Gunnery" l="5" />
+  </s>
+  <s n="Large Hybrid Turret" i="3307" d="Operation of large hybrid turret. 5% Bonus to large hybrid turret damage per level." a1="perception" a2="willpower" r="5" c="2000000">
+   <p n="Medium Hybrid Turret" l="3" />
+   <p n="Gunnery" l="5" />
+  </s>
+  <s n="Large Projectile Turret" i="3308" d="Operation of large projectile turret. 5% Bonus to large projectile turret damage per level." a1="perception" a2="willpower" r="5" c="2000000">
+   <p n="Medium Projectile Turret" l="3" />
+   <p n="Gunnery" l="5" />
+  </s>
+  <s n="Large Pulse Laser Specialization" i="12215" d="Specialist training in the operation of advanced large pulse lasers. 2% bonus per skill level to the damage of large turrets requiring Large Pulse Laser Specialization." a1="perception" a2="willpower" r="8" c="9000000">
+   <p n="Medium Pulse Laser Specialization" l="4" />
+   <p n="Motion Prediction" l="5" />
+   <p n="Large Energy Turret" l="5" />
+  </s>
+  <s n="Large Railgun Specialization" i="12207" d="Specialist training in the operation of advanced large railguns. 2% bonus per skill level to the damage of large turrets requiring Large Railgun Specialization." a1="perception" a2="willpower" r="8" c="9000000">
+   <p n="Medium Railgun Specialization" l="4" />
+   <p n="Sharpshooter" l="5" />
+   <p n="Large Hybrid Turret" l="5" />
+  </s>
+  <s n="Medium Artillery Specialization" i="12202" d="Specialist training in the operation of advanced Medium Artillery.  2% bonus per skill level to the damage of medium turrets requiring Medium Artillery Specialization." a1="perception" a2="willpower" r="5" c="3000000">
+   <p n="Small Artillery Specialization" l="4" />
+   <p n="Sharpshooter" l="4" />
+   <p n="Medium Projectile Turret" l="5" />
+  </s>
+  <s n="Medium Autocannon Specialization" i="12208" d="Specialist training in the operation of advanced medium autocannons. 2% bonus per skill level to the damage of medium turrets requiring Medium Autocannon Specialization." a1="perception" a2="willpower" r="5" c="3000000">
+   <p n="Small Autocannon Specialization" l="4" />
+   <p n="Motion Prediction" l="4" />
+   <p n="Medium Projectile Turret" l="5" />
+  </s>
+  <s n="Medium Beam Laser Specialization" i="12204" d="Specialist training in the operation of advanced medium beam lasers. 2% bonus per skill level to the damage of medium turrets requiring Medium Beam Laser Specialization." a1="perception" a2="willpower" r="5" c="3000000">
+   <p n="Small Beam Laser Specialization" l="4" />
+   <p n="Sharpshooter" l="4" />
+   <p n="Medium Energy Turret" l="5" />
+  </s>
+  <s n="Medium Blaster Specialization" i="12211" d="Specialist training in the operation of advanced medium blasters. 2% bonus per skill level to the damage of medium turrets requiring Medium Blaster Specialization." a1="perception" a2="willpower" r="5" c="3000000">
+   <p n="Small Blaster Specialization" l="4" />
+   <p n="Motion Prediction" l="4" />
+   <p n="Medium Hybrid Turret" l="5" />
+  </s>
+  <s n="Medium Energy Turret" i="3306" d="Operation of medium energy turret. 5% Bonus to medium energy turret damage per level." a1="perception" a2="willpower" r="3" c="100000">
+   <p n="Small Energy Turret" l="3" />
+   <p n="Gunnery" l="3" />
+  </s>
+  <s n="Medium Hybrid Turret" i="3304" d="Operation of medium hybrid turrets. 5% Bonus to medium hybrid turret damage per level." a1="perception" a2="willpower" r="3" c="100000">
+   <p n="Small Hybrid Turret" l="3" />
+   <p n="Gunnery" l="3" />
+  </s>
+  <s n="Medium Projectile Turret" i="3305" d="Operation of medium projectile turrets. 5% Bonus to medium projectile turret damage per level." a1="perception" a2="willpower" r="3" c="100000">
+   <p n="Small Projectile Turret" l="3" />
+   <p n="Gunnery" l="3" />
+  </s>
+  <s n="Medium Pulse Laser Specialization" i="12214" d="Specialist training in the operation of advanced medium pulse lasers. 2% bonus per skill level to the damage of medium turrets requiring Medium Pulse Laser Specialization." a1="perception" a2="willpower" r="5" c="3000000">
+   <p n="Small Pulse Laser Specialization" l="4" />
+   <p n="Motion Prediction" l="4" />
+   <p n="Medium Energy Turret" l="5" />
+  </s>
+  <s n="Medium Railgun Specialization" i="12206" d="Specialist training in the operation of advanced medium railguns. 2% bonus per skill level to the damage of medium turrets requiring Medium Railgun Specialization." a1="perception" a2="willpower" r="5" c="3000000">
+   <p n="Small Railgun Specialization" l="4" />
+   <p n="Sharpshooter" l="4" />
+   <p n="Medium Hybrid Turret" l="5" />
+  </s>
+  <s n="Motion Prediction" i="3312" d="Improved ability at hitting moving targets. 5% bonus per skill level to weapon turret tracking speeds." a1="perception" a2="willpower" r="2" c="60000">
+   <p n="Gunnery" l="2" />
+  </s>
+  <s n="Rapid Firing" i="3310" d="Skill at the rapid discharge of weapon turrets. 4% bonus per skill level to weapon turret rate of fire." a1="perception" a2="willpower" r="2" c="40000">
+   <p n="Gunnery" l="2" />
+  </s>
+  <s n="Sharpshooter" i="3311" d="Skill at long-range weapon turret firing. 5% bonus to weapon turret optimal range per skill level." a1="perception" a2="willpower" r="2" c="80000">
+   <p n="Gunnery" l="2" />
+  </s>
+  <s n="Small Artillery Specialization" i="12201" d="Specialist training in the operation of advanced Small Artillery. 2% bonus per skill level to the damage of small turrets requiring Small Artillery Specialization." a1="perception" a2="willpower" r="3" c="1000000">
+   <p n="Sharpshooter" l="3" />
+   <p n="Small Projectile Turret" l="5" />
+  </s>
+  <s n="Small Autocannon Specialization" i="11084" d="Specialist training in the operation of advanced small Autocannons. 2% bonus per skill level to the damage of small turrets requiring Small Autocannon Specialization." a1="perception" a2="willpower" r="3" c="1000000">
+   <p n="Motion Prediction" l="3" />
+   <p n="Small Projectile Turret" l="5" />
+  </s>
+  <s n="Small Beam Laser Specialization" i="11083" d="Specialist training in the operation of small Beam Lasers. 2% bonus per skill level to the damage of small turrets requiring Small Beam Laser Specialization." a1="perception" a2="willpower" r="3" c="1000000">
+   <p n="Sharpshooter" l="3" />
+   <p n="Small Energy Turret" l="5" />
+  </s>
+  <s n="Small Blaster Specialization" i="12210" d="Specialist training in the operation of advanced small blasters. 2% bonus per skill level to the damage of small turrets requiring Small Blaster Specialization." a1="perception" a2="willpower" r="3" c="1000000">
+   <p n="Motion Prediction" l="3" />
+   <p n="Small Hybrid Turret" l="5" />
+  </s>
+  <s n="Small Energy Turret" i="3303" d="Operation of small energy turrets. 5% Bonus to small energy turret damage per level." a1="perception" a2="willpower" r="1" c="20000">
+   <p n="Gunnery" l="1" />
+  </s>
+  <s n="Small Hybrid Turret" i="3301" d="Operation of small hybrid turrets. 5% Bonus to small hybrid turret damage per level." a1="perception" a2="willpower" r="1" c="20000">
+   <p n="Gunnery" l="1" />
+  </s>
+  <s n="Small Projectile Turret" i="3302" d="Operation of small projectile turrets. 5% Bonus to small projectile turret damage per level." a1="perception" a2="willpower" r="1" c="20000">
+   <p n="Gunnery" l="1" />
+  </s>
+  <s n="Small Pulse Laser Specialization" i="12213" d="Specialist training in the operation of small pulse lasers. 2% bonus per skill level to the damage of small turrets requiring Small Pulse Laser Specialization." a1="perception" a2="willpower" r="3" c="1000000">
+   <p n="Motion Prediction" l="3" />
+   <p n="Small Energy Turret" l="5" />
+  </s>
+  <s n="Small Railgun Specialization" i="11082" d="Specialist training in the operation of advanced small railguns. 2% bonus per skill level to the damage of small turrets requiring Small Railgun Specialization." a1="perception" a2="willpower" r="3" c="1000000">
+   <p n="Sharpshooter" l="3" />
+   <p n="Small Hybrid Turret" l="5" />
+  </s>
+  <s n="Surgical Strike" i="3315" d="Knowledge of spaceships' structural weaknesses. 3% bonus per skill level to the damage of all weapon turrets." a1="perception" a2="willpower" r="4" c="1000000">
+   <p n="Gunnery" l="4" />
+  </s>
+  <s n="Tactical Weapon Reconfiguration" i="22043" d="Skill at the operation of siege modules.  50-unit reduction in strontium clathrate consumption amount for module activation per skill level." a1="perception" a2="willpower" r="8" c="25000000">
+   <p n="Advanced Weapon Upgrades" l="5" />
+  </s>
+  <s n="Trajectory Analysis" i="3317" d="Advanced understanding of zero-G physics. 5% bonus per skill level to weapon turret accuracy falloff." a1="perception" a2="willpower" r="5" c="100000">
+   <p n="Gunnery" l="5" />
+  </s>
+  <s n="Weapon Upgrades" i="3318" d="Knowledge of gunnery computer systems, including the use of weapon upgrade modules. 5% reduction per skill level in the CPU needs of weapon turrets, launchers and smartbombs." a1="perception" a2="memory" r="2" c="80000">
+   <p n="Gunnery" l="2" />
+  </s>
+ </c>
+ <c n="Industry" g="268">
+  <s n="Advanced Mass Production" i="24625" d="Further training in the operation of multiple factories. Ability to run 1 additional manufacturing job per skill level." a1="memory" a2="intelligence" r="8" c="20000000">
+   <p n="Mass Production" l="5" />
+  </s>
+  <s n="Arkonor Processing" i="12180" d="Specialization in Arkonor processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Arkonor refining waste per skill level." a1="memory" a2="intelligence" r="4" c="375000">
+   <p n="Metallurgy" l="4" />
+   <p n="Refinery Efficiency" l="5" />
+  </s>
+  <s n="Bistot Processing" i="12181" d="Specialization in Bistot processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Bistot refining waste per skill level." a1="memory" a2="intelligence" r="4" c="350000">
+   <p n="Metallurgy" l="4" />
+   <p n="Refinery Efficiency" l="5" />
+  </s>
+  <s n="Crokite Processing" i="12182" d="Specialization in Crokite processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Crokite refining waste per skill level." a1="memory" a2="intelligence" r="4" c="325000">
+   <p n="Metallurgy" l="4" />
+   <p n="Refinery Efficiency" l="5" />
+  </s>
+  <s n="Dark Ochre Processing" i="12183" d="Specialization in Dark Ochre processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Dark Ochre refining waste per skill level." a1="memory" a2="intelligence" r="3" c="275000">
+   <p n="Metallurgy" l="3" />
+   <p n="Refinery Efficiency" l="4" />
+  </s>
+  <s n="Deep Core Mining" i="11395" d="Skill at operating mining lasers requiring Deep Core Mining. 20% reduction per skill level in the chance of a damage cloud forming while mining Mercoxit." a1="memory" a2="intelligence" r="6" c="500000">
+   <p n="Mining" l="5" />
+   <p n="Astrogeology" l="5" />
+  </s>
+  <s n="Drug Manufacturing" i="26224" d="Needed to manufacture boosters" a1="memory" a2="intelligence" r="2"  c="20000" />
+  <s n="Gas Cloud Harvesting" i="25544" d="Skill at harvesting gas clouds. Allows use of one gas cloud harvester per level." a1="memory" a2="intelligence" r="1" c="375000">
+   <p n="Mining" l="4" />
+  </s>
+  <s n="Gneiss Processing" i="12184" d="Specialization in Gneiss processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Gneiss refining waste per skill level." a1="memory" a2="intelligence" r="3" c="250000">
+   <p n="Metallurgy" l="3" />
+   <p n="Refinery Efficiency" l="4" />
+  </s>
+  <s n="Hedbergite Processing" i="12185" d="Specialization in Hedbergite processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Hedbergite refining waste per skill level." a1="memory" a2="intelligence" r="3" c="225000">
+   <p n="Metallurgy" l="3" />
+   <p n="Refinery Efficiency" l="4" />
+  </s>
+  <s n="Hemorphite Processing" i="12186" d="Specialization in Hemorphite processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Hemorphite refining waste per skill level." a1="memory" a2="intelligence" r="2" c="200000">
+   <p n="Science" l="3" />
+   <p n="Refining" l="5" />
+  </s>
+  <s n="Ice Harvesting" i="16281" d="Skill at mining ice. 5% reduction per skill level to the cycle time of ice harvesters." a1="memory" a2="intelligence" r="1" c="375000">
+   <p n="Mining" l="4" />
+  </s>
+  <s n="Ice Processing" i="18025" d="Skill for Ice processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Ice refining waste per skill level." a1="memory" a2="intelligence" r="5" c="400000">
+   <p n="Hydromagnetic Physics" l="4" />
+   <p n="Refinery Efficiency" l="5" />
+  </s>
+  <s n="Industry" i="3380" d="Allows basic operation of factories. 4% reduction in manufacturing time per skill level." a1="memory" a2="intelligence" r="1"  c="20000" />
+  <s n="Jaspet Processing" i="12187" d="Specialization in Jaspet processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Jaspet refining waste per skill level." a1="memory" a2="intelligence" r="2" c="175000">
+   <p n="Science" l="3" />
+   <p n="Refining" l="5" />
+  </s>
+  <s n="Kernite Processing" i="12188" d="Specialization in Kernite processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Kernite refining waste per skill level." a1="memory" a2="intelligence" r="2" c="150000">
+   <p n="Science" l="3" />
+   <p n="Refining" l="5" />
+  </s>
+  <s n="Mass Production" i="3387" d="Allows the operation of multiple factories. Ability to run 1 additional manufacturing job per level." a1="memory" a2="intelligence" r="2" c="150000">
+   <p n="Industry" l="3" />
+  </s>
+  <s n="Mercoxit Processing" i="12189" d="Specialization in Mercoxit processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Mercoxit refining waste per skill level." a1="memory" a2="intelligence" r="5" c="400000">
+   <p n="Metallurgy" l="4" />
+   <p n="Refinery Efficiency" l="5" />
+  </s>
+  <s n="Mining" i="3386" d="Skill at using mining lasers. 5% bonus to mining turret yield per skill level." a1="memory" a2="intelligence" r="1"  c="20000" />
+  <s n="Mining Upgrades" i="22578" d="Skill at using mining upgrades. 5% reduction per skill level in CPU penalty of mining upgrade modules." a1="memory" a2="intelligence" r="4" c="80000">
+   <p n="Mining" l="4" />
+  </s>
+  <s p="false" n="Mobile Refinery Operation" i="3390" d="Skill for operating a Mobile Refinery." a1="memory" a2="intelligence" r="4" c="700000">
+   <p n="Industry" l="4" />
+   <p n="Refining" l="4" />
+  </s>
+  <s p="false" n="Mobile Factory Operation" i="3391" d="Skill for operating a Mobile Factory." a1="memory" a2="intelligence" r="5" c="1000000">
+   <p n="Industry" l="5" />
+  </s>
+  <s n="Omber Processing" i="12190" d="Specialization in Omber processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Omber refining waste per skill level." a1="memory" a2="intelligence" r="2" c="125000">
+   <p n="Science" l="3" />
+   <p n="Refining" l="5" />
+  </s>
+  <s n="Plagioclase Processing" i="12191" d="Specialization in Plagioclase processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Plagioclase refining waste per skill level." a1="memory" a2="intelligence" r="1" c="75000">
+   <p n="Science" l="3" />
+   <p n="Refining" l="4" />
+  </s>
+  <s n="Production Efficiency" i="3388" d="Skill at efficiently using factories. 4% reduction per skill level to the material requirements needed for production." a1="memory" a2="intelligence" r="3" c="250000">
+   <p n="Industry" l="3" />
+  </s>
+  <s n="Pyroxeres Processing" i="12192" d="Specialization in Pyroxeres processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Pyroxeres refining waste per skill level." a1="memory" a2="intelligence" r="1" c="100000">
+   <p n="Science" l="3" />
+   <p n="Refining" l="4" />
+  </s>
+  <s n="Refinery Efficiency" i="3389" d="Advanced skill at using refineries. 4% reduction in refinery waste per skill level." a1="memory" a2="intelligence" r="3" c="280000">
+   <p n="Refining" l="5" />
+  </s>
+  <s n="Refining" i="3385" d="Skill at using refineries. 2% reduction in refinery waste per skill level." a1="memory" a2="intelligence" r="1" c="50000">
+   <p n="Industry" l="1" />
+  </s>
+  <s n="Scordite Processing" i="12193" d="Specialization in Scordite processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Scordite refining waste per skill level." a1="memory" a2="intelligence" r="1" c="50000">
+   <p n="Science" l="3" />
+   <p n="Refining" l="4" />
+  </s>
+  <s n="Scrapmetal Processing" i="12196" d="Specialization in Scrapmetal processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in scrapmetal refining waste per skill level." a1="memory" a2="intelligence" r="5" c="300000">
+   <p n="Metallurgy" l="5" />
+   <p n="Refinery Efficiency" l="5" />
+  </s>
+  <s n="Spodumain Processing" i="12194" d="Specialization in Spodumain processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Spodumain refining waste per skill level." a1="memory" a2="intelligence" r="3" c="300000">
+   <p n="Metallurgy" l="3" />
+   <p n="Refinery Efficiency" l="4" />
+  </s>
+  <s n="Supply Chain Management" i="24268" d="Proficiency at starting manufacturing jobs remotely. Each level increases the distance at which jobs can be created. Level 1 allows for range within the same solar system, Level 2 extends that range to systems within 5 jumps, and each subsequent level then doubles it. Level 5 allows for full regional range." a1="memory" a2="intelligence" r="3" c="7500000">
+   <p n="Mass Production" l="4" />
+  </s>
+  <s n="Veldspar Processing" i="12195" d="Specialization in Veldspar processing and refining. Allows a skilled refiner to utilize substandard refining facilities at considerably greater efficiency. 5% reduction in Veldspar refining waste per skill level." a1="memory" a2="intelligence" r="1" c="25000">
+   <p n="Science" l="3" />
+   <p n="Refining" l="4" />
+  </s>
+ </c>
+ <c n="Leadership" g="258">
+  <s n="Armored Warfare" i="20494" d="Basic proficiency at coordinating armored warfare. Grants a 2% bonus to gang members' armor hit points per skill level. Only the bonus of the gang member with the highest level in this skill is used.&#xD;&#xA;&#xD;&#xA;Note: Gang bonuses only affect gang members in space within the same solar system" a1="charisma" a2="willpower" r="2" c="100000">
+   <p n="Leadership" l="1" />
+  </s>
+  <s n="Armored Warfare Specialist" i="11569" d="Advanced proficiency at armored warfare. 100% bonus to effectiveness of armored warfare link modules per level." a1="charisma" a2="willpower" r="5" c="400000">
+   <p n="Armored Warfare" l="5" />
+   <p n="Leadership" l="1" />
+  </s>
+  <s n="Fleet Command" i="24764" d="Allows command of a Fleet. Grants the Fleet Commander the ability to command a new Wing per skill level, up to a maximum of 5 Wings." a1="charisma" a2="willpower" r="12" c="20000000">
+   <p n="Wing Command" l="5" />
+  </s>
+  <s n="Information Warfare" i="20495" d="Basic proficiency at coordinating information warfare. Grants a 2% bonus to gang members' targeting range per skill level. Only the bonus of the gang member with the highest level in this skill is used.&#xD;&#xA;&#xD;&#xA;Note: Gang bonuses only affect gang members in space within the same solar system" a1="charisma" a2="willpower" r="2" c="100000">
+   <p n="Leadership" l="1" />
+  </s>
+  <s n="Information Warfare Specialist" i="3352" d="Advanced proficiency at information warfare. 100% bonus to effectiveness of information warfare link modules per level." a1="charisma" a2="willpower" r="5" c="400000">
+   <p n="Information Warfare" l="5" />
+   <p n="Leadership" l="1" />
+  </s>
+  <s n="Leadership" i="3348" d="Allows command of a squadron. Increases maximum squadron size by 2 members per skill level, up to a maximum of 10 members." a1="charisma" a2="willpower" r="1"  c="20000" />
+  <s n="Mining Director" i="22552" d="Advanced proficiency at group mining. 100% bonus to effectiveness of Mining Foreman link modules per level." a1="charisma" a2="willpower" r="5" c="400000">
+   <p n="Mining Foreman" l="5" />
+   <p n="Leadership" l="1" />
+  </s>
+  <s n="Mining Foreman" i="22536" d="Basic proficiency at coordinating mining operations. Grants a 2% bonus to gang members' mining yield per level. Only the bonus of the gang member with the highest level in this skill is used." a1="charisma" a2="willpower" r="2" c="75000">
+   <p n="Leadership" l="1" />
+  </s>
+  <s n="Siege Warfare" i="3350" d="Basic proficiency at coordinating a gang's defenses. Grants a 2% bonus to gang members' shield capacity per skill level. Only the bonus of the gang member with the highest level in this skill is used.&#xD;&#xA;&#xD;&#xA;Note: Gang bonuses only affect gang members in space within the same solar system" a1="charisma" a2="willpower" r="2" c="100000">
+   <p n="Leadership" l="1" />
+  </s>
+  <s n="Siege Warfare Specialist" i="3351" d="Advanced proficiency at siege warfare. 100% bonus to effectiveness of siege warfare link modules per level." a1="charisma" a2="willpower" r="5" c="400000">
+   <p n="Siege Warfare" l="5" />
+   <p n="Leadership" l="1" />
+  </s>
+  <s n="Skirmish Warfare" i="3349" d="Basic proficiency at coordinating hit-and-run warfare. Grants a 2% bonus to gang members' maximum velocity per skill level. Only the bonus of the gang member with the highest level in this skill is used.&#xD;&#xA;&#xD;&#xA;Note: Gang bonuses only affect gang members in space within the same solar system" a1="charisma" a2="willpower" r="2" c="75000">
+   <p n="Leadership" l="1" />
+  </s>
+  <s n="Skirmish Warfare Specialist" i="11572" d="Advanced proficiency at skirmish warfare. 100% bonus to effectiveness of skirmish warfare link modules per level." a1="charisma" a2="willpower" r="5" c="400000">
+   <p n="Skirmish Warfare" l="5" />
+   <p n="Leadership" l="1" />
+  </s>
+  <s n="Warfare Link Specialist" i="3354" d="Improved gang leadership. Boosts effectiveness of all warfare link modules by 10% per level." a1="charisma" a2="willpower" r="6" c="2500000">
+   <p n="Leadership" l="5" />
+  </s>
+  <s n="Wing Command" i="11574" d="Allows command of a Wing. Grants the Wing Commander the ability to operate a new Squadron per skill level, up to a maximum of 5 Squadrons." a1="charisma" a2="willpower" r="8" c="2000000">
+   <p n="Leadership" l="5" />
+  </s>
+ </c>
+ <c n="Learning" g="267">
+  <s n="Analytical Mind" i="3377" d="1 point bonus to your Intelligence attribute per skill level." a1="memory" a2="intelligence" r="1"  c="50000" />
+  <s n="Clarity" i="12387" d="SOCT Advanced awareness training. While this training obviously is of great value to anyone, the most impressive results are achieved by students with great latent potential. These students develop almost superhuman sensory abilities and can react to stimuli so fast that, to the untrained eye, it almost seems as if they can predict the future.&#xD;&#xA;&#xD;&#xA;Adds 1 additional point to your Perception attribute per skill level." a1="perception" a2="willpower" r="3" c="5000000">
+   <p n="Spatial Awareness" l="4" />
+  </s>
+  <s n="Eidetic Memory" i="12385" d="SOCT Advanced mnemonic training. While this training obviously is of great value to anyone, the most impressive results are achieved by students with great latent potential, allowing them to recall nearly anything they have ever experienced with total lucidity.&#xD;&#xA;&#xD;&#xA;Adds 1 additional point to your Memory attribute per skill level." a1="memory" a2="intelligence" r="3" c="5000000">
+   <p n="Instant Recall" l="4" />
+  </s>
+  <s n="Empathy" i="3376" d="1 point bonus to your Charisma attribute per skill level." a1="memory" a2="intelligence" r="1"  c="50000" />
+  <s n="Focus" i="12386" d="SOCT Advanced self-discipline training. While this training obviously is of great value to anyone, the most impressive results are achieved by students with great latent potential. These students are able to remain focused and alert under extreme pressure, and can ignore pain and fatigue for extended periods of time.&#xD;&#xA;&#xD;&#xA;Adds 1 additional point to your Willpower attribute per skill level." a1="willpower" a2="charisma" r="3" c="5000000">
+   <p n="Iron Will" l="4" />
+  </s>
+  <s n="Instant Recall" i="3378" d="1 point bonus to your Memory attribute per skill level." a1="memory" a2="intelligence" r="1"  c="50000" />
+  <s n="Iron Will" i="3375" d="1 point bonus to your Willpower attribute per skill level." a1="memory" a2="intelligence" r="1"  c="50000" />
+  <s n="Learning" i="3374" d="2% bonus per level to all attributes resulting in a overall faster skill training time." a1="memory" a2="intelligence" r="1"  c="35000" />
+  <s n="Logic" i="12376" d="SOCT Advanced intelligence training. While this training obviously is of great value to anyone, the most impressive results are achieved by students with great latent potential. These students develop an intuitive understanding of complex patterns and are able to grasp esoteric concepts with incredible ease.&#xD;&#xA;&#xD;&#xA;Adds 1 additional point to your Intelligence attribute per skill level." a1="intelligence" a2="memory" r="3" c="5000000">
+   <p n="Analytical Mind" l="4" />
+  </s>
+  <s n="Presence" i="12383" d="SOCT Advanced social consciousness training. While this training obviously is of great value to anyone, the most impressive results are achieved by students with great latent potential. Training in this skill allows a student to develop heightened mental sensitivity, to the point of being able to sense the surface mood and emotions of a person.&#xD;&#xA;&#xD;&#xA;Adds 1 additional point to your Charisma attribute per skill level." a1="charisma" a2="perception" r="3" c="5000000">
+   <p n="Empathy" l="4" />
+  </s>
+  <s n="Spatial Awareness" i="3379" d="1 point bonus to your Perception attribute per skill level." a1="memory" a2="intelligence" r="1"  c="50000" />
+ </c>
+ <c n="Mechanic" g="269">
+  <s n="Armor Rigging" i="26253" d="Advanced understanding of armor subsystems. Allows makeshift modifications to armor subsystems through the use of rigs.&#xD;&#xA;&#xD;&#xA;10% reduction in Armor Rig drawbacks per level." a1="intelligence" a2="memory" r="3" c="100000">
+   <p n="Jury Rigging" l="3" />
+  </s>
+  <s n="Astronautics Rigging" i="26254" d="Advanced understanding of a ships navigational subsystems. Allows makeshift modifications to warp drive, sub warp drive and other navigational subsystems through the use of rigs.&#xD;&#xA;&#xD;&#xA;10% reduction in Astronautics Rig drawbacks per level." a1="intelligence" a2="memory" r="3" c="20000">
+   <p n="Jury Rigging" l="3" />
+  </s>
+  <s n="Capital Remote Armor Repair Systems" i="24568" d="Operation of capital sized remote armor repair systems. 5% reduced capacitor need for capital remote armor repair system modules per skill level." a1="intelligence" a2="memory" r="10" c="10000000">
+   <p n="Remote Armor Repair Systems" l="5" />
+  </s>
+  <s p="false" n="Capital Remote Hull Repair Systems" i="27936" d="Operation of remote capital class remote hull repair systems. 5% reduced capacitor need for capital class remote hull repair system modules per skill level." a1="intelligence" a2="memory" r="10" c="0">
+   <p n="Remote Hull Repair Systems" l="5" />
+  </s>
+  <s n="Capital Repair Systems" i="21803" d="Operation of capital armor/hull repair modules. 5% reduction in capital repair systems duration per skill level." a1="intelligence" a2="memory" r="8" c="17500000">
+   <p n="Mechanic" l="5" />
+   <p n="Repair Systems" l="5" />
+   <p n="Hull Upgrades" l="5" />
+  </s>
+  <s n="Capital Ship Construction" i="22242" d="Skill at the construction of capital ships." a1="intelligence" a2="memory" r="14" c="75000000">
+   <p n="Production Efficiency" l="5" />
+   <p n="Mechanic" l="5" />
+   <p n="Industry" l="5" />
+  </s>
+  <s n="Cruiser Construction" i="3397" d="Skill at the construction of advanced cruisers. Required for advanced cruiser BP manufacturing" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Frigate Construction" l="4" />
+   <p n="Mechanic" l="3" />
+  </s>
+  <s n="Drones Rigging" i="26255" d="Advanced understanding of a ships drone control subsystems. Allows makeshift modifications to drone subsystems through the use of rigs.&#xD;&#xA;&#xD;&#xA;10% reduction in Drone Rig drawbacks per level." a1="intelligence" a2="memory" r="3" c="100000">
+   <p n="Jury Rigging" l="3" />
+  </s>
+  <s n="Electronic Superiority Rigging" i="26256" d="Advanced understanding of electronics subsystems. Allows makeshift modifications to targeting, scanning and ECM systems through the use of rigs.&#xD;&#xA;&#xD;&#xA;10% reduction in Electronic Superiority Rig drawbacks per level." a1="intelligence" a2="memory" r="3" c="100000">
+   <p n="Jury Rigging" l="3" />
+  </s>
+  <s n="EM Armor Compensation" i="22806" d="To active armor hardeners: 3% bonus per skill level to Armor EM resistance when the modules are not active&#xD;&#xA;To passive armor hardeners: 5% bonus per skill level to Armor EM resistance" a1="intelligence" a2="memory" r="2" c="120000">
+   <p n="Hull Upgrades" l="4" />
+  </s>
+  <s n="Energy Weapon Rigging" i="26258" d="Advanced understanding of the interface between energy weapons and the numerous ship systems. Allows makeshift modifications to ship system architecture through the use of rigs.&#xD;&#xA;&#xD;&#xA;10% reduction in Energy Weapon Rig drawbacks per level." a1="intelligence" a2="memory" r="3" c="100000">
+   <p n="Jury Rigging" l="3" />
+  </s>
+  <s n="Explosive Armor Compensation" i="22807" d="To active armor hardeners: 3% bonus per skill level to Armor Explosive resistance when the modules are not active&#xD;&#xA;To passive armor hardeners: 5% bonus per skill level to Armor Explosive resistance" a1="intelligence" a2="memory" r="2" c="120000">
+   <p n="Hull Upgrades" l="4" />
+  </s>
+  <s n="Frigate Construction" i="3395" d="Skill at the construction of advanced frigates. Required for advanced frigate BP manufacturing" a1="intelligence" a2="memory" r="2" c="80000">
+   <p n="Mechanic" l="1" />
+   <p n="Industry" l="2" />
+  </s>
+  <s n="Hull Upgrades" i="3394" d="Skill at maintaining your ship's armour and installing hull upgrades like expanded cargoholds and inertial stabilizers. Grants a 5% bonus to armor hit points per skill level." a1="intelligence" a2="memory" r="2" c="60000">
+   <p n="Mechanic" l="1" />
+  </s>
+  <s n="Hybrid Weapon Rigging" i="26259" d="Advanced understanding of the interface between hybrid weapons and the numerous ship systems. Allows makeshift modifications to ship system architecture through the use of rigs.&#xD;&#xA;&#xD;&#xA;10% reduction in Hybrid Weapon Rig drawbacks per level." a1="intelligence" a2="memory" r="3" c="100000">
+   <p n="Jury Rigging" l="3" />
+  </s>
+  <s n="Industrial Construction" i="3396" d="Skill at the construction of advanced industrials." a1="intelligence" a2="memory" r="3" c="2000000">
+   <p n="Mechanic" l="2" />
+   <p n="Industry" l="3" />
+  </s>
+  <s n="Jury Rigging" i="26252" d="General understanding of the inner workings of starship components. Allows makeshift modifications to ship subsystems through the use of rigs. Required learning for further study in the field of rigging." a1="intelligence" a2="memory" r="2" c="60000">
+   <p n="Mechanic" l="3" />
+  </s>
+  <s n="Kinetic Armor Compensation" i="22808" d="To active armor hardeners: 3% bonus per skill level to Armor Kinetic resistance when the modules are not active&#xD;&#xA;To passive armor hardeners: 5% bonus per skill level to Armor Kinetic resistance" a1="intelligence" a2="memory" r="2" c="120000">
+   <p n="Hull Upgrades" l="4" />
+  </s>
+  <s n="Launcher Rigging" i="26260" d="Advanced understanding of the interface between Missile Launchers and the numerous ship systems. Allows makeshift modifications to ship system architecture through the use of rigs.&#xD;&#xA;&#xD;&#xA;10% reduction in Launcher Rig drawbacks per level." a1="intelligence" a2="memory" r="3" c="100000">
+   <p n="Jury Rigging" l="3" />
+  </s>
+  <s n="Mechanic" i="3392" d="Skill at maintaining the mechanical components and structural integrity of a spaceship. 5% bonus to structure hit points per skill level." a1="intelligence" a2="memory" r="1"  c="20000" />
+  <s n="Outpost Construction" i="3400" d="Skill at constructing outposts." a1="intelligence" a2="memory" r="16" c="100000000">
+   <p n="Mechanic" l="5" />
+   <p n="Industry" l="5" />
+   <p n="Anchoring" l="5" />
+  </s>
+  <s n="Projectile Weapon Rigging" i="26257" d="Advanced understanding of the interface between projectile weapons and the numerous ship systems. Allows makeshift modifications to ship system architecture through the use of rigs.&#xD;&#xA;&#xD;&#xA;10% reduction in Projectile Weapon Rig drawbacks per level." a1="intelligence" a2="memory" r="3" c="100000">
+   <p n="Jury Rigging" l="3" />
+  </s>
+  <s n="Remote Armor Repair Systems" i="16069" d="Operation of remote armor repair systems. 5% reduced capacitor need for remote armor repair system modules per skill level." a1="intelligence" a2="memory" r="2" c="85000">
+   <p n="Mechanic" l="3" />
+   <p n="Repair Systems" l="2" />
+  </s>
+  <s p="false" n="Remote Hull Repair Systems" i="27902" d="Operation of remote hull repair systems. 5% reduced capacitor need for remote hull repair system modules per skill level." a1="intelligence" a2="memory" r="2" c="0">
+   <p n="Mechanic" l="3" />
+  </s>
+  <s n="Repair Systems" i="3393" d="Operation of armor/hull repair modules. 5% reduction in repair systems duration per skill level." a1="intelligence" a2="memory" r="1" c="30000">
+   <p n="Mechanic" l="1" />
+  </s>
+  <s n="Salvaging" i="25863" d="Proficiency at salvaging ship wrecks. Required skill for the use of salvager modules. 5% increase in chance of salvage retrieval per level." a1="intelligence" a2="memory" r="3" c="1000000">
+   <p n="Mechanic" l="3" />
+   <p n="Survey" l="3" />
+  </s>
+  <s n="Shield Rigging" i="26261" d="Advanced understanding of shield subsystems. Allows makeshift modifications to shield subsystems through the use of rigs.&#xD;&#xA;&#xD;&#xA;10% reduction in Shield Rig drawbacks per level." a1="intelligence" a2="memory" r="3" c="100000">
+   <p n="Jury Rigging" l="3" />
+  </s>
+  <s p="false" n="Tactical Logistics Reconfiguration" i="27906" d="Skill at the operation of triage modules. 50-unit reduction in strontium clathrate consumption amount for module activation per skill level." a1="intelligence" a2="memory" r="8" c="0">
+   <p n="Logistics" l="4" />
+  </s>
+  <s n="Thermic Armor Compensation" i="22809" d="To active armor hardeners: 3% bonus per skill level to Armor Thermal resistance when the modules are not active&#xD;&#xA;To passive armor hardeners: 5% bonus per skill level to Armor Thermal resistance" a1="intelligence" a2="memory" r="2" c="120000">
+   <p n="Hull Upgrades" l="4" />
+  </s>
+ </c>
+ <c n="Missile Launcher Operation" g="256">
+  <s p="false" n="Bomb Deployment" i="28073" d="Basic operation of bomb delivery systems. 5% reduction of Bomb Launcher reactivation delay per skill level." a1="perception" a2="willpower" r="4" c="0" />
+  <s n="Citadel Torpedoes" i="21668" d="Skill at the handling and firing of citadel torpedoes. 5% bonus to citadel torpedo damage per skill level." a1="perception" a2="willpower" r="7" c="15000000">
+   <p n="Torpedoes" l="5" />
+   <p n="Missile Launcher Operation" l="5" />
+  </s>
+  <s n="Cruise Missile Specialization" i="20212" d="Specialist training in the operation of advanced cruise missile launchers. 2% bonus per level to the rate of fire of modules requiring Cruise Missile Specialization." a1="perception" a2="willpower" r="8" c="9000000">
+   <p n="Cruise Missiles" l="5" />
+   <p n="Missile Launcher Operation" l="1" />
+  </s>
+  <s n="Cruise Missiles" i="3326" d="Skill at the handling and firing of very large guided missiles. 5% bonus to cruise missile damage per skill level." a1="perception" a2="willpower" r="5" c="350000">
+   <p n="Heavy Missiles" l="3" />
+   <p n="Missile Launcher Operation" l="5" />
+  </s>
+  <s n="Defender Missiles" i="3323" d="Skill with anti-missile missiles.Special: 5% bonus to defender missile max velocity per skill level." a1="perception" a2="willpower" r="2" c="30000">
+   <p n="Missile Launcher Operation" l="2" />
+  </s>
+  <s n="FoF Missiles" i="3322" d="Skill with friend or foe missiles. Special: 5% bonus to F.O.F (light, heavy and cruise) damage per skill level." a1="perception" a2="willpower" r="3" c="25000">
+   <p n="Missile Launcher Operation" l="2" />
+  </s>
+  <s n="Guided Missile Precision" i="20312" d="Skill at precision missile homing. Proficiency at this skill increases the accuracy of a fired missile's exact point of impact, resulting in greater damage to small targets. 5% decreased factor of signature radius for light, heavy and cruise missile explosions per level of skill." a1="perception" a2="willpower" r="5" c="500000">
+   <p n="Missile Launcher Operation" l="5" />
+  </s>
+  <s n="Heavy Assault Missile Specialization" i="25718" d="Specialist training in the operation of advanced heavy missile launchers. 2% bonus per level to the rate of fire of modules requiring Heavy Missile Specialization." a1="perception" a2="willpower" r="5" c="3000000">
+   <p n="Heavy Assault Missiles" l="5" />
+   <p n="Missile Launcher Operation" l="1" />
+  </s>
+  <s n="Heavy Assault Missiles" i="25719" d="Skill with heavy missiles. Special: 5% bonus to heavy missile damage per skill level." a1="perception" a2="willpower" r="3" c="100000">
+   <p n="Standard Missiles" l="3" />
+   <p n="Missile Launcher Operation" l="3" />
+  </s>
+  <s n="Heavy Missile Specialization" i="20211" d="Specialist training in the operation of advanced heavy missile launchers. 2% bonus per level to the rate of fire of modules requiring Heavy Missile Specialization." a1="perception" a2="willpower" r="5" c="3000000">
+   <p n="Heavy Missiles" l="5" />
+   <p n="Missile Launcher Operation" l="1" />
+  </s>
+  <s n="Heavy Missiles" i="3324" d="Skill with heavy missiles. Special: 5% bonus to heavy missile damage per skill level." a1="perception" a2="willpower" r="3" c="100000">
+   <p n="Standard Missiles" l="3" />
+   <p n="Missile Launcher Operation" l="3" />
+  </s>
+  <s n="Missile Bombardment" i="12441" d="Proficiency at long-range missile combat. 10% bonus to all missiles' maximum flight time per level." a1="perception" a2="willpower" r="2" c="80000">
+   <p n="Missile Launcher Operation" l="1" />
+  </s>
+  <s n="Missile Launcher Operation" i="3319" d="Basic operation of missile launcher systems. 2% Bonus to missile launcher rate of fire per skill level." a1="perception" a2="willpower" r="1" c="20000" />
+  <s n="Missile Projection" i="12442" d="Skill at boosting missile bay propulsion systems and manipulating guided missiles' jet engines. 10% bonus to all missiles' maximum velocity per level." a1="perception" a2="willpower" r="4" c="100000">
+   <p n="Missile Launcher Operation" l="3" />
+  </s>
+  <s n="Rapid Launch" i="21071" d="Proficiency at rapid missile launcher firing. 3% bonus to missile launcher rate of fire per level." a1="perception" a2="willpower" r="2" c="40000">
+   <p n="Missile Launcher Operation" l="2" />
+  </s>
+  <s n="Rocket Specialization" i="20209" d="Specialist training in the operation of advanced rocket launchers. 2% bonus per level to the rate of fire of modules requiring Rocket Specialization." a1="perception" a2="willpower" r="3" c="1000000">
+   <p n="Rockets" l="5" />
+   <p n="Missile Launcher Operation" l="1" />
+  </s>
+  <s n="Rockets" i="3320" d="Skill with small short range missiles.Special: 5% bonus to rocket damage per skill level." a1="perception" a2="willpower" r="1" c="10000">
+   <p n="Missile Launcher Operation" l="1" />
+  </s>
+  <s n="Standard Missile Specialization" i="20210" d="Specialist training in the operation of advanced standard missile launchers and assault launchers. 2% bonus per level to the rate of fire of modules requiring Standard Missile Specialization." a1="perception" a2="willpower" r="3" c="1000000">
+   <p n="Standard Missiles" l="5" />
+   <p n="Missile Launcher Operation" l="1" />
+  </s>
+  <s n="Standard Missiles" i="3321" d="Skill with manually targeted missiles.Special: 5% Bonus to light missile damage per skill level." a1="perception" a2="willpower" r="2" c="20000">
+   <p n="Missile Launcher Operation" l="2" />
+  </s>
+  <s n="Target Navigation Prediction" i="20314" d="Proficiency at optimizing a missile's flight path to negate the effects of a target's speed upon the explosion's impact. 10% decrease per level in factor of target's velocity for all missiles." a1="perception" a2="willpower" r="2" c="60000">
+   <p n="Missile Launcher Operation" l="2" />
+  </s>
+  <s n="Torpedo Specialization" i="20213" d="Specialist training in the operation of advanced siege launchers. 2% bonus per level to the rate of fire of modules requiring Torpedo Specialization." a1="perception" a2="willpower" r="8" c="9000000">
+   <p n="Torpedoes" l="5" />
+   <p n="Missile Launcher Operation" l="1" />
+  </s>
+  <s n="Torpedoes" i="3325" d="Skill at the handling and firing of torpedoes. 5% bonus to torpedo damage per skill level." a1="perception" a2="willpower" r="4" c="400000">
+   <p n="Heavy Missiles" l="3" />
+   <p n="Missile Launcher Operation" l="4" />
+  </s>
+  <s n="Warhead Upgrades" i="20315" d="Proficiency at upgrading missile warheads with deadlier payloads. 2% bonus to all missile damage per skill level." a1="perception" a2="willpower" r="5" c="1000000">
+   <p n="Missile Launcher Operation" l="4" />
+  </s>
+ </c>
+ <c n="Navigation" g="275">
+  <s n="Acceleration Control" i="3452" d="Skill at efficiently using Afterburners and MicroWarpdrives. 5% Bonus to Afterburner and MicroWarpdrive speed boost per skill level." a1="intelligence" a2="perception" r="4" c="40000">
+   <p n="Navigation" l="3" />
+  </s>
+  <s n="Afterburner" i="3450" d="Skill at using afterburners. 10% bonus to Afterburner duration per skill level." a1="intelligence" a2="perception" r="1" c="22500">
+   <p n="Navigation" l="1" />
+  </s>
+  <s n="Evasive Maneuvering" i="3453" d="Improved skill at efficiently turning and accelerating a spaceship. 5% improved ship agility for all ships per skill level." a1="intelligence" a2="perception" r="2" c="25000">
+   <p n="Navigation" l="2" />
+  </s>
+  <s n="Fuel Conservation" i="3451" d="Improved control over afterburner energy consumption. 10% reduction in afterburner capacitor needs per skill level." a1="intelligence" a2="perception" r="2" c="30000">
+   <p n="Afterburner" l="2" />
+   <p n="Navigation" l="2" />
+  </s>
+  <s n="High Speed Maneuvering" i="3454" d="Skill at using MicroWarpdrives. 5% reduction in MicroWarpdrive capacitor usage per skill level." a1="intelligence" a2="perception" r="5" c="340000">
+   <p n="Afterburner" l="4" />
+   <p n="Navigation" l="4" />
+  </s>
+  <s n="Jump Drive Calibration" i="21611" d="Advanced skill at using Jump Drives. Each skill level grants a 25% increase in maximum jump range." a1="intelligence" a2="perception" r="9" c="30000000">
+   <p n="Jump Drive Operation" l="5" />
+  </s>
+  <s n="Jump Drive Operation" i="3456" d="Skill at using Jump Drives. Each skill level reduces the capacitor need of initiating a jump by 5%." a1="intelligence" a2="perception" r="5" c="10000000">
+   <p n="Warp Drive Operation" l="5" />
+   <p n="Science" l="5" />
+   <p n="Navigation" l="5" />
+  </s>
+  <s n="Jump Fuel Conservation" i="21610" d="Proficiency at regulating energy flow to the jump drive. 100-unit reduction in ice consumption amount for jump drive operation per light year per skill level." a1="intelligence" a2="perception" r="8" c="20000000">
+   <p n="Jump Drive Operation" l="3" />
+  </s>
+  <s n="Navigation" i="3449" d="Skill at regulating the power output of ship thrusters. 5% bonus to sub-warp ship velocity per skill level." a1="intelligence" a2="perception" r="1"  c="20000" />
+  <s n="Warp Drive Operation" i="3455" d="Skill at managing warp drive efficiency. Each skill level reduces the capacitor need of initiating warp by 10%." a1="intelligence" a2="perception" r="1" c="30000">
+   <p n="Navigation" l="1" />
+  </s>
+  <s p="false" n="Warp Navigation" i="12603" d="Skill at navigating in warp. 10% Bonus to warp accuracy and 10% less max range from desired warp location per level" a1="intelligence" a2="perception" r="4" c="0">
+   <p n="Warp Drive Operation" l="1" />
+  </s>
+ </c>
+ <c n="Science" g="270">
+  <s n="Advanced Laboratory Operation" i="24624" d="Further training in the operation of multiple laboratories. Ability to run 1 additional research job per skill level." a1="intelligence" a2="memory" r="8" c="20000000">
+   <p n="Laboratory Operation" l="5" />
+  </s>
+  <s n="Amarr Encryption Methods" i="23087" d="Understanding of the data encryption methods used by the Amarr Empire and its allies." a1="intelligence" a2="memory" r="5" c="0">
+   <p n="Hacking" l="2" />
+  </s>
+  <s n="Amarrian Starship Engineering" i="11444" d="Skill and knowledge of Amarrian Starship Engineering.&#xD;&#xA;&#xD;&#xA;Used Exclusively in the research of Amarrian Ships of all Sizes.&#xD;&#xA;&#xD;&#xA;Allows Amarrian Starship Engineering research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Mechanic" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Archaeology" i="13278" d="Proficiency at identifying and analyzing ancient artifacts. Required skill for the use of Analyzer modules. 5% increase in chance of archaeological find per level." a1="intelligence" a2="memory" r="3" c="1000000">
+   <p n="Survey" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Astrogeology" i="3410" d="Skill at analyzing the content of celestial objects with the intent of mining them. 5% bonus to mining turret yield per skill level." a1="intelligence" a2="memory" r="3" c="450000">
+   <p n="Mining" l="4" />
+   <p n="Science" l="4" />
+  </s>
+  <s n="Astrometric Pinpointing" i="25810" d="Greater accuracy in hunting down targets found through scanning. Reduces maximum scan deviation by 10% per level." a1="intelligence" a2="memory" r="5" c="450000">
+   <p n="Astrometrics" l="4" />
+  </s>
+  <s n="Astrometric Triangulation" i="25811" d="Skill at the advanced operation of long range scanners. 5% scan strength bonus per level of skill." a1="intelligence" a2="memory" r="5" c="450000">
+   <p n="Astrometrics" l="3" />
+  </s>
+  <s n="Astrometrics" i="3412" d="Skill at operating long range scanners. Adds one scan group per level." a1="intelligence" a2="memory" r="3" c="450000">
+   <p n="Science" l="3" />
+  </s>
+  <s n="Astronautic Engineering" i="11487" d="Skill and knowledge of Astronautics and its use in the development of advanced technology. Allows Astronautic Engineering research to be performed with the help of a research agent. It is also needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Mechanic" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Biology" i="3405" d="The science of life and of living organisms, and how chemicals affect them. 20% Bonus to attribute booster duration per skill level." a1="intelligence" a2="memory" r="1" c="25000">
+   <p n="Science" l="1" />
+  </s>
+  <s n="Caldari Encryption Methods" i="21790" d="Understanding of the data encryption methods used by the Caldari State and its allies." a1="intelligence" a2="memory" r="5" c="0">
+   <p n="Hacking" l="2" />
+  </s>
+  <s n="Caldari Starship Engineering" i="11454" d="Skill and knowledge of Caldari Starship Engineering and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses in the research of Caldari Ships of all Sizes.&#xD;&#xA;&#xD;&#xA;Allows Caldari Starship Engineering research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Mechanic" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Cloning Facility Operation" i="24606" d="Needed for use of the Clone Vat Bay module.&#xD;&#xA;&#xD;&#xA;Special: Increases a Clone Vat Bay's maximum capacity by 5 clones per skill level." a1="intelligence" a2="memory" r="10" c="125000000">
+   <p n="Capital Ships" l="3" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Cybernetics" i="3411" d="The science of interfacing biological and machine components. Allows the use of cybernetic implants." a1="intelligence" a2="memory" r="3" c="75000">
+   <p n="Science" l="3" />
+  </s>
+  <s p="false" n="Diagnostics Interfaces" i="13281" d="The skill interfacing with ship energy and structural diagnostics systems. Allows the use of advanced diagnostics implants." a1="intelligence" a2="memory" r="4" c="0">
+   <p n="Cybernetics" l="5" />
+  </s>
+  <s n="Doomsday Operation" i="24563" d="Skill at operating titan doomsday weapons. 10% increased damage per level." a1="willpower" a2="intelligence" r="14" c="250000000">
+   <p n="Energy Pulse Weapons" l="5" />
+   <p n="Advanced Weapon Upgrades" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s p="false" n="Duplicating" i="10298" d="Skill at duplicating items using a Molecular sequencer. While molecular sequencing does usually involve some basic understanding of the item being duplicated it is really more of an art than it is a science and often involves a great deal of trial and error to get right. Skill level x Item duplication chance = chance of succesfully duplicating a item" a1="intelligence" a2="memory" r="4" c="0">
+   <p n="Science" l="4" />
+  </s>
+  <s n="Electromagnetic Physics" i="11448" d="Skill and knowledge of Electromagnetic Physics and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of Railgun weaponry and various electronic systems.&#xD;&#xA;&#xD;&#xA;Allows Electromagnetic Physics research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints." a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Electronics" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Electronic Engineering" i="11453" d="Skill and knowledge of Electronic Engineering and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Used in all Electronics and Drone research.&#xD;&#xA;&#xD;&#xA;Allows Electronic Engineering research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Electronics" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Gallente Encryption Methods" i="23121" d="Understanding of the data encryption methods used by the Gallente Federation and its allies." a1="intelligence" a2="memory" r="5" c="0">
+   <p n="Hacking" l="2" />
+  </s>
+  <s n="Gallentean Starship Engineering" i="11450" d="Skill and knowledge of Gallente Starship Engineering and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses in the research of Gallente Ships of all Sizes.&#xD;&#xA;&#xD;&#xA;Allows Gallente Starship Engineering research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Mechanic" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Genetic Engineering" i="3404" d="The science of interfacing biological and machine components. Allows the use of DNA mutators." a1="intelligence" a2="memory" r="4" c="1000000">
+   <p n="Science" l="2" />
+  </s>
+  <s n="Graviton Physics" i="11446" d="Skill and knowledge of Graviton physics and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of Cloaking and other spatial distortion devices as well as Graviton based missiles and smartbombs.&#xD;&#xA;&#xD;&#xA;Allows Graviton Physics research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints." a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Engineering" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Gunnery Interfaces" i="13280" d="The skill interfacing with a ships turrets. Allows the use of advanced gunnery implants." a1="intelligence" a2="memory" r="4" c="0">
+   <p n="Cybernetics" l="5" />
+  </s>
+  <s n="Hacking" i="21718" d="Proficiency at breaking into guarded computer systems. Required skill for the use of codebreaker modules. 5% increase in chance of data retrieval per level." a1="intelligence" a2="memory" r="3" c="1000000">
+   <p n="Electronics Upgrades" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="High Energy Physics" i="11433" d="Skill and knowledge of High Energy Physics and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of various energy system modules as well as smartbombs and laser based weaponry.&#xD;&#xA;&#xD;&#xA;Allows High Energy Physics research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Engineering" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Hydromagnetic Physics" i="11443" d="Skill and knowledge of Hydromagnetic Physics and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of shield system.&#xD;&#xA;&#xD;&#xA;Allows Hydromagnetic Physics research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints." a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Engineering" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s p="false" n="Hypernet Science" i="11858" d="Skill and knowledge of Hypernet Technology such as Hacking decks, Codebreakers and Parasites." a1="intelligence" a2="memory" r="5" c="0">
+   <p n="Electronics" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Infomorph Psychology" i="24242" d="Psychological training which strengthens the pilot's mental tenacity. The reality of having ones conscious detached from their physical form, scattered across the galaxy and then placed in a vat grown clone can be very unsettling to the untrained mind.&#xD;&#xA;&#xD;&#xA;Allows 1 jump clone per level.&#xD;&#xA;&#xD;&#xA;Note: Clones can only be installed in stations with medical facilities or ships with clone vat bays. Installed clones are listed in the character sheet." a1="charisma" a2="willpower" r="1"  c="1000000" />
+  <s n="Jump Portal Generation" i="24562" d="Skill for the generation of jump portals to distant solar systems. 10% reduced material cost for jump portal activation per level." a1="intelligence" a2="memory" r="14" c="500000000">
+   <p n="Astrometrics" l="5" />
+   <p n="Jump Drive Operation" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Laboratory Operation" i="3406" d="Allows basic operation of research facilities. Ability to run 1 additional research job per skill level." a1="intelligence" a2="memory" r="1" c="300000">
+   <p n="Science" l="3" />
+  </s>
+  <s n="Laser Physics" i="11447" d="Skill and knowledge of Laser Physics and its use in the development of advanced Technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of Laser weaponry as well as EM based missiles and smartbombs.&#xD;&#xA;&#xD;&#xA;Allows Laser Physics research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints." a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Engineering" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Mechanical Engineering" i="11452" d="Skill and knowledge of Mechanical Engineering and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Used in all Starship research as well as hull and armor repair systems.&#xD;&#xA;&#xD;&#xA;Allows Mechanical Engineering research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Mechanic" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Metallurgy" i="3409" d="Advanced knowledge of mineral composition. 5% Bonus to material efficiency research speed per skill level." a1="intelligence" a2="memory" r="3" c="350000">
+   <p n="Science" l="4" />
+  </s>
+  <s n="Minmatar Encryption Methods" i="21791" d="Understanding of the data encryption methods used by the Minmatar Republic and its allies." a1="intelligence" a2="memory" r="5" c="0">
+   <p n="Hacking" l="2" />
+  </s>
+  <s n="Minmatar Starship Engineering" i="11445" d="Skill and knowledge of Minmatar Starship Engineering and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses in the research of Minmatar Ships of all Sizes.&#xD;&#xA;&#xD;&#xA;Allows Minmatar Starship Engineering research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Mechanic" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s p="false" n="Mnemonics" i="3407" d="Skill at handling skill stimulator boosters. 20% Bonus to skill booster duration per level." a1="intelligence" a2="memory" r="2" c="210000">
+   <p n="Science" l="2" />
+  </s>
+  <s n="Molecular Engineering" i="11529" d="Skill and knowledge of Molecular Physics and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of various hull and propulsion systems.&#xD;&#xA;&#xD;&#xA;Allows Molecular Engineering research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints." a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Mechanic" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Nanite Control" i="25538" d="Proficiency at reducing the severity of the side effects experienced upon injection of combat boosters." a1="intelligence" a2="memory" r="2" c="1000000">
+   <p n="Science" l="4" />
+  </s>
+  <s n="Nanite Engineering" i="11442" d="Skill and knowledge of Nanorobotics and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of various armor and hull systems.&#xD;&#xA;&#xD;&#xA;Allows Nanite Engineering research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Electronics" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Neurotoxin Recovery" i="25530" d="Proficiency at biofeedback techniques intended to negate the side effects typically experienced upon injection of combat boosters." a1="intelligence" a2="memory" r="5" c="25000">
+   <p n="Nanite Control" l="1" />
+  </s>
+  <s n="Nuclear Physics" i="11451" d="Skill and knowledge of Nuclear physics and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of Projectile weaponry as well as Nuclear missiles and smartbombs.&#xD;&#xA;&#xD;&#xA;Allows Nuclear Physics research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints." a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Engineering" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Plasma Physics" i="11441" d="Skill and knowledge of Plasma physics and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of particle blaster weaponry as well as plasma based missiles and smartbombs.&#xD;&#xA;&#xD;&#xA;Allows Plasma Physics research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Engineering" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Quantum Physics" i="11455" d="Skill and knowledge of Quantum Physics and its use in the development of advanced Technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of shield systems and Particle Blasters.&#xD;&#xA;&#xD;&#xA;Allows Quantum Physics research to be performed through a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints." a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Engineering" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s p="false" n="Remote Interfaces" i="13279" d="The skill interfacing with Remote systems such as drones and missiles . Allows the use of advanced Remote implants." a1="intelligence" a2="memory" r="4" c="0">
+   <p n="Cybernetics" l="5" />
+  </s>
+  <s n="Research" i="3403" d="Skill at researching more efficient production methods. 5% bonus to blueprint manufacturing time research per skill level." a1="intelligence" a2="memory" r="1" c="300000">
+   <p n="Science" l="3" />
+  </s>
+  <s n="Research Project Management" i="12179" d="Skill at overseeing agent research and development projects. Allows the simultaneous use of 1 additional Research and Development agent per skill level." a1="memory" a2="charisma" r="8" c="40000000">
+   <p n="Laboratory Operation" l="5" />
+   <p n="Research" l="5" />
+  </s>
+  <s p="false" n="Reverse Engineering" i="3408" d="Skill at illegaly creating blueprints from items . Skill level x Item Reverse engineering chance = Chance of reverse engineering a Item into a blueprint" a1="intelligence" a2="memory" r="4" c="0">
+   <p n="Science" l="5" />
+  </s>
+  <s n="Rocket Science" i="11449" d="Skill and knowledge of Rocket Science and its use in the development of advanced technology.&#xD;&#xA;&#xD;&#xA;Uses primarily in the research of missiles and propulsion systems.&#xD;&#xA;&#xD;&#xA;Allows Rocket Science research to be performed with the help of a research agent.&#xD;&#xA;&#xD;&#xA;Needed for all research and manufacturing operations on related blueprints" a1="intelligence" a2="memory" r="5" c="1000000">
+   <p n="Mechanic" l="5" />
+   <p n="Science" l="5" />
+  </s>
+  <s n="Science" i="3402" d="Basic understanding of scientific principles. 5% Bonus to blueprint copying speed per level." a1="intelligence" a2="memory" r="1"  c="20000" />
+  <s n="Scientific Networking" i="24270" d="Skill at running research operations remotely. Each level increases the distance at which research projects can be started. Level 1 allows for range within the same solar system, Level 2 extends that range to systems within 5 jumps, and each subsequent level then doubles it. Level 5 allows for full regional range." a1="intelligence" a2="memory" r="3" c="7500000">
+   <p n="Laboratory Operation" l="4" />
+  </s>
+  <s n="Signal Acquisition" i="25739" d="Skill for the advanced operation of long range scanners. 10% faster scanning with scan probes per level." a1="intelligence" a2="memory" r="8" c="450000">
+   <p n="Science" l="3" />
+  </s>
+  <s n="Sleeper Technology" i="21789" d="Basic understanding of interfacing with Sleeper technology.&#xD;&#xA;&#xD;&#xA;The Sleepers were masters of virtual reality, neural interfacing and cryotechnology.&#xD;&#xA;&#xD;&#xA;Allows the rudimentary use of Sleeper components in the creation of advanced technology, even though the scientific theories behind them remain a mystery." a1="intelligence" a2="memory" r="5" c="0">
+   <p n="Archaeology" l="2" />
+  </s>
+  <s n="Takmahl Technology" i="23123" d="Basic understanding of interfacing with Takmahl technology.&#xD;&#xA;&#xD;&#xA;The Takmahl nation excelled in cybernetics and bio-engineering.&#xD;&#xA;&#xD;&#xA;Allows the rudimentary use of Takmahl components in the creation of advanced technology, even though the scientific theories behind them remain a mystery." a1="intelligence" a2="memory" r="5" c="0">
+   <p n="Archaeology" l="2" />
+  </s>
+  <s n="Talocan Technology" i="20433" d="Basic understanding of interfacing with Talocan technology.&#xD;&#xA;&#xD;&#xA;The Talocan were masters of Spatial manipulation and Hypereuclidean Mathematics.&#xD;&#xA;&#xD;&#xA;Allows the rudimentary use of Talocan components in the creation of advanced technology, even though the scientific theories behind them remain a mystery." a1="intelligence" a2="memory" r="5" c="0">
+   <p n="Archaeology" l="2" />
+  </s>
+  <s n="Yan Jung Technology" i="23124" d="Basic understanding of interfacing with Yan Jung technology.&#xD;&#xA;&#xD;&#xA;The Yan Jung nation possessed advanced gravitronic technology and force field theories.&#xD;&#xA;&#xD;&#xA;Allows the rudimentary use of Yan Jung components in the creation of advanced technology, even though the scientific theories behind them remain a mystery." a1="intelligence" a2="memory" r="5" c="0">
+   <p n="Archaeology" l="2" />
+  </s>
+ </c>
+ <c n="Social" g="278">
+  <s n="Bureaucratic Connections" i="16546" d="Understanding of corporate bureaucracies.&#xD;&#xA;&#xD;&#xA;Improves loyalty point gain by 5% per level when working for agents in the following corporation divisions:&#xD;&#xA;&#xD;&#xA;Administration&#xD;&#xA;Internal Security&#xD;&#xA;Personnel&#xD;&#xA;Storage&#xD;&#xA;Archives&#xD;&#xA;Financial" a1="charisma" a2="intelligence" r="1" c="20000000">
+   <p n="Corporation Management" l="3" />
+   <p n="Social" l="3" />
+  </s>
+  <s n="Connections" i="3359" d="Skill at interacting with friendly NPCs. 4% Bonus to effective standing towards friendly NPC Corporations." a1="charisma" a2="intelligence" r="3" c="200000">
+   <p n="Social" l="3" />
+  </s>
+  <s n="Criminal Connections" i="3361" d="Skill at interacting with criminal NPCs. 0.4 bonus to effective standing towards NPCs with low Concord standing." a1="charisma" a2="intelligence" r="3" c="200000">
+   <p n="Social" l="3" />
+  </s>
+  <s n="DED Connections" i="3362" d="Skill at dealing with Concord Department and negotiating bounties&#xD;&#xA;&#xD;&#xA;Bonus fee of 1.500 isk per pirate head per level of the skill" a1="charisma" a2="intelligence" r="1" c="420000">
+   <p n="Social" l="5" />
+  </s>
+  <s n="Diplomacy" i="3357" d="Skill at interacting with hostile Agents. 0.4 Bonus per level to effective standing towards hostile Agents." a1="charisma" a2="intelligence" r="1" c="180000">
+   <p n="Social" l="2" />
+  </s>
+  <s n="Fast talk" i="3358" d="Skill at interacting with Concord. 5% Bonus to effective security rating increase." a1="charisma" a2="intelligence" r="4" c="100000">
+   <p n="Social" l="4" />
+  </s>
+  <s n="Financial Connections" i="16547" d="Understanding of Corporate Finances.&#xD;&#xA;&#xD;&#xA;Improves loyalty point gain by 5% per level when working for agents in the following corporation divisions:&#xD;&#xA;&#xD;&#xA;Public Relations&#xD;&#xA;Marketing&#xD;&#xA;Legal&#xD;&#xA;Accounting&#xD;&#xA;Financial&#xD;&#xA;Distribution" a1="charisma" a2="intelligence" r="1" c="20000000">
+   <p n="Negotiation" l="3" />
+   <p n="Social" l="3" />
+  </s>
+  <s n="High Tech Connections" i="16552" d="Understanding of high-tech corporate culture.&#xD;&#xA;&#xD;&#xA;Improves loyalty point gain by 5% per level when working for agents in the following corporation divisions:&#xD;&#xA;&#xD;&#xA;Archives&#xD;&#xA;Advisory&#xD;&#xA;Intelligence&#xD;&#xA;Manufacturing&#xD;&#xA;Surveillance" a1="charisma" a2="intelligence" r="1" c="20000000">
+   <p n="Science" l="3" />
+   <p n="Social" l="3" />
+  </s>
+  <s n="Labor Connections" i="16550" d="Understanding of corporate culture on the industrial level and the plight of the worker.&#xD;&#xA;&#xD;&#xA;Improves loyalty point gain by 5% per level when working for agents in the following corporation divisions:&#xD;&#xA;&#xD;&#xA;Manufacturing&#xD;&#xA;Production&#xD;&#xA;Personnel&#xD;&#xA;Mining&#xD;&#xA;Astrosurveying" a1="charisma" a2="intelligence" r="1" c="20000000">
+   <p n="Industry" l="3" />
+   <p n="Social" l="3" />
+  </s>
+  <s n="Military Connections" i="16549" d="Understanding of military culture.&#xD;&#xA;&#xD;&#xA;Improves loyalty point gain by 5% per level when working for agents in the following corporation divisions:&#xD;&#xA;&#xD;&#xA;Intelligence&#xD;&#xA;Security&#xD;&#xA;Astrosurveying&#xD;&#xA;Command&#xD;&#xA;Internal Security&#xD;&#xA;Surveillance" a1="charisma" a2="intelligence" r="1" c="20000000">
+   <p n="Leadership" l="3" />
+   <p n="Social" l="3" />
+  </s>
+  <s n="Negotiation" i="3356" d="Skill at agent negotiation. Improves agent effective quality. 5% additional pay per skill level for agent missions." a1="charisma" a2="intelligence" r="2" c="60000">
+   <p n="Social" l="1" />
+  </s>
+  <s n="Political Connections" i="16548" d="Understanding of political concepts and stratagems.&#xD;&#xA;&#xD;&#xA;Improves loyalty point gain by 5% per level when working for agents in the following corporation divisions:&#xD;&#xA;&#xD;&#xA;Security&#xD;&#xA;Legal&#xD;&#xA;Administration&#xD;&#xA;Advisory&#xD;&#xA;Command&#xD;&#xA;Public Relations" a1="charisma" a2="intelligence" r="1" c="20000000">
+   <p n="Diplomacy" l="3" />
+   <p n="Social" l="3" />
+  </s>
+  <s n="Social" i="3355" d="Skill at social interaction. 5% Bonus to NPC agent, corporation and faction standing increase." a1="charisma" a2="intelligence" r="1"  c="20000" />
+  <s n="Trade Connections" i="16551" d="Understanding of the way trade is conducted at the corporate level.&#xD;&#xA;&#xD;&#xA;Improves loyalty point gain by 5% per level when working for agents in the following corporation divisions:&#xD;&#xA;&#xD;&#xA;Distribution&#xD;&#xA;Storage&#xD;&#xA;Production&#xD;&#xA;Accounting&#xD;&#xA;Mining&#xD;&#xA;Marketing" a1="charisma" a2="intelligence" r="1" c="20000000">
+   <p n="Trade" l="3" />
+   <p n="Social" l="3" />
+  </s>
+ </c>
+ <c n="Spaceship Command" g="257">
+  <s n="Advanced Spaceship Command" i="20342" d="The advanced operation of spaceships. Grants a 5% Bonus per skill level to the agility of ships requiring Advanced Spaceship Command. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="5" c="50000000">
+   <p n="Spaceship Command" l="5" />
+  </s>
+  <s n="Amarr Battleship" i="3339" d="Skill at operating Amarr battleships. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="8" c="4000000">
+   <p n="Amarr Cruiser" l="4" />
+   <p n="Spaceship Command" l="4" />
+  </s>
+  <s n="Amarr Carrier" i="24311" d="Skill at operating Amarr carriers." a1="perception" a2="willpower" r="14" c="500000000">
+   <p n="Drone Interfacing" l="5" />
+   <p n="Capital Ships" l="3" />
+   <p n="Amarr Battleship" l="5" />
+  </s>
+  <s n="Amarr Cruiser" i="3335" d="Skill at operating Amarr cruisers." a1="perception" a2="willpower" r="5" c="500000">
+   <p n="Amarr Frigate" l="4" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Amarr Dreadnought" i="20525" d="Skill at operating Amarr dreadnoughts. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="12" c="100000000">
+   <p n="Capital Ships" l="1" />
+   <p n="Amarr Battleship" l="5" />
+  </s>
+  <s n="Amarr Freighter" i="20524" d="Skill at operating Amarr freighters. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="10" c="75000000">
+   <p n="Advanced Spaceship Command" l="1" />
+   <p n="Amarr Industrial" l="5" />
+  </s>
+  <s n="Amarr Frigate" i="3331" d="Skill at operating Amarr frigates." a1="perception" a2="willpower" r="2" c="40000">
+   <p n="Spaceship Command" l="1" />
+  </s>
+  <s n="Amarr Industrial" i="3343" d="Skill at operating Amarr industrial ships. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="4" c="300000">
+   <p n="Amarr Frigate" l="3" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Amarr Titan" i="3347" d="Skill at operating Amarr titans." a1="perception" a2="willpower" r="16" c="705032704">
+   <p n="Capital Ships" l="5" />
+   <p n="Amarr Battleship" l="5" />
+   <p n="Leadership" l="5" />
+  </s>
+  <s n="Assault Ships" i="12095" d="Skill for operation of the Assault Ship class frigates. Can not be trained on Trial Accounts." a1="willpower" a2="perception" r="4" c="4000000">
+   <p n="Mechanic" l="5" />
+   <p n="Engineering" l="5" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Battlecruisers" i="12099" d="Skill at operating Battlecruisers. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="6" c="1000000">
+   <p n="Spaceship Command" l="4" />
+  </s>
+  <s n="Caldari Battleship" i="3338" d="Skill at operating Caldari battleships. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="8" c="4000000">
+   <p n="Caldari Cruiser" l="4" />
+   <p n="Spaceship Command" l="4" />
+  </s>
+  <s n="Caldari Carrier" i="24312" d="Skill at operating Caldari carriers." a1="perception" a2="willpower" r="14" c="500000000">
+   <p n="Drone Interfacing" l="5" />
+   <p n="Capital Ships" l="3" />
+   <p n="Caldari Battleship" l="5" />
+  </s>
+  <s n="Caldari Cruiser" i="3334" d="Skill at operating Caldari cruisers." a1="perception" a2="willpower" r="5" c="500000">
+   <p n="Caldari Frigate" l="4" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Caldari Dreadnought" i="20530" d="Skill at operating Caldari dreadnoughts. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="12" c="100000000">
+   <p n="Capital Ships" l="1" />
+   <p n="Caldari Battleship" l="5" />
+  </s>
+  <s n="Caldari Freighter" i="20526" d="Skill at operating Caldari freighters. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="10" c="75000000">
+   <p n="Advanced Spaceship Command" l="1" />
+   <p n="Caldari Industrial" l="5" />
+  </s>
+  <s n="Caldari Frigate" i="3330" d="Skill at operating Caldari frigates." a1="perception" a2="willpower" r="2" c="40000">
+   <p n="Spaceship Command" l="1" />
+  </s>
+  <s n="Caldari Industrial" i="3342" d="Skill at operating Caldari industrial ships. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="4" c="300000">
+   <p n="Caldari Frigate" l="3" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Caldari Titan" i="3346" d="Skill at operating Caldari titans." a1="perception" a2="willpower" r="16" c="705032704">
+   <p n="Capital Ships" l="5" />
+   <p n="Caldari Battleship" l="5" />
+   <p n="Leadership" l="5" />
+  </s>
+  <s n="Capital Ships" i="20533" d="The operation of capital ships. Grants a 5% bonus per skill level to the agility of ships requiring the Capital Ships skill. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="14" c="400000000">
+   <p n="Advanced Spaceship Command" l="5" />
+  </s>
+  <s p="false" n="Carriers" i="12100" d="Skill at operating Carriers and Motherships. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="2" c="4000000">
+   <p n="Drone Interfacing" l="5" />
+   <p n="Spaceship Command" l="5" />
+  </s>
+  <s n="Command Ships" i="23950" d="Skill for the operation of Command Ships. Can not be trained on Trial Accounts." a1="willpower" a2="perception" r="8" c="64000000">
+   <p n="Battlecruisers" l="5" />
+   <p n="Warfare Link Specialist" l="4" />
+   <p n="Spaceship Command" l="5" />
+  </s>
+  <s p="false" n="Concord" i="10264" d="Skill at operating Concord ." a1="perception" a2="willpower" r="12" c="300000000">
+   <p n="Polaris" l="5" />
+   <p n="Spaceship Command" l="5" />
+  </s>
+  <s n="Covert Ops" i="12093" d="Covert operations frigates are designed for recon and espionage operation. Their main strength is the ability to travel unseen through enemy territory and to avoid unfavorable encounters Much of their free space is sacrificed to house an advanced spatial field control system. This allows it to utilize very advanced forms of cloaking at greatly reduced CPU cost. Can not be trained on Trial Accounts." a1="willpower" a2="perception" r="4" c="4000000">
+   <p n="Electronics Upgrades" l="5" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Destroyers" i="12097" d="Skill at operating Destroyers." a1="perception" a2="willpower" r="2" c="100000">
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Exhumers" i="22551" d="Skill for the operation of elite mining barges. Can not be trained on Trial Accounts." a1="willpower" a2="perception" r="5" c="28000000">
+   <p n="Industry" l="5" />
+   <p n="Astrogeology" l="5" />
+   <p n="Spaceship Command" l="4" />
+  </s>
+  <s p="false" n="Flagships" i="12101" d="Skill at operating Wing Command Carriers. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="2" c="400000000">
+   <p n="Wing Command" l="5" />
+   <p n="Spaceship Command" l="5" />
+  </s>
+  <s n="Gallente Battleship" i="3336" d="Skill at operating Gallente battleships. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="8" c="4000000">
+   <p n="Gallente Cruiser" l="4" />
+   <p n="Spaceship Command" l="4" />
+  </s>
+  <s n="Gallente Carrier" i="24313" d="Skill at operating Gallente carriers." a1="perception" a2="willpower" r="14" c="500000000">
+   <p n="Drone Interfacing" l="5" />
+   <p n="Capital Ships" l="3" />
+   <p n="Gallente Battleship" l="5" />
+  </s>
+  <s n="Gallente Cruiser" i="3332" d="Skill at operating Gallente cruisers." a1="perception" a2="willpower" r="5" c="500000">
+   <p n="Gallente Frigate" l="4" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Gallente Dreadnought" i="20531" d="Skill at operating Gallente dreadnoughts. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="12" c="100000000">
+   <p n="Capital Ships" l="1" />
+   <p n="Gallente Battleship" l="5" />
+  </s>
+  <s n="Gallente Freighter" i="20527" d="Skill at operating Gallente freighters. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="10" c="75000000">
+   <p n="Advanced Spaceship Command" l="1" />
+   <p n="Gallente Industrial" l="5" />
+  </s>
+  <s n="Gallente Frigate" i="3328" d="Skill at operating Gallente frigates." a1="perception" a2="willpower" r="2" c="40000">
+   <p n="Spaceship Command" l="1" />
+  </s>
+  <s n="Gallente Industrial" i="3340" d="Skill at operating Gallente industrial ships. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="4" c="300000">
+   <p n="Gallente Frigate" l="3" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Gallente Titan" i="3344" d="Skill at operating Gallente titans." a1="perception" a2="willpower" r="16" c="705032704">
+   <p n="Capital Ships" l="5" />
+   <p n="Gallente Battleship" l="5" />
+   <p n="Leadership" l="5" />
+  </s>
+  <s n="Heavy Assault Ships" i="16591" d="Skill for operation of the Heavy Assault class cruisers. Can not be trained on Trial Accounts." a1="willpower" a2="perception" r="6" c="32000000">
+   <p n="Weapon Upgrades" l="5" />
+   <p n="Assault Ships" l="4" />
+   <p n="Spaceship Command" l="5" />
+  </s>
+  <s n="Interceptors" i="12092" d="The Operation Of Advanced Interceptor class Frigates. Can not be trained on Trial Accounts." a1="willpower" a2="perception" r="4" c="1000000">
+   <p n="Evasive Maneuvering" l="5" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Interdictors" i="12098" d="The Operation Of Advanced Interdictor class Destroyers. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="5" c="40000000">
+   <p n="Interceptors" l="4" />
+   <p n="Spaceship Command" l="4" />
+  </s>
+  <s p="false" n="Jove Battleship" i="11078" d="Skill at operating jove battleships." a1="perception" a2="willpower" r="8" c="4000000">
+   <p n="Jove Cruiser" l="4" />
+   <p n="Spaceship Command" l="5" />
+  </s>
+  <s p="false" n="Jove Cruiser" i="3758" d="" a1="perception" a2="willpower" r="12" c="1500000">
+   <p n="Caldari Frigate" l="4" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s p="false" n="Jove Frigate" i="3755" d="" a1="perception" a2="willpower" r="12" c="120000">
+   <p n="Spaceship Command" l="5" />
+  </s>
+  <s p="false" n="Jove Industrial" i="11075" d="Skill at operating Jovian industrial ships." a1="perception" a2="willpower" r="6" c="300000">
+   <p n="Jove Frigate" l="4" />
+   <p n="Spaceship Command" l="5" />
+  </s>
+  <s n="Logistics" i="12096" d="Skill at operating Support Cruisers. Can not be trained on Trial Accounts." a1="willpower" a2="perception" r="6" c="28000000">
+   <p n="Signature Analysis" l="5" />
+   <p n="Long Range Targeting" l="5" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Mining Barge" i="17940" d="Skill at operating ORE Mining Barges. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="4" c="500000">
+   <p n="Industry" l="5" />
+   <p n="Astrogeology" l="3" />
+  </s>
+  <s n="Minmatar Battleship" i="3337" d="Skill at operating Minmatar battleships. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="8" c="4000000">
+   <p n="Minmatar Cruiser" l="4" />
+   <p n="Spaceship Command" l="4" />
+  </s>
+  <s n="Minmatar Carrier" i="24314" d="Skill at operating Minmatar carriers." a1="perception" a2="willpower" r="14" c="500000000">
+   <p n="Drone Interfacing" l="5" />
+   <p n="Capital Ships" l="3" />
+   <p n="Minmatar Battleship" l="5" />
+  </s>
+  <s n="Minmatar Cruiser" i="3333" d="Skill at operating Minmatar cruisers." a1="perception" a2="willpower" r="5" c="500000">
+   <p n="Minmatar Frigate" l="4" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Minmatar Dreadnought" i="20532" d="Skill at operating Minmatar dreadnoughts. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="12" c="100000000">
+   <p n="Capital Ships" l="1" />
+   <p n="Minmatar Battleship" l="5" />
+  </s>
+  <s n="Minmatar Freighter" i="20528" d="Skill at operating Minmatar freighters. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="10" c="75000000">
+   <p n="Advanced Spaceship Command" l="1" />
+   <p n="Minmatar Industrial" l="5" />
+  </s>
+  <s n="Minmatar Frigate" i="3329" d="Skill at operating Minmatar frigates." a1="perception" a2="willpower" r="2" c="40000">
+   <p n="Spaceship Command" l="1" />
+  </s>
+  <s n="Minmatar Industrial" i="3341" d="Skill at operating Minmatar industrial ships. Can not be trained on Trial Accounts." a1="perception" a2="willpower" r="4" c="300000">
+   <p n="Minmatar Frigate" l="3" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+  <s n="Minmatar Titan" i="3345" d="Skill at operating Minmatar titans." a1="perception" a2="willpower" r="16" c="705032704">
+   <p n="Capital Ships" l="5" />
+   <p n="Minmatar Battleship" l="5" />
+   <p n="Leadership" l="5" />
+  </s>
+  <s p="false" n="Omnipotent" i="19430" d="Those who possess this are all knowing and all seeing with unlimited power and authority." a1="perception" a2="willpower" r="42" c="0">
+   <!-- <p n="Omnipotent" l="5" /> -->
+   <p n="Polaris" l="5" />
+  </s>
+  <s p="false" n="Polaris" i="9955" d="Skill at operating Polaris." a1="perception" a2="willpower" r="1" c="800000000"> <!-- r="0"> -->
+   <p n="Spaceship Command" l="5" />
+   <!-- <p n="Polaris" l="5" /> -->
+  </s>
+  <s n="Recon Ships" i="22761" d="Skill for the operation of Recon Ships. Can not be trained on Trial Accounts." a1="willpower" a2="perception" r="6" c="32000000">
+   <p n="Signature Analysis" l="5" />
+   <p n="Covert Ops" l="4" />
+   <p n="Spaceship Command" l="5" />
+  </s>
+  <s n="Spaceship Command" i="3327" d="The basic operation of spaceships. 2% improved ship agility for all ships per skill level." a1="perception" a2="willpower" r="1"  c="20000" />
+  <s n="Transport Ships" i="19719" d="Skill for operation of the Transport Ship class industrials. Can not be trained on Trial Accounts." a1="willpower" a2="perception" r="6" c="30000000">
+   <p n="Industry" l="5" />
+   <p n="Spaceship Command" l="3" />
+  </s>
+ </c>
+ <c n="Trade" g="274">
+  <s n="Accounting" i="16622" d="Proficiency at squaring away the odds and ends of business transactions, keeping the check books tight. Each level of skill reduces transaction tax by 10%." a1="charisma" a2="memory" r="3" c="5000000">
+   <p n="Trade" l="4" />
+  </s>
+  <s p="false" n="Black Market Trading" i="3445" d="Skill at forging cargo manifest and disguising contraband cargo. from a base chance 90%, each level of skill reduces the chance of contraband detection by 10%." a1="willpower" a2="charisma" r="2" c="70000">
+   <p n="Trade" l="2" />
+   <p n="Retail" l="2" />
+  </s>
+  <s n="Broker Relations" i="3446" d="Proficiency at driving down market-related costs. Each level of skill grants a 5% reduction in the costs associated with setting up a market order, which usually come to 1% of the order's total value. This can be further influenced by the player's standing towards the owner of the station where the order is entered." a1="willpower" a2="charisma" r="2" c="100000">
+   <p n="Trade" l="2" />
+  </s>
+  <s n="Contracting" i="25235" d="This skill allows you to create formal agreements with other characters.&#xD;&#xA;&#xD;&#xA;For each level of this skill the number of outstanding contracts is increased by three (up to a maximum of 15 at level 5)&#xD;&#xA;&#xD;&#xA;Note: Can not be trained on trial accounts" a1="charisma" a2="willpower" r="1" c="150000">
+   <p n="Social" l="1" />
+  </s>
+  <s n="Corporation Contracting" i="25233" d="You are familiar with the intricacies of formalizing contracts between yourself and others. You can not create contracts on behalf of your corporation without this skill.&#xD;&#xA;&#xD;&#xA;For each level of this skill the number of concurrent inner-corporation/alliance contracts you make on behalf of your corporation is increased by 10.&#xD;&#xA;&#xD;&#xA;This has no effect on public contracts or contracts you make personally." a1="charisma" a2="willpower" r="3" c="150000">
+   <p n="Contracting" l="4" />
+  </s>
+  <s n="Daytrading" i="16595" d="Allows for remote modification of buy and sell orders. Each level of skill increases the range at which orders may be modified. Level 1 allows for modification of orders within the same solar system, Level 2 extends that range to systems within 5 jumps, and each subsequent level then doubles it. Level 5 allows for market order modification anywhere within current region." a1="charisma" a2="memory" r="1" c="12500000">
+   <p n="Trade" l="4" />
+  </s>
+  <s n="Margin Trading" i="16597" d="Ability to make potentially risky investments work in your favor. Each level of skill reduces the percentage of ISK placed in market escrow when entering buy orders. Starting with an escrow percentage of 100% at Level 1, each skill level cumulatively reduces the percentage by 25%." a1="charisma" a2="memory" r="3" c="20000000">
+   <p n="Accounting" l="4" />
+  </s>
+  <s n="Marketing" i="16598" d="Skill at selling items remotely. Each level increases the range from the seller to the item being sold. Level 1 allows for the sale of items within the same solar system, Level 2 extends that range to systems within 5 jumps, and each subsequent level then doubles it. Level 5 allows for sale of items located anywhere within current region." a1="charisma" a2="memory" r="3" c="3500000">
+   <p n="Trade" l="2" />
+  </s>
+  <s n="Procurement" i="16594" d="Proficiency at placing remote buy orders on the market. Level 1 allows for the placement of orders within the same solar system, Level 2 extends that range to systems within 5 jumps, and each subsequent level then doubles it. Level 5 allows for placement of remote buy orders anywhere within current region.&#xD;&#xA;&#xD;&#xA;Note: placing buy orders and directly buying an item are not the same thing. Direct remote purchase requires no skill." a1="charisma" a2="memory" r="3" c="1500000">
+   <p n="Marketing" l="2" />
+  </s>
+  <s n="Retail" i="3444" d="Ability to organize and manage market operations. Each level raises the limit of active orders by 8." a1="willpower" a2="charisma" r="2" c="100000">
+   <p n="Trade" l="2" />
+  </s>
+  <s n="Trade" i="3443" d="Knowledge of the market and skill at manipulating it. Active sell order limit increased by 4 per level of skill." a1="willpower" a2="charisma" r="1"  c="20000" />
+  <s n="Tycoon" i="18580" d="Ability to organize and manage ultra large-scale market operations. Each level raises the limit of active orders by 32." a1="charisma" a2="memory" r="6" c="100000000">
+   <p n="Wholesale" l="5" />
+   <p n="Marketing" l="4" />
+  </s>
+  <s n="Visibility" i="3447" d="Skill at acquiring products remotely. Each level of skill increases your remote buy order range. Level 1 allows for the placing of buy orders within the same solar system, Level 2 extends that range to systems within 5 jumps, and each subsequent level then doubles it. Level 5 allows for a full regional range.&#xD;&#xA;&#xD;&#xA;Note: Only remotely placed buy orders (using Procurement) require this skill to alter the range. Any range can be set on a local buy order with no skill." a1="charisma" a2="memory" r="3" c="7500000">
+   <p n="Procurement" l="4" />
+  </s>
+  <s n="Wholesale" i="16596" d="Ability to organize and manage large-scale market operations. Each level raises the limit of active orders by 16." a1="charisma" a2="memory" r="4" c="35000000">
+   <p n="Retail" l="5" />
+   <p n="Marketing" l="2" />
+  </s>
+ </c>
+</skills>
