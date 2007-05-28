@@ -5,8 +5,9 @@ import sys
 import os
 import time
 import threading
+import ConfigParser
 
-from EveSession import EveChar
+import EveSession
 from EveXML import EveXML
 
 try:
@@ -17,14 +18,13 @@ except ImportError, (strerror):
 	sys.exit(1)
 
 class AddChar(gtk.Dialog):
+    """ Dialogs to add a character, design 'inspired' by EveMon (ie shamelessly copied) """
 
     def __init__(self, parent = None):
-
-
-        gtk.Dialog.__init__(self, 'Add Character', parent, 0, (gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT, gtk.STOCK_APPLY, gtk.RESPONSE_OK))
+        gtk.Dialog.__init__(self, 'Add Character', parent, 0, ( gtk.STOCK_APPLY, gtk.RESPONSE_OK, gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
         self.set_has_separator(False)
 
-        self.action_area.get_children()[0].set_sensitive(False) # err, this is (x_O) no idea if there is a better way
+        self.action_area.get_children()[1].set_sensitive(False) # err, this is (x_O) no idea if there is a better way
 
         frame = gtk.Frame('EVE Online Loin')
         self.vbox.pack_start(frame, True, True, 0)
@@ -72,9 +72,20 @@ class AddChar(gtk.Dialog):
         self.show_all()
         response = self.run()
 
+        if response == gtk.RESPONSE_OK:
+            self.eveusername  = self.username.get_text()
+            self.evepassword  = self.password.get_text()
+            self.evecharacter = self.character.get_text()
+        else:
+            self.eveusername = None
+
         self.destroy()
-
-
+    
+    def get_added(self):
+        if self.eveusername != None:
+            return ((self.eveusername, self.evepassword, self.evecharacter))
+        else:
+            return None
 
     def on_character_select_clicked(self, button):
         dialog = gtk.Dialog("Select a Character", self, 0, (gtk.STOCK_OK, gtk.RESPONSE_OK, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
@@ -84,9 +95,8 @@ class AddChar(gtk.Dialog):
         chars = {}
 
         try:
-            tmpsession = EveChar(eveusername, evepassword)
+            tmpsession = EveSession.EveChar(eveusername, evepassword)
             chars = tmpsession.getCharacters()
-            sleep(100)
         except:
             error = gtk.MessageDialog(self, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, "Unable to get EVE Characters!")
             error.run()
@@ -113,7 +123,7 @@ class AddChar(gtk.Dialog):
             selected = combo.get_active_text()
             if selected != None:
                 self.character.set_text(selected)
-                self.action_area.get_children()[0].set_sensitive(True) # err, this is (x_O) no idea if there is a better way
+                self.action_area.get_children()[1].set_sensitive(True) # err, this is (x_O) no idea if there is a better way
 
 
         dialog.destroy()
@@ -123,7 +133,6 @@ class AddChar(gtk.Dialog):
 
 class EveStatusIcon():
     """ The GUI thread """
-
 
     def __init__(self, parent=None):
         self.icon = gtk.status_icon_new_from_stock(gtk.STOCK_DIALOG_INFO)
@@ -157,13 +166,15 @@ class EveStatusIcon():
         gtk.main_quit()
 
     def add_char(self, selected):
-        AddChar()
+        _char = AddChar().get_added()
+        if _char != None:
+            chars.add(_char[0], _char[1], _char[2]) # FIXME: is it a good idea to do this from the GUI thread?
+            chars.save() # FIXME: This is EVIL, could block the UI
 
     def on_activate(self, icon):
-        print "wuss?"
+        pass
 
     def wakeup(self):
-
         if global_status.current_status == Status.E_IDLE:
             self.icon.set_from_stock(gtk.STOCK_DIALOG_INFO)
             self.icon.set_tooltip(global_status.tooltip)
@@ -172,18 +183,11 @@ class EveStatusIcon():
             self.icon.set_from_stock(gtk.STOCK_REFRESH)
             self.icon.set_tooltip(global_status.to_string(global_status.current_status))
             self.icon.set_blinking(True)
-            
-
         return True
 
 
-
-
-class EveData(EveChar):
-    """ Abstracts the EveChar class and Stores Information about the Characters we're interested in.
-
-    TODO: Implement a save() and loda() method to store configuration
-    """
+class EveChar(EveSession.EveChar):
+    """Abstracts the EveSession.EveChar class and Stores Information about a single Character."""
 
     next_update     = 0 # When the next update should happen. time_t
     update_interval = 900 # in seconds, this is eve's current default
@@ -194,20 +198,76 @@ class EveData(EveChar):
 
     def __init__(self, username, password, character):
         self.next_update = time.time() # update immediatly after start
-        EveChar.__init__(self, username, password)
-        self.character = character
+        EveSession.EveChar.__init__(self, username, password)
+        if character in self.getCharacters():
+            self.character = character
+        else:
+            raise IOError, ('character nor found', 'The Character "%s" was not found' % character)
 
     def set_tooltip(self, tooltip):
         self.tooltip = tooltip
         return True
 
 
+class EveChars:
+    """Contains all the characters we monitor, and supplies load() and save() options"""
+
+    #TODO: implement Locking, to allow both threads to manipulate this?
+
+    chars = []
+
+    DATADIR = ''
+
+    def __init__(self):
+        self.DATADIR = os.path.join(os.environ["HOME"], ".config/EveTimer/")
+
+
+    def add(self, username, password, char):
+        # TODO: check for dublicates
+
+        try:
+            _char = EveChar(username, password, char)
+            _char.DATADIR = self.DATADIR
+        except:
+            return False
+
+        self.chars.append(_char)
+        return True
+
+    def get(self):
+        return self.chars
+
+    def save(self):
+        cfg = ConfigParser.ConfigParser()
+
+        for char in self.get():
+            cfg.add_section(char.character)
+            cfg.set(char.character, 'username', char.eveusername)
+            cfg.set(char.character, 'password', char.evepassword)
+
+        try:
+            cfg.write(open(self.DATADIR + 'characters.cfg', 'w'))
+        except:
+            raise
+        
+        return True
+
+    def load(self):
+        cfg = ConfigParser.ConfigParser()
+        
+        try:
+            cfg.read(self.DATADIR + 'characters.cfg')
+            for char in cfg.sections():
+                self.add(cfg.get(char, "username"), cfg.get(char, "password"), char)
+        except:
+            raise
+
+
 
 class Status:
-    """ Communication between the GUI thread and data thread happens through this
+    """Communication between the GUI thread and data thread happens through this
     Only the Data Thread is allowed to write, the GUI thread may only read.
-    Manipulation should never happen directly, only through functions
-    """
+    Manipulation should never happen directly, only through functions"""
 
     E_IDLE     = 0
     E_UPDATING = 1
@@ -244,7 +304,7 @@ class EveDataThread(threading.Thread):
 
             _tooltip = ''
 
-            for char in chars:
+            for char in chars.get():
                 if char.next_update < time.time():
                     global_status.set(Status.E_UPDATING)
 
@@ -269,18 +329,12 @@ class EveDataThread(threading.Thread):
             time.sleep(0.5) # dont burn cpu cycles
 
 
+
 if __name__ == "__main__":
 
-    blah = AddChar()
-    gtk.main()
-    sys.exit(2)
+    chars = EveChars()
+    chars.load()
 
-    chars = []
-
-
-    chars.append(EveData('cb0amg', 'RivCodes9', 'Kyara'))
-    chars.append(EveData('cb5amg', 'RivCodes9', 'Eurybe'))
-    chars.append(EveData('cb2amg', 'RivCodes9', 'Antandre'))
 
     global_status = Status()
     evexml = EveXML()

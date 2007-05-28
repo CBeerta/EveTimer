@@ -113,12 +113,18 @@ class EveChar:
         else:
             skillxml = self.loadSkillTrainingXML(char)
             node = skillxml.documentElement
-            #return time.strptime(node.getElementsByTagName('trainingEndTime')[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S")
-            to_date = datetime.strptime(node.getElementsByTagName('trainingEndTime')[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S") - datetime.utcnow()
+
+            datenode = node.getElementsByTagName('trainingEndTime')
+
+            if len(datenode) == 1:
+                to_date = datetime.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S") - datetime.utcnow()
+            else:
+                return None
 
             #FIXME is there a better way to reformat a timedelta?
             _deltastr = re.search('^(\d+ days,)?\s?(\d+):(\d+):(\d+)', "%s" % to_date)
             return "%s %sh, %sm, %ss" % (_deltastr.group(1),_deltastr.group(2),_deltastr.group(3),_deltastr.group(4))
+
 
     def getCurrentlyTrainingID(self, char):
         if char not in self.charlist:
@@ -126,7 +132,12 @@ class EveChar:
         else:
             skillxml = self.loadSkillTrainingXML(char)
             node = skillxml.documentElement
-            id = node.getElementsByTagName('trainingTypeID')[0].childNodes[0].data
+            
+            idnode = node.getElementsByTagName('trainingTypeID')
+            if len(idnode) == 1:
+                id = idnode[0].childNodes[0].data
+            else:
+                return None
 
             if id.isdigit():
                 return int(id)

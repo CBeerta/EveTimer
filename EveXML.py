@@ -23,6 +23,8 @@ class EveXML:
     def skillIdToName(self, id):
         if id in self.skillnames.keys():
             return self.skillnames[id]
+        elif id == None:
+            return 'Not Training!'
         else:
             return 'Unknown Skill'
 
