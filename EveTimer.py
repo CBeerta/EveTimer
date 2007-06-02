@@ -147,12 +147,36 @@ class AddChar(gtk.Dialog):
             if selected != None:
                 self.character.set_text(selected)
                 self.action_area.get_children()[1].set_sensitive(True) # err, this is (x_O) no idea if there is a better way
-
-
         dialog.destroy()
         return True
 
+class RemoveChar(gtk.Dialog):
+    def __init__(self,parent = None):
+        dialog = gtk.Dialog("Select a Character", self, 0, (gtk.STOCK_REMOVE, gtk.RESPONSE_OK, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
+        hbox = gtk.HBox(False, 8)
+        hbox.set_border_width(8)
+        dialog.vbox.pack_start(hbox, False, False, 0)
 
+        combo = gtk.combo_box_new_text()
+
+        for char in chars.get():
+            combo.append_text(char.character)
+
+        hbox.pack_start(combo, True, True, 0)
+
+        dialog.show_all()
+        response = dialog.run()
+
+        if response == gtk.RESPONSE_OK:
+            selected = combo.get_active_text()
+            if selected != None:
+                taskq.put(['remove', selected])
+ 
+        dialog.destroy()
+        return None
+
+    def get_removed(self):
+        return 'fgasdfgsdFG'
 
 class EveStatusIcon:
     """ The GUI thread """
@@ -167,7 +191,8 @@ class EveStatusIcon:
     def make_menu(self, event_button, event_time, icon):
         menu = gtk.Menu()
 
-        newchar = gtk.MenuItem('Add _Character')
+        newchar = gtk.MenuItem('Add a _Character')
+        remove  = gtk.MenuItem('R_emove a Character')
         quit    = gtk.ImageMenuItem(gtk.STOCK_QUIT)
         refresh = gtk.ImageMenuItem(gtk.STOCK_REFRESH)
         about   = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
@@ -175,15 +200,18 @@ class EveStatusIcon:
         menu.append(about)
         menu.append(refresh)
         menu.append(newchar)
+        menu.append(remove)
         menu.append(quit)
 
         refresh.connect('activate', self.refresh)
         newchar.connect('activate', self.add_char)
+        remove.connect('activate', self.remove_char)
         quit.connect('activate', self.destroy)
         about.connect('activate', self.activate_about)
 
         refresh.show()
         newchar.show()
+        remove.show()
         quit.show()
         about.show()
 
@@ -195,6 +223,10 @@ class EveStatusIcon:
     def destroy(self, button):
         taskq.put(['terminate'])
         gtk.main_quit()
+
+    def remove_char(self, button):
+        _char = RemoveChar().get_removed()
+
 
     def add_char(self, selected):
         _char = AddChar().get_added()
@@ -210,7 +242,7 @@ class EveStatusIcon:
         dialog.set_copyright("\302\251 %s" % __copyright__)
         dialog.set_version(__version__)
         dialog.set_website("http://claus.beerta.net/")
-        dialog.set_comments("A tool to monitor your Skill Training\n\nIf you enjoy this tool, feel free to send ISK donations to 'Kyara'.")
+        dialog.set_comments("A tool to monitor your Skill Training in EVE-Online.\n\nIf you enjoy this tool, feel free to send ISK donations to 'Kyara'.")
 
         dialog.connect ("response", lambda d, r: d.destroy())
         dialog.show()
@@ -231,7 +263,7 @@ class EveStatusIcon:
                 self.icon.set_tooltip(_cmd[1])
                 self.icon.set_blinking(False)
             elif _cmd[0] in ('completed'):
-                self.icon.set_from_stock(gtk.STOCK_STOP)
+                self.icon.set_from_stock(gtk.STOCK_DIALOG_WARNING)
                 self.icon.set_tooltip(_cmd[1])
                 self.icon.set_blinking(False)
             elif _cmd[0] in ('tooltip'):
@@ -284,7 +316,6 @@ class EveChars:
 
     def add(self, username, password, char):
         # TODO: check for dublicates
-
         try:
             _char = EveChar(username, password, char)
             _char.DATADIR = self.DATADIR
@@ -293,6 +324,13 @@ class EveChars:
 
         self.chars.append(_char)
         return True
+
+    def remove(self, character):
+        for i, char in enumerate(self.get()):
+            if char.character == character:
+                self.chars.pop(i)
+        return True
+
 
     def get(self):
         return self.chars
@@ -307,6 +345,7 @@ class EveChars:
 
         try:
             cfg.write(open(self.DATADIR + 'characters.cfg', 'w'))
+            os.chmod(self.DATADIR + 'characters.cfg', 0600) # this holds username+passwords
         except:
             raise
         
@@ -350,6 +389,13 @@ class EveDataThread(threading.Thread):
                         guiq.put(['error', 'Unable to add Character "%s"' % _cmd[3]])
                 elif _cmd[0] in ('terminate'):
                     terminate = True
+                elif _cmd[0] in ('remove'):
+                    try:
+                        chars.remove(_cmd[1])
+                        chars.save()
+                    except:
+                        guiq.put(['error', 'Unable to remove Character "%s"' % _cmd[1]])
+
                 taskq.task_done()
 
             _tooltip = ''
