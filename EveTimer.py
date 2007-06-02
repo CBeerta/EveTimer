@@ -1,11 +1,16 @@
 #! /usr/bin/env python
 # vim:ts=4 sw=4 softtabstop=4 expandtab
 
+__author__      = "Claus Beerta"
+__copyright__   = "Copyright (C) 2007 Claus Beerta"
+__version__     = "0.6.0"
+
 import sys
 import os
 import time
 import threading
-from Queue import Queue
+import Queue
+from datetime import datetime
 import ConfigParser
 
 import EveSession
@@ -145,29 +150,33 @@ class EveStatusIcon:
     def make_menu(self, event_button, event_time, icon):
         menu = gtk.Menu()
 
-        newchar = gtk.MenuItem('Add New Character')
-        quit    = gtk.MenuItem('Quit')
-        refresh = gtk.MenuItem('Refresh')
+        newchar = gtk.MenuItem('Add _Character')
+        quit    = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+        refresh = gtk.ImageMenuItem(gtk.STOCK_REFRESH)
+        about   = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
 
+        menu.append(about)
         menu.append(refresh)
         menu.append(newchar)
         menu.append(quit)
 
-        refresh.connect_object('activate', self.refresh, "refresh")
-        newchar.connect_object('activate', self.add_char, "newchar")
-        quit.connect_object('activate', self.destroy, "file.quit")
+        refresh.connect('activate', self.refresh)
+        newchar.connect('activate', self.add_char)
+        quit.connect('activate', self.destroy)
+        about.connect('activate', self.activate_about)
 
         refresh.show()
         newchar.show()
         quit.show()
+        about.show()
 
         menu.popup(None, None, gtk.status_icon_position_menu, event_button, event_time, icon)
 
     def on_right_click(self, icon, event_button, event_time):
         self.make_menu(event_button, event_time, icon)
 
-    def destroy(self, hm):
-        global_status.terminate = True # tell the data thread to quit
+    def destroy(self, button):
+        taskq.put(['terminate'])
         gtk.main_quit()
 
     def add_char(self, selected):
@@ -178,24 +187,44 @@ class EveStatusIcon:
     def on_activate(self, icon):
         pass
 
-    def refresh(self, ignore):
+    def activate_about(self, button):
+        dialog = gtk.AboutDialog()
+        dialog.set_name("EveTimer")
+        dialog.set_copyright("\302\251 %s" % __copyright__)
+        dialog.set_version(__version__)
+        dialog.set_website("http://claus.beerta.net/")
+        dialog.set_comments("A tool to monitor your Skill Training\n\nIf you enjoy this tool, feel free to send ISK donations to 'Kyara'.")
+
+        dialog.connect ("response", lambda d, r: d.destroy())
+        dialog.show()
+
+
+    def refresh(self, button):
         taskq.put(['refresh'])
 
 
     def wakeup(self):
-
-        if guiq.empty() != True:
-            print "Gui got somethign to do!"
-            _cmd = guiq.get()
-
-            if _cmd[0] in ('tooltip'):
+        try:
+            _cmd = guiq.get(False)
+        except Queue.Empty:
+            pass
+        else:
+            if _cmd[0] in ('completing'):
+                self.icon.set_from_icon_name('gnome-run')
+                self.icon.set_tooltip(_cmd[1])
+                self.icon.set_blinking(False)
+            elif _cmd[0] in ('completed'):
+                self.icon.set_from_stock(gtk.STOCK_STOP)
+                self.icon.set_tooltip(_cmd[1])
+                self.icon.set_blinking(False)
+            elif _cmd[0] in ('tooltip'):
                 self.icon.set_tooltip(_cmd[1])
                 self.icon.set_from_stock(gtk.STOCK_DIALOG_INFO)
                 self.icon.set_blinking(False)
             elif _cmd[0] in ('updating'):
                 self.icon.set_from_stock(gtk.STOCK_REFRESH)
                 self.icon.set_blinking(True)
-
+            guiq.task_done()
         return True
 
 
@@ -205,9 +234,12 @@ class EveChar(EveSession.EveChar):
     next_update     = 0 # When the next update should happen. time_t
     update_interval = 900 # in seconds, this is eve's current default
 
-    character = ''
+    character = None
 
-    tooltip = '' # tooltip with 'Charname - Skill Currently Training - When it finishes'
+    currently_training = None
+    training_ends = None
+
+    tooltip = None # tooltip with 'Charname - Skill Currently Training - When it finishes'
 
     def __init__(self, username, password, character):
         self.next_update = time.time() # update immediatly after start
@@ -223,9 +255,7 @@ class EveChar(EveSession.EveChar):
 
 
 class EveChars:
-    """Contains all the characters we monitor, and supplies load() and save() options"""
-
-    #TODO: implement Locking, to allow both threads to manipulate this?
+    """Contains all the characters we monitor, and supplies load() and save() options, only the datathread is allowed to manipulate the data herein"""
 
     chars = []
 
@@ -277,62 +307,40 @@ class EveChars:
 
 
 
-class Status:
-    """Communication between the GUI thread and data thread happens through this
-    Only the Data Thread is allowed to write, the GUI thread may only read.
-    Manipulation should never happen directly, only through functions"""
-
-    E_IDLE     = 0
-    E_UPDATING = 1
-    E_ERROR    = 2
-
-    current_status = 0
-    tooltip = ''
-
-    terminate = False # Signal from gui thread to update thread to terminate
-
-    def to_string(self, status):
-        stati = {
-                self.E_IDLE: 'Idle',  # Idle is a pseudo status, the Data thread overrides this tooltip
-                self.E_UPDATING: 'Updating',
-                self.E_ERROR:  'Error'
-                }
-        return stati[status]
-
-    def set(self, status):
-        self.current_status = status
-        return True
-
-
-
-
 class EveDataThread(threading.Thread):
     """ The Data Thread *doh* """
 
     # this is where the backgrounded updates and action is happening
 
     def run(self):
+        terminate = False
 
-        while global_status.terminate == False:
+        while terminate == False:
 
-            if taskq.empty() != True:
-                command =  taskq.get()
-
-                if command[0] == 'refresh':
-                    print "Updating!"
-                elif command[0] == 'add_char':
+            try:
+                _cmd = taskq.get(False)
+            except Queue.Empty:
+                pass
+            else:
+                if _cmd[0] in ('refresh'):
+                    for char in chars.get():
+                        char.next_update = time.time() - 1
+                elif _cmd[0] in ('add_char'):
                     try: 
-                       chars.add(command[1], command[2], command[3])
+                       chars.add(_cmd[1], _cmd[2], _cmd[3])
                        chars.save()
                     except:
-                        guiq.put(['error', 'Unable to add Character "%s"' % command[3]])
+                        guiq.put(['error', 'Unable to add Character "%s"' % _cmd[3]])
+                elif _cmd[0] in ('terminate'):
+                    terminate = True
+                taskq.task_done()
 
             _tooltip = ''
+            _cmd = 'tooltip'
 
             for char in chars.get():
                 if char.next_update < time.time():
-                    global_status.set(Status.E_UPDATING)
-
+                    guiq.put(['updating'])
                     if len(char.charlist) == 0:
                         #no chars available yet
                         try:
@@ -341,18 +349,29 @@ class EveDataThread(threading.Thread):
                             print "ERROR :" + msg
                         else:
                             print char.charlist
-
-                    skillname = evexml.skillIdToName(char.getCurrentlyTrainingID(char.character))
-                    char.set_tooltip("%s - %s - %s\n" % (char.character, skillname, char.getTimeTillEnd(char.character)))
-
-                    global_status.set(Status.E_IDLE)
+                    char.currently_training = evexml.skillIdToName(char.getCurrentlyTrainingID(char.character))
+                    char.training_ends = char.getTrainingEnd(char.character)
                     char.next_update = time.time() + char.update_interval
+                #FIXME: make this less braindamaging:
+                if char.training_ends != None:
+                    _seconds_till_end = (char.training_ends - datetime.utcnow()).seconds
+                    if  _seconds_till_end < 1800 and _seconds_till_end > 0:
+                        _endtime = "%s" % char.deltaToString(char.training_ends - datetime.utcnow())
+                        _cmd = 'completing'
+                        _tooltip = "%s %s - %s - %s\n" % (_tooltip, char.character, char.currently_training, _endtime)
+                    elif _seconds_till_end <= 0:
+                        _cmd = 'completed'
+                        _tooltip = "%s %s - %s\n" % (_tooltip, char.character, char.currently_training)
+                    else:
+                        _endtime = "%s" % char.deltaToString(char.training_ends - datetime.utcnow())
+                        _tooltip = "%s %s - %s - %s\n" % (_tooltip, char.character, char.currently_training, _endtime)
                 else:
-                    _tooltip = _tooltip + char.tooltip
+                    _cmd = 'completed'
+                    _tooltip = "%s %s - %s\n" % (_tooltip, char.character, char.currently_training)
 
 
-            guiq.put(['tooltip', _tooltip.rstrip()])
-            time.sleep(0.5) # dont burn cpu cycles
+            guiq.put([_cmd, _tooltip.rstrip()])
+            time.sleep(1) # dont burn cpu cycles
 
 
 
@@ -361,10 +380,9 @@ if __name__ == "__main__":
     chars = EveChars()
     chars.load()
 
-    taskq = Queue(0) # gui -> datathread commands
-    guiq = Queue(0) # datathread -> gui errors/notifications
+    taskq = Queue.Queue(0) # gui -> datathread commands
+    guiq = Queue.Queue(0) # datathread -> gui errors/notifications
 
-    global_status = Status()
     evexml = EveXML()
 
     icon = EveStatusIcon()

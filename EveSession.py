@@ -107,27 +107,25 @@ class EveChar:
 
 
 
-    def getTimeTillEnd(self, char):
+    def getTrainingEnd(self, char):
         if char not in self.charlist:
             raise IOError, ('char not found', 'Unable to find %s for this account' % char)
         else:
             skillxml = self.loadSkillTrainingXML(char)
             node = skillxml.documentElement
-
             datenode = node.getElementsByTagName('trainingEndTime')
-
             if len(datenode) == 1:
                 # python2.4 hackery, no datetime.datetime.strptime available there
                 _ts = time.mktime(time.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S"))
-                to_date = datetime.fromtimestamp(_ts) - datetime.utcnow()
-               #to_date = time.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S") - datetime.utcnow()
-            else:
-                return None
+                to_date = datetime.fromtimestamp(_ts)
+                return to_date
+        return None
 
+
+    def deltaToString(self, tdelta):
             #FIXME is there a better way to reformat a timedelta?
-            _deltastr = re.search('^(\d+ days,)?\s?(\d+):(\d+):(\d+)', "%s" % to_date)
+            _deltastr = re.search('^(\d+ days,)?\s?(\d+):(\d+):(\d+)', "%s" % tdelta)
             _datestr = ''
-
 
             # FIXME: use your brain!
             if _deltastr.group(1) != None:
@@ -141,7 +139,6 @@ class EveChar:
 
             if _deltastr.group(4) != None:
                 _datestr = "%s %ss" % (_datestr, _deltastr.group(4))
-
 
             return _datestr
 
