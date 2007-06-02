@@ -126,7 +126,24 @@ class EveChar:
 
             #FIXME is there a better way to reformat a timedelta?
             _deltastr = re.search('^(\d+ days,)?\s?(\d+):(\d+):(\d+)', "%s" % to_date)
-            return "%s %sh, %sm, %ss" % (_deltastr.group(1),_deltastr.group(2),_deltastr.group(3),_deltastr.group(4))
+            _datestr = ''
+
+
+            # FIXME: use your brain!
+            if _deltastr.group(1) != None:
+                _datestr = "%s " % _deltastr.group(1)
+
+            if _deltastr.group(2) != None:
+                _datestr = "%s %sh" % (_datestr, _deltastr.group(2))
+
+            if _deltastr.group(3) != None:
+                _datestr = "%s %sm" % (_datestr, _deltastr.group(3))
+
+            if _deltastr.group(4) != None:
+                _datestr = "%s %ss" % (_datestr, _deltastr.group(4))
+
+
+            return _datestr
 
 
     def getCurrentlyTrainingID(self, char):

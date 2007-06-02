@@ -5,6 +5,7 @@ import sys
 import os
 import time
 import threading
+from Queue import Queue
 import ConfigParser
 
 import EveSession
@@ -146,13 +147,17 @@ class EveStatusIcon:
 
         newchar = gtk.MenuItem('Add New Character')
         quit    = gtk.MenuItem('Quit')
+        refresh = gtk.MenuItem('Refresh')
 
+        menu.append(refresh)
         menu.append(newchar)
         menu.append(quit)
 
+        refresh.connect_object('activate', self.refresh, "refresh")
         newchar.connect_object('activate', self.add_char, "newchar")
         quit.connect_object('activate', self.destroy, "file.quit")
 
+        refresh.show()
         newchar.show()
         quit.show()
 
@@ -168,21 +173,29 @@ class EveStatusIcon:
     def add_char(self, selected):
         _char = AddChar().get_added()
         if _char != None:
-            chars.add(_char[0], _char[1], _char[2]) # FIXME: is it a good idea to do this from the GUI thread?
-            chars.save() # FIXME: This is EVIL, could block the UI
+            taskq.put(['add_char', _char[0], _char[1], _char[2]])
 
     def on_activate(self, icon):
         pass
 
+    def refresh(self, ignore):
+        taskq.put(['refresh'])
+
+
     def wakeup(self):
-        if global_status.current_status == Status.E_IDLE:
-            self.icon.set_from_stock(gtk.STOCK_DIALOG_INFO)
-            self.icon.set_tooltip(global_status.tooltip)
-            self.icon.set_blinking(False)
-        elif global_status.current_status == Status.E_UPDATING:
-            self.icon.set_from_stock(gtk.STOCK_REFRESH)
-            self.icon.set_tooltip(global_status.to_string(global_status.current_status))
-            self.icon.set_blinking(True)
+
+        if guiq.empty() != True:
+            print "Gui got somethign to do!"
+            _cmd = guiq.get()
+
+            if _cmd[0] in ('tooltip'):
+                self.icon.set_tooltip(_cmd[1])
+                self.icon.set_from_stock(gtk.STOCK_DIALOG_INFO)
+                self.icon.set_blinking(False)
+            elif _cmd[0] in ('updating'):
+                self.icon.set_from_stock(gtk.STOCK_REFRESH)
+                self.icon.set_blinking(True)
+
         return True
 
 
@@ -302,6 +315,18 @@ class EveDataThread(threading.Thread):
 
         while global_status.terminate == False:
 
+            if taskq.empty() != True:
+                command =  taskq.get()
+
+                if command[0] == 'refresh':
+                    print "Updating!"
+                elif command[0] == 'add_char':
+                    try: 
+                       chars.add(command[1], command[2], command[3])
+                       chars.save()
+                    except:
+                        guiq.put(['error', 'Unable to add Character "%s"' % command[3]])
+
             _tooltip = ''
 
             for char in chars.get():
@@ -325,7 +350,8 @@ class EveDataThread(threading.Thread):
                 else:
                     _tooltip = _tooltip + char.tooltip
 
-            global_status.tooltip = _tooltip.rstrip()
+
+            guiq.put(['tooltip', _tooltip.rstrip()])
             time.sleep(0.5) # dont burn cpu cycles
 
 
@@ -335,12 +361,14 @@ if __name__ == "__main__":
     chars = EveChars()
     chars.load()
 
+    taskq = Queue(0) # gui -> datathread commands
+    guiq = Queue(0) # datathread -> gui errors/notifications
 
     global_status = Status()
     evexml = EveXML()
 
     icon = EveStatusIcon()
-    gobject.timeout_add(1000, icon.wakeup)
+    gobject.timeout_add(500, icon.wakeup)
     gtk.gdk.threads_init()
 
     try:
