@@ -20,7 +20,7 @@
 
 __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
-__version__     = "0.7.0"
+__version__     = "0.7.1"
 
 import sys
 import os

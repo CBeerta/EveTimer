@@ -26,7 +26,7 @@ class EveXML:
     
     def __init__(self):
         try:
-            self.skilldom = minidom.parse(sys.prefix + 'share/EveTimer/eve-skills2.xml')
+            self.skilldom = minidom.parse(sys.prefix + '/share/EveTimer/eve-skills2.xml')
         except IOError:
             self.skilldom = None
         else:
