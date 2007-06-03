@@ -18,7 +18,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA.
 
 from xml.dom import minidom, Node
-
+import sys
 
 class EveXML:
 
@@ -26,7 +26,7 @@ class EveXML:
     
     def __init__(self):
         try:
-            self.skilldom = minidom.parse('eve-skills2.xml')
+            self.skilldom = minidom.parse(sys.prefix + 'share/EveTimer/eve-skills2.xml')
         except IOError:
             self.skilldom = None
         else:
