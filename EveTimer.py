@@ -20,7 +20,7 @@
 
 __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
-__version__     = "0.6.0"
+__version__     = "0.7.0"
 
 import sys
 import os
@@ -186,6 +186,7 @@ class EveStatusIcon:
         self.icon.connect('popup-menu', self.on_right_click)
         self.icon.connect('activate', self.on_activate)
 
+
         EveDataThread().start()
 
     def make_menu(self, event_button, event_time, icon):
@@ -288,8 +289,6 @@ class EveChar(EveSession.EveChar):
     currently_training = None
     training_ends = None
 
-    tooltip = None # tooltip with 'Charname - Skill Currently Training - When it finishes'
-
     def __init__(self, username, password, character):
         self.next_update = time.time() # update immediatly after start
         EveSession.EveChar.__init__(self, username, password)
@@ -297,10 +296,6 @@ class EveChar(EveSession.EveChar):
             self.character = character
         else:
             raise IOError, ('character nor found', 'The Character "%s" was not found' % character)
-
-    def set_tooltip(self, tooltip):
-        self.tooltip = tooltip
-        return True
 
 
 class EveChars:
@@ -369,6 +364,8 @@ class EveDataThread(threading.Thread):
     # this is where the backgrounded updates and action is happening
 
     def run(self):
+        evexml = EveXML()
+
         terminate = False
 
         while terminate == False:
@@ -438,24 +435,22 @@ class EveDataThread(threading.Thread):
 
 
 
-if __name__ == "__main__":
+chars = EveChars()
+taskq = Queue.Queue(0) # gui -> datathread commands
+guiq = Queue.Queue(0) # datathread -> gui errors/notifications
 
-    chars = EveChars()
-    chars.load()
+class Base():
+    def __init__(self):
+        chars.load()
 
-    taskq = Queue.Queue(0) # gui -> datathread commands
-    guiq = Queue.Queue(0) # datathread -> gui errors/notifications
+        icon = EveStatusIcon()
+        gobject.timeout_add(500, icon.wakeup)
+        gtk.gdk.threads_init()
 
-    evexml = EveXML()
-
-    icon = EveStatusIcon()
-    gobject.timeout_add(500, icon.wakeup)
-    gtk.gdk.threads_init()
-
-    try:
+    def main(self):
+        gtk.gdk.threads_enter()
         gtk.main()
-    except KeyboardInterrupt:
-        pass
+        gtk.gdk.threads_leave()
 
 
 
