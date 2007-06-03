@@ -1,0 +1,11 @@
+
+[Desktop Entry]
+Name=EveTimer
+Comment=A tool to monitor skill training in EVE-Online
+Exec=EveTimer
+Terminal=false
+Type=Application
+Icon=sonata
+Categories=GTK;Application;Utility;
+StartupNotify=false
+Encoding=UTF-8

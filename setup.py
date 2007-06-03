@@ -18,5 +18,6 @@ setup(name='EveTimer',
         url='http://claus.beerta.net',
         py_modules=['EveTimer', 'EveXML', 'EveSession'],
         scripts=['EveTimer'],
-        data_files=[('share/EveTimer', ['eve-skills2.xml','ChangeLog'])],
+        data_files=[('share/EveTimer', ['eve-skills2.xml','ChangeLog','README']),
+                    ('share/applications', ['EveTimer.desktop'])]
         )
