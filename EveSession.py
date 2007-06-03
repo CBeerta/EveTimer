@@ -178,17 +178,3 @@ class EveChar:
                 return False
 
 
-
-
-if __name__ == "__main__":
-
-    try:
-        eve = EveChar('cb5amg', 'RivCodes9')
-        print eve.getCharacters()
-    except IOError, (_, msg):
-        print "ERROR: " + msg
-    else:
-        print eve.getTimeTillEnd('Eurybe')
-
-
-

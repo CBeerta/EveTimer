@@ -49,7 +49,7 @@ class AddChar(gtk.Dialog):
 
         self.action_area.get_children()[1].set_sensitive(False) # err, this is (x_O) no idea if there is a better way
 
-        frame = gtk.Frame('EVE Online Loin')
+        frame = gtk.Frame('EVE Online Login')
         self.vbox.pack_start(frame, True, True, 0)
         vbox = gtk.VBox(False, 8)
         vbox.set_border_width(8)
