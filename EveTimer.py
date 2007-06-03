@@ -414,12 +414,13 @@ class EveDataThread(threading.Thread):
                     char.next_update = time.time() + char.update_interval
                 #FIXME: make this less braindamaging:
                 if char.training_ends != None:
-                    _seconds_till_end = (char.training_ends - datetime.utcnow()).seconds
-                    if  _seconds_till_end < 1800 and _seconds_till_end > 0:
+                    tdelta = char.training_ends - datetime.utcnow()
+                    tend = tdelta.days*24*60*60 + tdelta.seconds
+                    if  tend < 1800 and tend > 0:
                         _endtime = "%s" % char.deltaToString(char.training_ends - datetime.utcnow())
                         _cmd = 'completing'
                         _tooltip = "%s %s - %s - %s\n" % (_tooltip, char.character, char.currently_training, _endtime)
-                    elif _seconds_till_end <= 0:
+                    elif tend <= 0:
                         _cmd = 'completed'
                         _tooltip = "%s %s - %s\n" % (_tooltip, char.character, char.currently_training)
                     else:
@@ -428,7 +429,6 @@ class EveDataThread(threading.Thread):
                 else:
                     _cmd = 'completed'
                     _tooltip = "%s %s - %s\n" % (_tooltip, char.character, char.currently_training)
-
 
             guiq.put([_cmd, _tooltip.rstrip()])
             time.sleep(1) # dont burn cpu cycles
