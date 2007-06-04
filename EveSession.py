@@ -140,8 +140,10 @@ class EveChar:
 
     def deltaToString(self, tdelta):
             #FIXME is there a better way to reformat a timedelta?
-            _deltastr = re.search('^(\d+ days,)?\s?(\d+):(\d+):(\d+)', "%s" % tdelta)
-            _datestr = ''
+            _deltastr = re.search('^(\d+ [a-z,]{4,5})?\s?(\d+):(\d+):(\d+)', "%s" % tdelta)
+
+            if _deltastr == None:
+                return tdelta
 
             # FIXME: use your brain!
             if _deltastr.group(1) != None:

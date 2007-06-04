@@ -20,7 +20,7 @@
 
 __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
-__version__     = "0.7.2"
+__version__     = "0.7.3"
 
 import sys
 import os
@@ -274,7 +274,7 @@ class EveStatusIcon:
             elif _cmd[0] in ('updating'):
                 self.icon.set_from_stock(gtk.STOCK_REFRESH)
                 self.icon.set_blinking(True)
-            guiq.task_done()
+            #guiq.task_done() # not available in python2.4
         return True
 
 
@@ -393,7 +393,7 @@ class EveDataThread(threading.Thread):
                     except:
                         guiq.put(['error', 'Unable to remove Character "%s"' % _cmd[1]])
 
-                taskq.task_done()
+                #taskq.task_done() #not available in python2.4
 
             _tooltip = ''
             _cmd = 'tooltip'
@@ -439,7 +439,7 @@ chars = EveChars()
 taskq = Queue.Queue(0) # gui -> datathread commands
 guiq = Queue.Queue(0) # datathread -> gui errors/notifications
 
-class Base():
+class Base:
     def __init__(self):
         chars.load()
 
