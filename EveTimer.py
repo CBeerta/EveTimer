@@ -422,7 +422,7 @@ class EveDataThread(threading.Thread):
                         _tooltip = "%s %s - %s - %s\n" % (_tooltip, char.character, char.currently_training, _endtime)
                     elif tend <= 0:
                         _cmd = 'completed'
-                        _tooltip = "%s %s - %s\n" % (_tooltip, char.character, char.currently_training)
+                        _tooltip = "%s %s - %s - Completed!\n" % (_tooltip, char.character, char.currently_training)
                     else:
                         _endtime = "%s" % char.deltaToString(char.training_ends - datetime.utcnow())
                         _tooltip = "%s %s - %s - %s\n" % (_tooltip, char.character, char.currently_training, _endtime)

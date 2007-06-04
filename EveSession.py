@@ -145,6 +145,7 @@ class EveChar:
             if _deltastr == None:
                 return tdelta
 
+            _datestr = ''
             # FIXME: use your brain!
             if _deltastr.group(1) != None:
                 _datestr = "%s " % _deltastr.group(1)
