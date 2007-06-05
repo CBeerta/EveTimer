@@ -40,6 +40,22 @@ except ImportError, (strerror):
 	print >>sys.stderr, "%s.  Please make sure you have this library installed into a directory in Python's path or in the same directory as Sonata.\n" % strerror
 	sys.exit(1)
 
+try:
+	import dbus
+	import dbus.service
+	if getattr(dbus, "version", (0,0,0)) >= (0,41,0):
+		import dbus.glib
+	if getattr(dbus, "version", (0,0,0)) >= (0,80,0):
+		import _dbus_bindings as dbus_bindings
+		NEW_DBUS = True
+	else:
+		import dbus.dbus_bindings as dbus_bindings
+		NEW_DBUS = False
+	HAVE_DBUS = True
+except:
+	HAVE_DBUS = False
+
+
 class AddChar(gtk.Dialog):
     """ Dialogs to add a character, design 'inspired' by EveMon (ie shamelessly copied) """
 
@@ -367,6 +383,7 @@ class EveDataThread(threading.Thread):
         evexml = EveXML()
 
         terminate = False
+        do_update = True # set to false in case of screensaver 
 
         while terminate == False:
 
@@ -392,6 +409,13 @@ class EveDataThread(threading.Thread):
                         chars.save()
                     except:
                         guiq.put(['error', 'Unable to remove Character "%s"' % _cmd[1]])
+                elif _cmd[0] in ('do_update'):
+                    if _cmd[1]:
+                        do_update = True
+                    else:
+                        do_update = False
+
+
 
                 #taskq.task_done() #not available in python2.4
 
@@ -399,7 +423,7 @@ class EveDataThread(threading.Thread):
             _cmd = 'tooltip'
 
             for char in chars.get():
-                if char.next_update < time.time():
+                if char.next_update < time.time() and do_update:
                     guiq.put(['updating'])
                     if len(char.charlist) == 0:
                         #no chars available yet
@@ -412,6 +436,7 @@ class EveDataThread(threading.Thread):
                     char.currently_training = evexml.skillIdToName(char.getCurrentlyTrainingID(char.character))
                     char.training_ends = char.getTrainingEnd(char.character)
                     char.next_update = time.time() + char.update_interval
+
                 #FIXME: make this less braindamaging:
                 if char.training_ends != None:
                     tdelta = char.training_ends - datetime.utcnow()
@@ -433,6 +458,11 @@ class EveDataThread(threading.Thread):
             guiq.put([_cmd, _tooltip.rstrip()])
             time.sleep(1) # dont burn cpu cycles
 
+def detect_screensaver(enabled):
+    if enabled == 1:
+        taskq.put(['do_update', False])
+    else:
+        taskq.put(['do_update',True])
 
 
 chars = EveChars()
@@ -448,6 +478,12 @@ class Base:
         gtk.gdk.threads_init()
 
     def main(self):
+        if HAVE_DBUS:
+            bus = dbus.SessionBus()
+            screensaver = bus.get_object('org.gnome.ScreenSaver', '/org/gnome/ScreenSaver')
+            screensaver.connect_to_signal('ActiveChanged', detect_screensaver)
+
+
         gtk.gdk.threads_enter()
         gtk.main()
         gtk.gdk.threads_leave()
