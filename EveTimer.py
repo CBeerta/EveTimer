@@ -20,7 +20,7 @@
 
 __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
-__version__     = "0.7.4"
+__version__     = "0.8.0"
 
 import sys
 import os
@@ -29,6 +29,7 @@ import threading
 import Queue
 from datetime import datetime
 import ConfigParser
+import locale
 
 import EveSession
 from EveXML import EveXML
@@ -36,6 +37,7 @@ from EveXML import EveXML
 try:
 	import gtk
     import gobject
+    import pango
 except ImportError, (strerror):
 	print >>sys.stderr, "%s.  Please make sure you have this library installed into a directory in Python's path or in the same directory as Sonata.\n" % strerror
 	sys.exit(1)
@@ -134,7 +136,7 @@ class AddChar(gtk.Dialog):
         chars = {}
 
         try:
-            tmpsession = EveSession.EveChar(eveusername, evepassword)
+            tmpsession = EveSession.EveAccount(eveusername, evepassword)
             chars = tmpsession.getCharacters()
         except:
             error = gtk.MessageDialog(self, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, "Unable to get EVE Characters!")
@@ -168,7 +170,7 @@ class AddChar(gtk.Dialog):
 
 class RemoveChar(gtk.Dialog):
     def __init__(self,parent = None):
-        dialog = gtk.Dialog("Select a Character", self, 0, (gtk.STOCK_REMOVE, gtk.RESPONSE_OK, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
+        dialog = gtk.Dialog("Select a Character", parent, 0, (gtk.STOCK_REMOVE, gtk.RESPONSE_OK, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
         hbox = gtk.HBox(False, 8)
         hbox.set_border_width(8)
         dialog.vbox.pack_start(hbox, False, False, 0)
@@ -193,6 +195,82 @@ class RemoveChar(gtk.Dialog):
 
     def get_removed(self):
         return 'fgasdfgsdFG'
+
+
+class CharInfo(gtk.Dialog):
+    """ Also shamelessly copied from EveMON, a window that shows some character information """
+    def __init__(self, parent = None, characters = None):
+        gtk.Dialog.__init__(self, 'Character Info', parent, 0, (gtk.STOCK_CLOSE, gtk.RESPONSE_OK))
+
+        locale.setlocale(locale.LC_NUMERIC, '')
+
+        notebook = gtk.Notebook()
+
+        for char in characters:
+            label = gtk.Label(char.character)
+            notebook.append_page(self._charPage(char), label)
+
+        self.vbox.pack_start(notebook, False, False, 0)
+
+        self.show_all()
+
+        res = self.run()
+        self.destroy()
+
+
+    def _charPage(self, char):
+        table = gtk.Table(3, 4)
+        table.set_row_spacings(10)
+        table.set_col_spacings(10)
+
+        tview = gtk.TextView()
+        tview.set_editable(False)
+        tview.set_cursor_visible(False)
+        tbuffer = tview.get_buffer()
+        iter = tbuffer.get_iter_at_offset(0)
+
+        tbuffer.create_tag("x-large", scale=pango.SCALE_X_LARGE)
+        tbuffer.create_tag("bold", weight=pango.WEIGHT_BOLD)
+
+        table.attach(tview, 1, 2, 0, 1)
+
+        tbuffer.insert_with_tags_by_name(iter, "%s\n" % char.character, 'x-large', 'bold')
+        tbuffer.insert(iter, "%s %s %s\n" % (char.gender, char.race, char.bloodLine))
+        tbuffer.insert(iter, "Corporation: %s\n" % char.corporationName)
+        tbuffer.insert(iter, "Balance: " + locale.format("%.2f", float(char.balance), True) + " ISK\n\n")
+
+        for name in ('intelligence', 'charisma', 'perception', 'memory', 'willpower'):
+            tbuffer.insert(iter, name.capitalize() + ": %.2f\n" % float(getattr(char, name)))
+
+
+        img = gtk.Image()
+
+        try:
+            imgfile = char.DATADIR + '/' + char.charlist[char.character] + '-256.jpg'
+            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
+            img.set_from_pixbuf(pixbuf)
+        except:
+            raise
+            #FIXME: load the not available image
+        finally:
+            table.attach(img, 0, 1, 0, 1)
+
+        tview1 = gtk.TextView()
+        tview1.set_editable(False)
+        tview1.set_cursor_visible(False)
+        tbuffer1 = tview1.get_buffer()
+        tbuffer1.create_tag("bold", weight=pango.WEIGHT_BOLD)
+        iter = tbuffer1.get_iter_at_offset(0)
+
+        tbuffer1.insert_with_tags_by_name(iter, "%s Known Skills\n" % char.skillcount, 'bold')
+        tbuffer1.insert_with_tags_by_name(iter, "%s Total SP\n" % locale.format("%.d", int(char.skillpoints), True), 'bold')
+        tbuffer1.insert_with_tags_by_name(iter, "%s Skills at Level V\n" % char.skillsmaxed, 'bold')
+
+        table.attach(tview1, 0, 1, 1 ,2)
+
+        return table
+
+
 
 class EveStatusIcon:
     """ The GUI thread """
@@ -251,7 +329,7 @@ class EveStatusIcon:
             taskq.put(['add_char', _char[0], _char[1], _char[2]])
 
     def on_activate(self, icon):
-        pass
+        CharInfo(None, chars.get())
 
     def activate_about(self, button):
         dialog = gtk.AboutDialog()
@@ -294,24 +372,6 @@ class EveStatusIcon:
         return True
 
 
-class EveChar(EveSession.EveChar):
-    """Abstracts the EveSession.EveChar class and Stores Information about a single Character."""
-
-    next_update     = 0 # When the next update should happen. time_t
-    update_interval = 900 # in seconds, this is eve's current default
-
-    character = None
-
-    currently_training = None
-    training_ends = None
-
-    def __init__(self, username, password, character):
-        self.next_update = time.time() # update immediatly after start
-        EveSession.EveChar.__init__(self, username, password)
-        if character in self.getCharacters():
-            self.character = character
-        else:
-            raise IOError, ('character nor found', 'The Character "%s" was not found' % character)
 
 
 class EveChars:
@@ -328,12 +388,18 @@ class EveChars:
     def add(self, username, password, char):
         # TODO: check for dublicates
         try:
-            _char = EveChar(username, password, char)
+            _char = EveSession.EveChar(username, password, char)
             _char.DATADIR = self.DATADIR
         except:
-            return False
+            raise
 
         self.chars.append(_char)
+        try:
+            _char.fetchImages()
+            _char.getFullXML()
+        except:
+            pass
+
         return True
 
     def remove(self, character):
@@ -434,7 +500,7 @@ class EveDataThread(threading.Thread):
                         else:
                             print char.charlist
                     char.currently_training = evexml.skillIdToName(char.getCurrentlyTrainingID(char.character))
-                    char.training_ends = char.getTrainingEnd(char.character)
+                    char.training_ends = char.getTrainingEnd()
                     char.next_update = time.time() + char.update_interval
 
                 #FIXME: make this less braindamaging:
@@ -457,6 +523,8 @@ class EveDataThread(threading.Thread):
 
             guiq.put([_cmd, _tooltip.rstrip()])
             time.sleep(1) # dont burn cpu cycles
+
+
 
 def detect_screensaver(enabled):
     if enabled == 1:

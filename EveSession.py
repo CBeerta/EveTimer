@@ -26,16 +26,17 @@ from xml.dom import minidom, Node
 from datetime import datetime
 
 
-class EveChar:
+
+class EveAccount:
     
-    eveusername = ''
-    evepassword = ''
-    evesessionid = ''
+    eveusername = None
+    evepassword = None
+    evesessionid = None
 
     charlist = {}
 
-    COOKIEFILE = ''
-    DATADIR = ''
+    COOKIEFILE = None
+    DATADIR = None
 
     def __init__(self, username, password):
         self.eveusername = username
@@ -73,7 +74,6 @@ class EveChar:
             raise IOError, ('login error', 'Unable to get Session ID')
 
 
-
     def getCharacters(self):
         _charlist = {}
         charxml = self.opener.open('http://myeve.eve-online.com/character/xml.asp?sid=' + self.evesessionid)
@@ -90,8 +90,6 @@ class EveChar:
             return _charlist
         else:
             raise IOError, ('no chars found', 'Unable to get any Character IDs')
-
-
 
     def loadSkillTrainingXML(self, char, forcedownload=False):
         destfile = self.DATADIR + '/' + self.charlist[char] + '.xml'
@@ -120,8 +118,6 @@ class EveChar:
             skillxml = minidom.parse(destfile)
 
         return skillxml
-
-
 
     def getTrainingEnd(self, char):
         if char not in self.charlist:
@@ -180,4 +176,102 @@ class EveChar:
             else:
                 return False
 
+
+
+class EveChar(EveAccount):
+    """Abstracts the EveSession.EveAccount class and Stores Information about a single Character."""
+
+    next_update     = 0 # When the next update should happen. time_t
+    update_interval = 900 # in seconds, this is eve's current default
+
+    character = None
+
+    currently_training = None
+    training_ends = None
+
+    balance = None
+    bloodLine = None
+    gender = None
+    corporationName = None
+    race = None
+
+    # Attrributes  
+    intelligence = None
+    charisma = None
+    perception = None
+    memory = None
+    willpower = None
+    
+    skillpoints = None
+    skillcount = None
+    skillsmaxed = None
+
+    def __init__(self, username, password, character):
+        self.next_update = time.time() # update immediatly after start
+        EveAccount.__init__(self, username, password)
+        if character in self.getCharacters():
+            self.character = character
+        else:
+            raise IOError, ('character nor found', 'The Character "%s" was not found' % character)
+
+    def getTrainingEnd(self):
+        return EveAccount.getTrainingEnd(self,self.character)
+    
+    def getFullXML(self, forcedownload=False):
+        destfile = self.DATADIR + '/' + self.charlist[self.character] + '-full.xml'
+
+        if not (os.path.isfile(destfile)) and forcedownload == False:
+            try:
+                url = 'http://myeve.eve-online.com/character/xml.asp?characterID=' + self.charlist[self.character]
+                xml = self.opener.open(url)
+                open(destfile, 'w').write(xml.read())
+            except:
+                raise
+
+        dom = minidom.parse(destfile)
+
+        for char in  dom.getElementsByTagName('character'):
+            if char.getAttribute('name') == self.character:
+                nextUpdate = int(char.getAttribute('timeLeftInCache'))/1000 +  os.stat(destfile).st_mtime
+                if  datetime.fromtimestamp(nextUpdate) <= datetime.utcnow():
+                    print "need to update"
+                    os.unlink(destfile)
+                    return self.getFullXML(True)
+
+
+        # Set the Attributes for this character
+        for node in dom.getElementsByTagName('attributes')[0].childNodes:
+            if node.nodeType == node.ELEMENT_NODE:
+                for attribs in node.childNodes:
+                    if attribs.nodeType == attribs.TEXT_NODE:
+                        setattr(self, node.tagName, attribs.data)
+        
+        for type in ('balance', 'bloodLine', 'race', 'gender', 'corporationName'):
+            setattr(self, type, dom.getElementsByTagName(type)[0].childNodes[0].data)
+
+        sp = sc = sa5 = 0
+        for node in dom.getElementsByTagName('skill'):
+            if node.nodeType == node.ELEMENT_NODE:
+                sp += int(node.getElementsByTagName('skillpoints')[0].childNodes[0].data)
+                sc += 1
+                if int(node.getElementsByTagName('level')[0].childNodes[0].data) == 5:
+                    sa5 += 1
+
+        self.skillpoints = sp
+        self.skillcount = sc
+        self.skillsmaxed = sa5
+    
+
+    def getTrainingEnd(self):
+        return EveAccount.getTrainingEnd(self, self.character)
+
+    def fetchImages(self):
+        for size in [64,256]:
+            destfile = self.DATADIR + '/' + self.charlist[self.character] + '-%d' % size + '.jpg'
+            try:
+                url = 'http://img.eve.is/serv.asp?s=%d&c=%s' % (size, self.charlist[self.character])
+                img = urllib2.urlopen(url)
+                open(destfile, 'w').write(img.read())
+            except:
+                pass
 
