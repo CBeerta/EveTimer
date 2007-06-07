@@ -20,7 +20,7 @@
 
 __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
-__version__     = "0.8.0"
+__version__     = "0.8.1"
 
 import sys
 import os
@@ -199,7 +199,12 @@ class RemoveChar(gtk.Dialog):
 
 class CharInfo(gtk.Dialog):
     """ Also shamelessly copied from EveMON, a window that shows some character information """
-    def __init__(self, parent = None, characters = None):
+    def __init__(self, parent = None, characters = {}):
+
+        if len(characters) == 0:
+            # no use popping up an empty window really
+            return False
+
         gtk.Dialog.__init__(self, 'Character Info', parent, 0, (gtk.STOCK_CLOSE, gtk.RESPONSE_OK))
 
         locale.setlocale(locale.LC_NUMERIC, '')
@@ -219,10 +224,13 @@ class CharInfo(gtk.Dialog):
 
 
     def _charPage(self, char):
-        table = gtk.Table(3, 4)
+        vbox = gtk.VBox(False, 10)
+
+        table = gtk.Table(1, 1, True)
         table.set_row_spacings(10)
         table.set_col_spacings(10)
 
+        # General Overview
         tview = gtk.TextView()
         tview.set_editable(False)
         tview.set_cursor_visible(False)
@@ -255,6 +263,9 @@ class CharInfo(gtk.Dialog):
         finally:
             table.attach(img, 0, 1, 0, 1)
 
+        vbox.pack_start(table)
+
+        # Skill Trivia
         tview1 = gtk.TextView()
         tview1.set_editable(False)
         tview1.set_cursor_visible(False)
@@ -266,9 +277,24 @@ class CharInfo(gtk.Dialog):
         tbuffer1.insert_with_tags_by_name(iter, "%s Total SP\n" % locale.format("%.d", int(char.skillpoints), True), 'bold')
         tbuffer1.insert_with_tags_by_name(iter, "%s Skills at Level V\n" % char.skillsmaxed, 'bold')
 
-        table.attach(tview1, 0, 1, 1 ,2)
+        vbox.pack_start(tview1)
 
-        return table
+        # Currently Training, if any
+        if char.currently_training != None:
+            tview2 = gtk.TextView()
+            tview2.set_editable(False)
+            tview2.set_cursor_visible(False)
+            tbuffer2 = tview2.get_buffer()
+            tbuffer2.create_tag("bold", weight=pango.WEIGHT_BOLD)
+
+            iter = tbuffer2.get_iter_at_offset(0)
+            tbuffer2.insert_with_tags_by_name(iter, "Currently Training:\n", 'bold')
+            tbuffer2.insert(iter, "%s %s\n" % (char.currently_training, char.currently_training_to_level))
+            tbuffer2.insert(iter, "%s\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
+
+            vbox.pack_start(tview2)
+
+        return vbox
 
 
 
@@ -490,36 +516,41 @@ class EveDataThread(threading.Thread):
 
             for char in chars.get():
                 if char.next_update < time.time() and do_update:
+                    #FIXME:  Updating and Downloading should really be in the EveAccount or EveChar class, not here
                     guiq.put(['updating'])
                     if len(char.charlist) == 0:
-                        #no chars available yet
                         try:
                             char.getCharacters()
                         except IOError, (_, msg):
                             print "ERROR :" + msg
                         else:
                             print char.charlist
-                    char.currently_training = evexml.skillIdToName(char.getCurrentlyTrainingID(char.character))
-                    char.training_ends = char.getTrainingEnd()
-                    char.next_update = time.time() + char.update_interval
 
-                #FIXME: make this less braindamaging:
+                    try:
+                        char.currently_training = evexml.skillIdToName(char.getCurrentlyTrainingID())
+                        char.currently_training_to_level = char.getCurrentlyTrainingToLevel()
+                        char.training_ends = char.getTrainingEnd()
+                    except IOError, (_, msg):
+                        print "ERROR :" + msg
+                    finally:
+                        char.next_update = time.time() + char.update_interval
+
                 if char.training_ends != None:
                     tdelta = char.training_ends - datetime.utcnow()
                     tend = tdelta.days*24*60*60 + tdelta.seconds
+
+                    _endtime = " - %s" % char.deltaToString(char.training_ends - datetime.utcnow())
                     if  tend < 1800 and tend > 0:
-                        _endtime = "%s" % char.deltaToString(char.training_ends - datetime.utcnow())
                         _cmd = 'completing'
-                        _tooltip = "%s %s - %s - %s\n" % (_tooltip, char.character, char.currently_training, _endtime)
                     elif tend <= 0:
                         _cmd = 'completed'
-                        _tooltip = "%s %s - %s - Completed!\n" % (_tooltip, char.character, char.currently_training)
-                    else:
-                        _endtime = "%s" % char.deltaToString(char.training_ends - datetime.utcnow())
-                        _tooltip = "%s %s - %s - %s\n" % (_tooltip, char.character, char.currently_training, _endtime)
+                        _endtime = 'Completed!'
                 else:
                     _cmd = 'completed'
-                    _tooltip = "%s %s - %s\n" % (_tooltip, char.character, char.currently_training)
+                    _endtime = ''
+
+                _tooltip = "%s %s - %s %s %s\n" % (_tooltip, char.character, char.currently_training, char.currently_training_to_level, _endtime)
+
 
             guiq.put([_cmd, _tooltip.rstrip()])
             time.sleep(1) # dont burn cpu cycles

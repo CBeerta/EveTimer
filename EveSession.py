@@ -38,6 +38,8 @@ class EveAccount:
     COOKIEFILE = None
     DATADIR = None
 
+    _skillxml = None
+
     def __init__(self, username, password):
         self.eveusername = username
         self.evepassword = password
@@ -93,31 +95,39 @@ class EveAccount:
 
     def loadSkillTrainingXML(self, char, forcedownload=False):
         destfile = self.DATADIR + '/' + self.charlist[char] + '.xml'
-        if not (os.path.isfile(destfile) and forcedownload == False):
+        if not os.path.isfile(destfile) or forcedownload == True:
             skill = self.opener.open('http://myeve.eve-online.com/xml/skilltraining.asp?characterID=%s' % self.charlist[char])
             open(destfile, "w").write(skill.read())
 
-        skillxml = minidom.parse(destfile)
-        node = skillxml.documentElement
+        if self._skillxml == None or forcedownload == True:
+            # store the dom so we don't have to reload it on every request
+            skillxml = minidom.parse(destfile)
+        else:
+            skillxml = self._skillxml
 
+        node = skillxml.documentElement
+        next =  node.getElementsByTagName('tryAgainIn')[0].childNodes[0].data
         if node.getElementsByTagName('error'):
             os.unlink(destfile)
-            raise IOError, ('skilltraining xml', 'Unable to get initial skilltraining xml')
+            self._skillxml = None
+            raise IOError, ('skilltraining xml', 'Unable to get initial skilltraining xml, try again in %s' % next)
         else:
-            next =  node.getElementsByTagName('tryAgainIn')[0].childNodes[0].data
-            last = time.strptime(node.getElementsByTagName('currentTime')[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S")
-            if float(next) + time.mktime(last) - time.mktime(time.gmtime()) < 0 and forcedownload == False:
+            last = time.strptime(node.getElementsByTagName('currentTime')[0].childNodes[0].data + " GMT", "%Y-%m-%d %H:%M:%S %Z")
+
+            if (float(next)+time.mktime(last)) < time.mktime(time.gmtime()) and forcedownload == False:
                 #we can get an update
                 os.rename(destfile, destfile + '.bak')
                 try:
                     self.loadSkillTrainingXML(char, True)
-                    os.unlink(destfile + '.bak')
                 except:
                     os.rename(destfile + '.bak', destfile)
+                else:
+                    os.unlink(destfile + '.bak')
 
             skillxml = minidom.parse(destfile)
 
-        return skillxml
+        self._skillxml = skillxml
+        return self._skillxml
 
     def getTrainingEnd(self, char):
         if char not in self.charlist:
@@ -168,13 +178,26 @@ class EveAccount:
             idnode = node.getElementsByTagName('trainingTypeID')
             if len(idnode) == 1:
                 id = idnode[0].childNodes[0].data
-            else:
-                return None
+                if id.isdigit():
+                    return int(id)
+        return False
 
-            if id.isdigit():
-                return int(id)
-            else:
-                return False
+    def getCurrentlyTrainingToLevel(self, char):
+        levels = [None, 'I', 'II', 'III', 'IV', 'V']
+        if char not in self.charlist:
+            raise IOError, ('char not found', 'Unable to find %s for this account' % char)
+        else:
+            skillxml = self.loadSkillTrainingXML(char)
+            node = skillxml.documentElement
+
+            lnode = node.getElementsByTagName('trainingToLevel')
+            if len(lnode) == 1:
+                lvl = lnode[0].childNodes[0].data
+                if lvl.isdigit():
+                    return levels[int(lvl)]
+            
+        return None
+
 
 
 
@@ -265,9 +288,17 @@ class EveChar(EveAccount):
     def getTrainingEnd(self):
         return EveAccount.getTrainingEnd(self, self.character)
 
+    def getCurrentlyTrainingID(self):
+        return EveAccount.getCurrentlyTrainingID(self, self.character)
+
+    def getCurrentlyTrainingToLevel(self):
+        return EveAccount.getCurrentlyTrainingToLevel(self, self.character)
+
     def fetchImages(self):
         for size in [64,256]:
             destfile = self.DATADIR + '/' + self.charlist[self.character] + '-%d' % size + '.jpg'
+            if os.path.isfile(destfile):
+                continue # don't redownload
             try:
                 url = 'http://img.eve.is/serv.asp?s=%d&c=%s' % (size, self.charlist[self.character])
                 img = urllib2.urlopen(url)
