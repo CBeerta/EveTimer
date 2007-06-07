@@ -290,7 +290,7 @@ class CharInfo(gtk.Dialog):
             iter = tbuffer2.get_iter_at_offset(0)
             tbuffer2.insert_with_tags_by_name(iter, "Currently Training:\n", 'bold')
             tbuffer2.insert(iter, "%s %s\n" % (char.currently_training, char.currently_training_to_level))
-            tbuffer2.insert(iter, "%s\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
+            tbuffer2.insert(iter, "%s\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S +0000"))
 
             vbox.pack_start(tview2)
 
