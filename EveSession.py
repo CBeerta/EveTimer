@@ -62,7 +62,6 @@ class EveAccount:
         self.getSessionId()
 
 
-
     def getSessionId(self):
         login = self.opener.open('https://myeve.eve-online.com/login.asp?username=%s&password=%s&login=Login&Check=OK&r=&t=/ingameboard.asp&remember=1' % (self.eveusername, self.evepassword))
         sid = re.search('^https:\/\/.*&sid=(\d+)$', login.geturl())
@@ -92,6 +91,7 @@ class EveAccount:
             return _charlist
         else:
             raise IOError, ('no chars found', 'Unable to get any Character IDs')
+
 
     def loadSkillTrainingXML(self, char, forcedownload=False):
         destfile = self.DATADIR + '/' + self.charlist[char] + '.xml'
@@ -129,20 +129,6 @@ class EveAccount:
         self._skillxml = skillxml
         return self._skillxml
 
-    def getTrainingEnd(self, char):
-        if char not in self.charlist:
-            raise IOError, ('char not found', 'Unable to find %s for this account' % char)
-        else:
-            skillxml = self.loadSkillTrainingXML(char)
-            node = skillxml.documentElement
-            datenode = node.getElementsByTagName('trainingEndTime')
-            if len(datenode) == 1:
-                # python2.4 hackery, no datetime.datetime.strptime available there
-                _ts = time.mktime(time.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S"))
-                to_date = datetime.fromtimestamp(_ts)
-                return to_date
-        return None
-
 
     def deltaToString(self, tdelta):
             #FIXME is there a better way to reformat a timedelta?
@@ -166,37 +152,6 @@ class EveAccount:
                 _datestr = "%s %ss" % (_datestr, _deltastr.group(4))
 
             return _datestr
-
-
-    def getCurrentlyTrainingID(self, char):
-        if char not in self.charlist:
-            raise IOError, ('char not found', 'Unable to find %s for this account' % char)
-        else:
-            skillxml = self.loadSkillTrainingXML(char)
-            node = skillxml.documentElement
-            
-            idnode = node.getElementsByTagName('trainingTypeID')
-            if len(idnode) == 1:
-                id = idnode[0].childNodes[0].data
-                if id.isdigit():
-                    return int(id)
-        return False
-
-    def getCurrentlyTrainingToLevel(self, char):
-        levels = [None, 'I', 'II', 'III', 'IV', 'V']
-        if char not in self.charlist:
-            raise IOError, ('char not found', 'Unable to find %s for this account' % char)
-        else:
-            skillxml = self.loadSkillTrainingXML(char)
-            node = skillxml.documentElement
-
-            lnode = node.getElementsByTagName('trainingToLevel')
-            if len(lnode) == 1:
-                lvl = lnode[0].childNodes[0].data
-                if lvl.isdigit():
-                    return levels[int(lvl)]
-            
-        return None
 
 
 
@@ -237,9 +192,6 @@ class EveChar(EveAccount):
         else:
             raise IOError, ('character nor found', 'The Character "%s" was not found' % character)
 
-    def getTrainingEnd(self):
-        return EveAccount.getTrainingEnd(self,self.character)
-    
     def getFullXML(self, forcedownload=False):
         destfile = self.DATADIR + '/' + self.charlist[self.character] + '-full.xml'
 
@@ -286,13 +238,41 @@ class EveChar(EveAccount):
     
 
     def getTrainingEnd(self):
-        return EveAccount.getTrainingEnd(self, self.character)
+        skillxml = self.loadSkillTrainingXML(self.character)
+        node = skillxml.documentElement
+        datenode = node.getElementsByTagName('trainingEndTime')
+        if len(datenode) == 1:
+            # python2.4 hackery, no datetime.datetime.strptime available there
+            _ts = time.mktime(time.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S"))
+            to_date = datetime.fromtimestamp(_ts)
+            return to_date
+        return None
+
 
     def getCurrentlyTrainingID(self):
-        return EveAccount.getCurrentlyTrainingID(self, self.character)
+        skillxml = self.loadSkillTrainingXML(self.character)
+        node = skillxml.documentElement
+        
+        idnode = node.getElementsByTagName('trainingTypeID')
+        if len(idnode) == 1:
+            id = idnode[0].childNodes[0].data
+            if id.isdigit():
+                return int(id)
+        return None
 
     def getCurrentlyTrainingToLevel(self):
-        return EveAccount.getCurrentlyTrainingToLevel(self, self.character)
+        levels = [None, 'I', 'II', 'III', 'IV', 'V']
+        skillxml = self.loadSkillTrainingXML(self.character)
+        node = skillxml.documentElement
+
+        lnode = node.getElementsByTagName('trainingToLevel')
+        if len(lnode) == 1:
+            lvl = lnode[0].childNodes[0].data
+            if lvl.isdigit():
+                return levels[int(lvl)]
+            
+        return None
+
 
     def fetchImages(self):
         for size in [64,256]:
