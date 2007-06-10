@@ -264,7 +264,7 @@ class CharInfo(gtk.Dialog):
             img.set_from_pixbuf(pixbuf)
         except:
             #imgfile = char.DATADIR + '/' + char.charlist[char.character] + '-256.jpg'
-            imgfile = 'portrait.jpg'
+            imgfile = sys.prefix + '/share/EveTimer/portrait.jpg'
             pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
             img.set_from_pixbuf(pixbuf)
         finally:
