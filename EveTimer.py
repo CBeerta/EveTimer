@@ -267,11 +267,11 @@ class CharInfo(gtk.Dialog):
             imgfile = sys.prefix + '/share/EveTimer/portrait.jpg'
             pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
             img.set_from_pixbuf(pixbuf)
-        finally:
-            imgevbox = gtk.EventBox()
-            imgevbox.add(img)
-            table.attach(imgevbox, 0, 1, 0, 1)
-            imgevbox.connect('button-press-event', self.reload_image_popup)
+
+        imgevbox = gtk.EventBox()
+        imgevbox.add(img)
+        table.attach(imgevbox, 0, 1, 0, 1)
+        imgevbox.connect('button-press-event', self.reload_image_popup)
 
         vbox.pack_start(table)
 
@@ -574,9 +574,9 @@ class EveDataThread(threading.Thread):
                     except IOError, (_, msg):
                         print "ERROR :" + msg
                     except:
-                        raise
-                    finally:
-                        char.next_update = time.time() + char.update_interval
+                        pass
+
+                    char.next_update = time.time() + char.update_interval
 
                 if char.training_ends != None:
                     tdelta = char.training_ends - datetime.utcnow()
