@@ -63,7 +63,8 @@ class EveAccount:
 
 
     def getSessionId(self):
-        login = self.opener.open('https://myeve.eve-online.com/login.asp?username=%s&password=%s&login=Login&Check=OK&r=&t=/ingameboard.asp&remember=1' % (self.eveusername, self.evepassword))
+        login = self.opener.open('https://myeve.eve-online.com/login.asp', 'username=%s&password=%s&login=Login&Check=OK&r=&t=/ingameboard.asp&remember=1' % (self.eveusername, self.evepassword))
+        
         sid = re.search('^https:\/\/.*&sid=(\d+)$', login.geturl())
         if sid:
             #login succeeded
@@ -209,7 +210,6 @@ class EveChar(EveAccount):
             if char.getAttribute('name') == self.character:
                 nextUpdate = int(char.getAttribute('timeLeftInCache'))/1000 +  os.stat(destfile).st_mtime
                 if  datetime.fromtimestamp(nextUpdate) <= datetime.utcnow():
-                    print "need to update"
                     os.unlink(destfile)
                     return self.getFullXML(True)
 
@@ -272,7 +272,6 @@ class EveChar(EveAccount):
                 return levels[int(lvl)]
             
         return None
-
 
     def fetchImages(self):
         for size in [64,256]:

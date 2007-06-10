@@ -20,7 +20,7 @@
 
 __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
-__version__     = "0.8.1"
+__version__     = "0.8.2"
 
 import sys
 import os
@@ -201,9 +201,11 @@ class CharInfo(gtk.Dialog):
     """ Also shamelessly copied from EveMON, a window that shows some character information """
     def __init__(self, parent = None, characters = {}):
 
+
         if len(characters) == 0:
             # no use popping up an empty window really
             return False
+
 
         gtk.Dialog.__init__(self, 'Character Info', parent, 0, (gtk.STOCK_CLOSE, gtk.RESPONSE_OK))
 
@@ -212,8 +214,11 @@ class CharInfo(gtk.Dialog):
         notebook = gtk.Notebook()
 
         for char in characters:
-            label = gtk.Label(char.character)
-            notebook.append_page(self._charPage(char), label)
+            if char.balance == None or char.corporationName == None:
+                continue
+            else:
+                label = gtk.Label(char.character)
+                notebook.append_page(self._charPage(char), label)
 
         self.vbox.pack_start(notebook, False, False, 0)
 
@@ -258,10 +263,15 @@ class CharInfo(gtk.Dialog):
             pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
             img.set_from_pixbuf(pixbuf)
         except:
-            raise
-            #FIXME: load the not available image
+            #imgfile = char.DATADIR + '/' + char.charlist[char.character] + '-256.jpg'
+            imgfile = 'portrait.jpg'
+            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
+            img.set_from_pixbuf(pixbuf)
         finally:
-            table.attach(img, 0, 1, 0, 1)
+            imgevbox = gtk.EventBox()
+            imgevbox.add(img)
+            table.attach(imgevbox, 0, 1, 0, 1)
+            imgevbox.connect('button-press-event', self.reload_image_popup)
 
         vbox.pack_start(table)
 
@@ -296,10 +306,26 @@ class CharInfo(gtk.Dialog):
 
         return vbox
 
+    def reload_image_popup(self, img, event): 
+        return # FIXME: how do i reload the damn image?
+        if event.button == 3:
+            menu = gtk.Menu()
+            reload = gtk.ImageMenuItem(gtk.STOCK_REFRESH)
+            reload.connect('activate', self.reload_image)
+            menu.append(reload)
+            reload.show()
+            menu.popup(None, None, None, event.button, event.time)
+        else:
+            return
+
+    def reload_image(self, button):
+        print char.character
 
 
 class EveStatusIcon:
     """ The GUI thread """
+
+    do_update = True
 
     def __init__(self, parent=None):
         self.icon = gtk.status_icon_new_from_stock(gtk.STOCK_DIALOG_INFO)
@@ -317,9 +343,15 @@ class EveStatusIcon:
         quit    = gtk.ImageMenuItem(gtk.STOCK_QUIT)
         refresh = gtk.ImageMenuItem(gtk.STOCK_REFRESH)
         about   = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
+        update  = gtk.CheckMenuItem('Enable Updates')
+
+        if self.do_update == True:
+            update.set_active(True)
+
 
         menu.append(about)
         menu.append(refresh)
+        menu.append(update)
         menu.append(newchar)
         menu.append(remove)
         menu.append(quit)
@@ -329,12 +361,14 @@ class EveStatusIcon:
         remove.connect('activate', self.remove_char)
         quit.connect('activate', self.destroy)
         about.connect('activate', self.activate_about)
+        update.connect('toggled', self.toggle_update)
 
         refresh.show()
         newchar.show()
         remove.show()
         quit.show()
         about.show()
+        update.show()
 
         menu.popup(None, None, gtk.status_icon_position_menu, event_button, event_time, icon)
 
@@ -347,6 +381,13 @@ class EveStatusIcon:
 
     def remove_char(self, button):
         _char = RemoveChar().get_removed()
+
+    def toggle_update(self, button):
+        if self.do_update == True:
+            self.do_update = False
+        else:
+            self.do_update = True
+        taskq.put(['do_update',self.do_update])
 
 
     def add_char(self, selected):
@@ -372,7 +413,6 @@ class EveStatusIcon:
     def refresh(self, button):
         taskq.put(['refresh'])
 
-
     def wakeup(self):
         try:
             _cmd = guiq.get(False)
@@ -396,7 +436,6 @@ class EveStatusIcon:
                 self.icon.set_blinking(True)
             #guiq.task_done() # not available in python2.4
         return True
-
 
 
 
@@ -530,8 +569,12 @@ class EveDataThread(threading.Thread):
                         char.currently_training = evexml.skillIdToName(char.getCurrentlyTrainingID())
                         char.currently_training_to_level = char.getCurrentlyTrainingToLevel()
                         char.training_ends = char.getTrainingEnd()
+                        char.getFullXML() 
+                        char.fetchImages()
                     except IOError, (_, msg):
                         print "ERROR :" + msg
+                    except:
+                        raise
                     finally:
                         char.next_update = time.time() + char.update_interval
 
@@ -577,10 +620,15 @@ class Base:
         gtk.gdk.threads_init()
 
     def main(self):
+
+        #FIXME: this clashes with the manual update toggle
+        """
         if HAVE_DBUS:
             bus = dbus.SessionBus()
             screensaver = bus.get_object('org.gnome.ScreenSaver', '/org/gnome/ScreenSaver')
             screensaver.connect_to_signal('ActiveChanged', detect_screensaver)
+
+        """
 
 
         gtk.gdk.threads_enter()

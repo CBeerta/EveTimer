@@ -2,3 +2,4 @@ include eve-skills2.xml
 include ChangeLog
 include README
 include EveTimer.desktop
+include portrait.jpg
