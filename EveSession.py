@@ -197,23 +197,28 @@ class EveChar(EveAccount):
     def getFullXML(self, forcedownload=False):
         destfile = self.DATADIR + '/' + self.charlist[self.character] + '-full.xml'
 
-        if not (os.path.isfile(destfile)) and forcedownload == False:
+        download = False
+
+        try:
+            dom = minidom.parse(destfile)
+        except:
+            download = True
+        else:
+            for char in  dom.getElementsByTagName('character'):
+                if char.getAttribute('name') == self.character:
+                    nextUpdate = int(char.getAttribute('timeLeftInCache'))/1000 +  os.stat(destfile).st_mtime
+                    if  datetime.fromtimestamp(nextUpdate) <= datetime.utcnow():
+                        download = True
+
+        if download == True:
             try:
                 url = 'http://myeve.eve-online.com/character/xml.asp?characterID=' + self.charlist[self.character]
                 xml = self.opener.open(url)
                 open(destfile, 'w').write(xml.read())
             except:
                 raise
-
-        dom = minidom.parse(destfile)
-
-        for char in  dom.getElementsByTagName('character'):
-            if char.getAttribute('name') == self.character:
-                nextUpdate = int(char.getAttribute('timeLeftInCache'))/1000 +  os.stat(destfile).st_mtime
-                if  datetime.fromtimestamp(nextUpdate) <= datetime.utcnow():
-                    os.unlink(destfile)
-                    return self.getFullXML(True)
-
+            else:
+                dom = minidom.parse(destfile)
 
         # Set the Attributes for this character
         for node in dom.getElementsByTagName('attributes')[0].childNodes:
@@ -236,6 +241,8 @@ class EveChar(EveAccount):
         self.skillpoints = sp
         self.skillcount = sc
         self.skillsmaxed = sa5
+
+        dom.unlink()
     
 
     def getTrainingEnd(self):

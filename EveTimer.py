@@ -20,7 +20,7 @@
 
 __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
-__version__     = "0.8.2"
+__version__     = "0.8.3"
 
 import sys
 import os
@@ -201,7 +201,6 @@ class CharInfo(gtk.Dialog):
     """ Also shamelessly copied from EveMON, a window that shows some character information """
     def __init__(self, parent = None, characters = {}):
 
-
         if len(characters) == 0:
             # no use popping up an empty window really
             return None
@@ -263,7 +262,6 @@ class CharInfo(gtk.Dialog):
             pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
             img.set_from_pixbuf(pixbuf)
         except:
-            #imgfile = char.DATADIR + '/' + char.charlist[char.character] + '-256.jpg'
             imgfile = sys.prefix + '/share/EveTimer/portrait.jpg'
             pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
             img.set_from_pixbuf(pixbuf)
@@ -303,7 +301,7 @@ class CharInfo(gtk.Dialog):
             if char.training_ends == None:
                 tbuffer2.insert(iter, "Not Training\n")
             else:
-                tbuffer2.insert(iter, "%s\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S +0000"))
+                tbuffer2.insert(iter, "%s EVE Time\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
 
             vbox.pack_start(tview2)
 
@@ -329,12 +327,12 @@ class EveStatusIcon:
     """ The GUI thread """
 
     do_update = True
+    char_info_popup = False
 
     def __init__(self, parent=None):
         self.icon = gtk.status_icon_new_from_stock(gtk.STOCK_DIALOG_INFO)
         self.icon.connect('popup-menu', self.on_right_click)
         self.icon.connect('activate', self.on_activate)
-
 
         EveDataThread().start()
 
@@ -399,7 +397,10 @@ class EveStatusIcon:
             taskq.put(['add_char', _char[0], _char[1], _char[2]])
 
     def on_activate(self, icon):
-        CharInfo(None, chars.get())
+        if self.char_info_popup == False:
+            self.char_info_popup = True
+            CharInfo(None, chars.get())
+            self.char_info_popup = False
 
     def activate_about(self, button):
         dialog = gtk.AboutDialog()
@@ -437,7 +438,12 @@ class EveStatusIcon:
             elif _cmd[0] in ('updating'):
                 self.icon.set_from_stock(gtk.STOCK_REFRESH)
                 self.icon.set_blinking(True)
-            #guiq.task_done() # not available in python2.4
+            elif _cmd[0] in ('do_update'):
+                if _cmd[1]:
+                    self.do_update = True
+                else:
+                    self.do_update = False
+
         return True
 
 
@@ -564,7 +570,7 @@ class EveDataThread(threading.Thread):
                         try:
                             char.getCharacters()
                         except IOError, (_, msg):
-                            print "ERROR :" + msg
+                            print "ERROR getCharacters()  :" + msg
                         else:
                             print char.charlist
 
@@ -575,7 +581,7 @@ class EveDataThread(threading.Thread):
                         char.getFullXML() 
                         char.fetchImages()
                     except IOError, (_, msg):
-                        print "ERROR :" + msg
+                        print "ERROR Updating :" + msg
                     except:
                         pass
 
@@ -606,8 +612,10 @@ class EveDataThread(threading.Thread):
 def detect_screensaver(enabled):
     if enabled == 1:
         taskq.put(['do_update', False])
+        guiq.put(['do_update', False])
     else:
         taskq.put(['do_update',True])
+        guiq.put(['do_update', True])
 
 
 chars = EveChars()
@@ -624,14 +632,10 @@ class Base:
 
     def main(self):
 
-        #FIXME: this clashes with the manual update toggle
-        """
         if HAVE_DBUS:
             bus = dbus.SessionBus()
             screensaver = bus.get_object('org.gnome.ScreenSaver', '/org/gnome/ScreenSaver')
             screensaver.connect_to_signal('ActiveChanged', detect_screensaver)
-
-        """
 
 
         gtk.gdk.threads_enter()

@@ -26,11 +26,11 @@ class EveXML:
     
     def __init__(self):
         try:
-            self.skilldom = minidom.parse(sys.prefix + '/share/EveTimer/eve-skills2.xml')
+            skilldom = minidom.parse(sys.prefix + '/share/EveTimer/eve-skills2.xml')
         except IOError:
-            self.skilldom = None
+            print "Unable to load %s, check for correct installation and permissios. " % (sys.prefix + '/share/EveTimer/eve-skills2.xml')
         else:
-            node = self.skilldom.documentElement
+            node = skilldom.documentElement
             for skill in node.getElementsByTagName('s'):
                 i = skill.getAttribute('i')
                 n = skill.getAttribute('n')
@@ -38,11 +38,9 @@ class EveXML:
                 if i.isdigit() and n != None:
                     self.skillnames[int(i)] = n
 
-        
+        skilldom.unlink()
+    
     def skillIdToName(self, id):
-
-        if self.skilldom == None:
-            return 'No skillinformation available'
 
         if id in self.skillnames.keys():
             return self.skillnames[id]
