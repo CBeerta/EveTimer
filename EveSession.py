@@ -166,6 +166,7 @@ class EveChar(EveAccount):
     character = None
 
     currently_training = None
+    currently_training_to_level = None
     training_ends = None
 
     balance = None

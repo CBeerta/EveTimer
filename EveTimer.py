@@ -204,7 +204,7 @@ class CharInfo(gtk.Dialog):
 
         if len(characters) == 0:
             # no use popping up an empty window really
-            return False
+            return None
 
 
         gtk.Dialog.__init__(self, 'Character Info', parent, 0, (gtk.STOCK_CLOSE, gtk.RESPONSE_OK))
@@ -300,7 +300,10 @@ class CharInfo(gtk.Dialog):
             iter = tbuffer2.get_iter_at_offset(0)
             tbuffer2.insert_with_tags_by_name(iter, "Currently Training:\n", 'bold')
             tbuffer2.insert(iter, "%s %s\n" % (char.currently_training, char.currently_training_to_level))
-            tbuffer2.insert(iter, "%s\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S +0000"))
+            if char.training_ends == None:
+                tbuffer2.insert(iter, "Not Training\n")
+            else:
+                tbuffer2.insert(iter, "%s\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S +0000"))
 
             vbox.pack_start(tview2)
 
