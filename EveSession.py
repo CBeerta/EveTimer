@@ -31,7 +31,6 @@ class EveAccount:
     
     eveusername = None
     evepassword = None
-    evesessionid = None
 
     charlist = {}
 
@@ -54,35 +53,21 @@ class EveAccount:
         # We need a session ID to download the xml files, so we need cookies
         self.cj = cookielib.LWPCookieJar(self.COOKIEFILE)
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cj))
-        
-        #FIXME: multiple accounts!
-        #if os.path.isfile(self.COOKIEFILE):
-        #    self.cj.load()
-
-        self.getSessionId()
-
-
-    def getSessionId(self):
-        login = self.opener.open('https://myeve.eve-online.com/login.asp', 'username=%s&password=%s&login=Login&Check=OK&r=&t=/ingameboard.asp&remember=1' % (self.eveusername, self.evepassword))
-        
-        sid = re.search('^https:\/\/.*&sid=(\d+)$', login.geturl())
-        if sid:
-            #login succeeded
-            self.evesessionid = sid.group(1)
-            #self.cj.save() #FIXME: what to do on multiple accounts?
-            return True
-        else:
-            self.evesessionid = False
-            raise IOError, ('login error', 'Unable to get Session ID')
 
 
     def getCharacters(self):
         _charlist = {}
-        charxml = self.opener.open('http://myeve.eve-online.com/character/xml.asp?sid=' + self.evesessionid)
-        chardom = minidom.parseString(charxml.read())
+        charxml = self.opener.open('http://api.eve-online.com/account/Characters.xml.aspx', 'userId=%s&apiKey=%s' % (self.eveusername, self.evepassword))
+        try:
+            chardom = minidom.parseString(charxml.read())
+            node = chardom.documentElement
+        except:
+            raise IOError, ('no chars found', 'Unable to get any Character IDs')
 
-        node = chardom.documentElement
-        for char in node.getElementsByTagName('character'):
+        if len(node.getElementsByTagName('error')) > 0:
+            raise IOError, ('no chars found', 'Error Downloading Characteds. userID and apiKey correct?')
+
+        for char in node.getElementsByTagName('row'):
             _charlist[char.getAttribute('name')] = char.getAttribute('characterID')
 
         chardom.unlink()
@@ -97,25 +82,26 @@ class EveAccount:
     def loadSkillTrainingXML(self, char, forcedownload=False):
         destfile = self.DATADIR + '/' + self.charlist[char] + '.xml'
         if not os.path.isfile(destfile) or forcedownload == True:
-            skill = self.opener.open('http://myeve.eve-online.com/xml/skilltraining.asp?characterID=%s' % self.charlist[char])
+            skill = self.opener.open('http://api.eve-online.com/char/SkillInTraining.xml.aspx', 'userId=%s&apiKey=%s&characterID=%s' % (self.eveusername, self.evepassword, self.charlist[char]))
             open(destfile, "w").write(skill.read())
 
         if self._skillxml == None or forcedownload == True:
-            # store the dom so we don't have to reload it on every request
             skillxml = minidom.parse(destfile)
         else:
             skillxml = self._skillxml
 
         node = skillxml.documentElement
-        next =  node.getElementsByTagName('tryAgainIn')[0].childNodes[0].data
+        next = node.getElementsByTagName('cachedUntil')[0].childNodes[0].data
+
         if node.getElementsByTagName('error'):
             os.unlink(destfile)
             self._skillxml = None
             raise IOError, ('skilltraining xml', 'Unable to get initial skilltraining xml, try again in %s' % next)
         else:
             last = time.strptime(node.getElementsByTagName('currentTime')[0].childNodes[0].data + " GMT", "%Y-%m-%d %H:%M:%S %Z")
-
-            if (float(next)+time.mktime(last)) < time.mktime(time.gmtime()) and forcedownload == False:
+            print "Next: %s, Last: %s" % (next, last)
+            if time.strptime(next + " GMT", "%Y-%m-%d %H:%M:%S %Z") < time.gmtime() and forcedownload == False:
+                print "get update"
                 #we can get an update
                 os.rename(destfile, destfile + '.bak')
                 try:
@@ -243,7 +229,6 @@ class EveChar(EveAccount):
         self.skillsmaxed = sa5
 
         dom.unlink()
-    
 
     def getTrainingEnd(self):
         skillxml = self.loadSkillTrainingXML(self.character)
@@ -251,7 +236,7 @@ class EveChar(EveAccount):
         datenode = node.getElementsByTagName('trainingEndTime')
         if len(datenode) == 1:
             # python2.4 hackery, no datetime.datetime.strptime available there
-            _ts = time.mktime(time.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S"))
+            _ts = time.mktime(time.strptime(datenode[0].childNodes[0].data, "%m/%d/%Y %I:%M:%S %p"))
             to_date = datetime.fromtimestamp(_ts)
             return to_date
         return None
