@@ -164,10 +164,16 @@ class EveChar(EveAccount):
     perception = None
     memory = None
     willpower = None
+    learning = None
     
     skillpoints = None
     skillcount = None
     skillsmaxed = None
+
+    skill_enhancers = {
+            '3377': 'intelligence', '3379': 'perception', '3376': 'charisma', '3375': 'willpower', '3378': 'memory',
+            '12376': 'intelligence', '12387': 'perception', '12383': 'charisma', '12386': 'willpower', '12385': 'memory',
+            }
 
     def __init__(self, username, password, character):
         self.next_update = time.time() # update immediatly after start
@@ -222,6 +228,13 @@ class EveChar(EveAccount):
                     sc += 1
                     if int(skillrow.getAttribute('level')) == 5:
                         sa5 += 1
+
+                    training_id = skillrow.getAttribute('typeID')
+                    if training_id in self.skill_enhancers.keys():
+                        base = getattr(self, self.skill_enhancers[training_id])
+                        setattr(self, self.skill_enhancers[training_id], int(base) + int(skillrow.getAttribute('level')))
+                    elif training_id == '3374': # Learning
+                        self.learning = int(skillrow.getAttribute('level'))
 
         self.skillpoints = sp
         self.skillcount = sc

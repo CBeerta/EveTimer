@@ -185,6 +185,7 @@ class MainWindow(gtk.Window):
 
     training_info = {}
     do_update = True
+    prev_command = None # Store the last command we got from the Datathread, so we don't flash around with the status icon
 
     def __init__(self, parent = None):
         gobject.timeout_add(500, self.wakeup)
@@ -279,7 +280,8 @@ class MainWindow(gtk.Window):
         tbuffer.insert_with_tags_by_name(iter, "Balance: " + locale.format("%.2f", float(char.balance), True) + " ISK\n\n", "spacing")
 
         for name in ('intelligence', 'charisma', 'perception', 'memory', 'willpower'):
-            tbuffer.insert_with_tags_by_name(iter, name.capitalize() + ": %.2f\n" % float(getattr(char, name)), "spacing")
+            level = float(getattr(char, name)) * (1 + (char.learning * 0.02))
+            tbuffer.insert_with_tags_by_name(iter, name.capitalize() + ": %.2f\n" % level, "spacing")
 
         img = gtk.Image()
         try:
@@ -409,36 +411,38 @@ class MainWindow(gtk.Window):
                     self.training_info[char.character].insert(iter, "%s\n" % char.training_ends_tooltip)
                     self.training_info[char.character].insert(iter, "%s EVE Time\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
 
-        self.icon.set_tooltip(tooltip.rstrip())
 
         try:
             cmd = guiq.get(False)
         except Queue.Empty:
             pass
         else:
-            if cmd[0] in ('completing'):
-                self.icon.set_from_icon_name('gnome-run')
-                self.icon.set_blinking(False)
-            elif cmd[0] in ('completed'):
-                self.icon.set_from_stock(gtk.STOCK_DIALOG_WARNING)
-                self.icon.set_blinking(False)
-            elif cmd[0] in ('tooltip'):
-                self.icon.set_from_stock(gtk.STOCK_DIALOG_INFO)
-                self.icon.set_blinking(False)
-            elif cmd[0] in ('updating'):
-                self.icon.set_from_stock(gtk.STOCK_REFRESH)
-                self.icon.set_blinking(True)
-            elif cmd[0] in ('do_update'):
-                if cmd[1]:
-                    self.do_update = True
-                else:
-                    self.do_update = False
-            elif cmd[0] in ['char_added']:
-                label = gtk.Label(cmd[1])
-                self.char_notebook.append_page(self.__char_tab(chars.get(cmd[1])), label)
-                self.char_notebook.show_all()
-                self.char_notebook.queue_draw_area(0,0,-1,-1)
+            if self.prev_command != cmd[0]:
+                self.prev_command = cmd[0]
+                if cmd[0] in ('completing'):
+                    self.icon.set_from_icon_name('gnome-run')
+                    self.icon.set_blinking(False)
+                elif cmd[0] in ('completed'):
+                    self.icon.set_from_stock(gtk.STOCK_DIALOG_WARNING)
+                    self.icon.set_blinking(False)
+                elif cmd[0] in ('tooltip'):
+                    self.icon.set_from_stock(gtk.STOCK_DIALOG_INFO)
+                    self.icon.set_blinking(False)
+                elif cmd[0] in ('updating'):
+                    self.icon.set_from_stock(gtk.STOCK_REFRESH)
+                    self.icon.set_blinking(True)
+                elif cmd[0] in ('do_update'):
+                    if cmd[1]:
+                        self.do_update = True
+                    else:
+                        self.do_update = False
+                elif cmd[0] in ('char_added'):
+                    label = gtk.Label(cmd[1])
+                    self.char_notebook.append_page(self.__char_tab(chars.get(cmd[1])), label)
+                    self.char_notebook.show_all()
+                    self.char_notebook.queue_draw_area(0,0,-1,-1)
 
+        self.icon.set_tooltip(tooltip.rstrip())
         return True
 
 
@@ -564,7 +568,6 @@ class EveDataThread(threading.Thread):
             _cmd = None 
             for char in chars.get():
                 if char.next_update < time.time() and do_update:
-                    #FIXME:  Updating and Downloading should really be in the EveAccount or EveChar class, not here
                     guiq.put(['updating'])
                     _cmd = 'tooltip'
 
@@ -586,7 +589,7 @@ class EveDataThread(threading.Thread):
                     tend = tdelta.days*24*60*60 + tdelta.seconds
 
                     _endtime = "%s" % char.deltaToString(char.training_ends - datetime.utcnow())
-                    if  tend < 1800 and tend > 0:
+                    if  tend < 1800 and tend > 0 and _cmd != 'completed':
                         _cmd = 'completing'
                     elif tend <= 0:
                         _cmd = 'completed'
@@ -596,10 +599,11 @@ class EveDataThread(threading.Thread):
                     _endtime = ''
                 char.training_ends_tooltip = _endtime
 
+
             if _cmd != None:
                 guiq.put([_cmd])
 
-            time.sleep(0.1) # dont burn cpu cycles
+            time.sleep(0.1)
 
 
 
