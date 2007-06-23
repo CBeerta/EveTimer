@@ -21,12 +21,77 @@ __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
 
 
-import EveTimer
+import getopt, sys
+
+try:
+	import dbus
+	import dbus.service
+	if getattr(dbus, "version", (0,0,0)) >= (0,41,0):
+		import dbus.glib
+	HAVE_DBUS = True
+except:
+	HAVE_DBUS = False
+    print "WARNING: No DBUS Bindings found, for extra features install 'dbus-python'"
+
+
+def usage():
+    print """
+Usage: EveTimer <option>
+  -h, --help                   This help message
+  -n, --noicon                 Don't display a Status Icon (The App will basically be without a UI)
+""",
+    if HAVE_DBUS:
+        print "  -g <character>               Get what <character> is currently training"
+        print "  -q, --quit                   Exit the Already running Instance"
+        print "  -r, --refresh                Update XML from EVE-Online"
+    else:
+        print
 
 if __name__ == "__main__":
-    app = EveTimer.Base()
+    status_icon = True
 
     try:
+        opts, args = getopt.getopt(sys.argv[1:], "hng:qr", ["help", "noicon", "quit", "refresh"])
+    except getopt.GetoptError:
+        usage()
+        sys.exit(2)
+
+    if HAVE_DBUS:
+        try:
+            session_bus = dbus.SessionBus()
+            dbus_evetimer = session_bus.get_object("org.EveTimer", "/org/EveTimer")
+        except:
+            already_running = False
+        else:
+            already_running = True
+            dbus_iface = dbus.Interface(dbus_evetimer, "org.EveTimer")
+
+
+    for o,a in opts:
+        if o in ("-h", "--help"):
+            usage()
+            sys.exit()
+        if o in ("-n", "--noicon"):
+            status_icon = False
+        if o in ("-g"):
+            print dbus_iface.getCurrentlyTraining(a)
+        if o in ("-q", "--quit"):
+            dbus_iface.quit()
+        if o in ("-r", "--refresh"):
+            dbus_iface.refresh()
+
+
+    if already_running:
+        sys.exit()
+
+    try:
+        import EveTimer
+        app = EveTimer.Base()
+        app.status_icon = status_icon
         app.main()
     except KeyboardInterrupt:
         pass
+    except:
+        raise
+
+

@@ -20,7 +20,7 @@
 
 __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
-__version__     = "0.9.0beta"
+__version__     = "0.9.1beta"
 
 import sys
 import os
@@ -47,15 +47,10 @@ try:
 	import dbus.service
 	if getattr(dbus, "version", (0,0,0)) >= (0,41,0):
 		import dbus.glib
-	if getattr(dbus, "version", (0,0,0)) >= (0,80,0):
-		import _dbus_bindings as dbus_bindings
-		NEW_DBUS = True
-	else:
-		import dbus.dbus_bindings as dbus_bindings
-		NEW_DBUS = False
 	HAVE_DBUS = True
 except:
 	HAVE_DBUS = False
+
 
 
 class AddChar(gtk.Dialog):
@@ -187,10 +182,11 @@ class MainWindow(gtk.Window):
     do_update = True
     prev_command = None # Store the last command we got from the Datathread, so we don't flash around with the status icon
 
-    def __init__(self, parent = None):
+    def __init__(self, parent = None, status_icon=True):
         gobject.timeout_add(500, self.wakeup)
 
         self.icon = gtk.status_icon_new_from_stock(gtk.STOCK_DIALOG_INFO)
+        self.icon.set_visible(status_icon)
         self.icon.connect('activate', self.status_icon_activate)
         self.icon.connect('popup-menu', self.__icon_menu)
 
@@ -620,19 +616,45 @@ chars = EveChars()
 taskq = Queue.Queue(0) # gui -> datathread commands
 guiq = Queue.Queue(0) # datathread -> gui errors/notifications
 
+if HAVE_DBUS:
+    class EveTimerDBus(dbus.service.Object):
+
+        @dbus.service.method("org.EveTimer")
+        def getCurrentlyTraining(self, character):
+            char = chars.get(character)
+            if char != False:
+                return "%s - %s %s - %s" % (char.character, char.currently_training, char.currently_training_to_level, char.training_ends_tooltip)
+            else:
+                return "Char not Found!"
+
+        @dbus.service.method("org.EveTimer")
+        def quit(self):
+            gtk.main_quit()
+
+        @dbus.service.method("org.EveTimer")
+        def refresh(self):
+            taskq.put(['refresh'])
+
+
+
 class Base:
+    status_icon = True
+
     def __init__(self):
         chars.load()
         gobject.threads_init()
 
     def main(self):
         if HAVE_DBUS:
-            bus = dbus.SessionBus()
-            screensaver = bus.get_object('org.gnome.ScreenSaver', '/org/gnome/ScreenSaver')
+            session_bus = dbus.SessionBus()
+            screensaver = session_bus.get_object('org.gnome.ScreenSaver', '/org/gnome/ScreenSaver')
             screensaver.connect_to_signal('ActiveChanged', detect_screensaver)
 
+            name = dbus.service.BusName("org.EveTimer", bus=session_bus)
+            object = EveTimerDBus(name, "/org/EveTimer")
+            
         EveDataThread().start()
-        MainWindow()
+        MainWindow(None, self.status_icon)
         gtk.quit_add(0, taskq.put, ['terminate'])
         gtk.main()
 
