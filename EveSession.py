@@ -54,7 +54,6 @@ class EveAccount:
         self.cj = cookielib.LWPCookieJar(self.COOKIEFILE)
         self.opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(self.cj))
 
-
     def getCharacters(self):
         _charlist = {}
         charxml = self.opener.open('http://api.eve-online.com/account/Characters.xml.aspx', 'userId=%s&apiKey=%s' % (self.eveusername, self.evepassword))
@@ -99,9 +98,7 @@ class EveAccount:
             raise IOError, ('skilltraining xml', 'Unable to get initial skilltraining xml, try again in %s' % next)
         else:
             last = time.strptime(node.getElementsByTagName('currentTime')[0].childNodes[0].data + " GMT", "%Y-%m-%d %H:%M:%S %Z")
-            print "Next: %s, Last: %s" % (next, last)
             if time.strptime(next + " GMT", "%Y-%m-%d %H:%M:%S %Z") < time.gmtime() and forcedownload == False:
-                print "get update"
                 #we can get an update
                 os.rename(destfile, destfile + '.bak')
                 try:
@@ -217,12 +214,14 @@ class EveChar(EveAccount):
             setattr(self, type, dom.getElementsByTagName(type)[0].childNodes[0].data)
 
         sp = sc = sa5 = 0
-        for node in dom.getElementsByTagName('skill'):
-            if node.nodeType == node.ELEMENT_NODE:
-                sp += int(node.getElementsByTagName('skillpoints')[0].childNodes[0].data)
-                sc += 1
-                if int(node.getElementsByTagName('level')[0].childNodes[0].data) == 5:
-                    sa5 += 1
+
+        for node in dom.getElementsByTagName('rowset'):
+            if node.nodeType == node.ELEMENT_NODE and node.getAttribute('name') in 'skills':
+                for skillrow in node.getElementsByTagName('row'):
+                    sp += int(skillrow.getAttribute('skillpoints'))
+                    sc += 1
+                    if int(skillrow.getAttribute('level')) == 5:
+                        sa5 += 1
 
         self.skillpoints = sp
         self.skillcount = sc

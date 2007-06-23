@@ -20,7 +20,7 @@
 
 __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
-__version__     = "0.9.0"
+__version__     = "0.9.0beta"
 
 import sys
 import os
@@ -79,7 +79,7 @@ class AddChar(gtk.Dialog):
         vbox.pack_start(table, False, False, 0)
 
         # Username
-        label = gtk.Label("User _name:")
+        label = gtk.Label("_User ID:")
         label.set_use_underline(True)
         table.attach(label, 0,1,0,1)
 
@@ -88,12 +88,12 @@ class AddChar(gtk.Dialog):
         label.set_mnemonic_widget(self.username)
 
         # Password
-        label = gtk.Label("_Password:")
+        label = gtk.Label("_API Key:")
         label.set_use_underline(True)
         table.attach(label, 0,1,1,2)
 
         self.password = gtk.Entry()
-        self.password.set_visibility(False)
+        #self.password.set_visibility(False)
         table.attach(self.password,1,2,1,2)
         label.set_mnemonic_widget(self.password)
 
@@ -183,8 +183,11 @@ class MainWindow(gtk.Window):
             </toolbar>
             </ui>'''
 
+    training_info = {}
+    do_update = True
+
     def __init__(self, parent = None):
-        gobject.timeout_add(100, self.wakeup)
+        gobject.timeout_add(500, self.wakeup)
 
         self.icon = gtk.status_icon_new_from_stock(gtk.STOCK_DIALOG_INFO)
         self.icon.connect('activate', self.status_icon_activate)
@@ -193,7 +196,7 @@ class MainWindow(gtk.Window):
         gtk.Window.__init__(self)
         self.set_title('Eve Timer')
         self.set_position(gtk.WIN_POS_CENTER)
-        self.set_default_size(300,400)
+        self.set_default_size(300,200)
 
         self.connect('destroy', lambda *w: gtk.main_quit())
 
@@ -220,14 +223,20 @@ class MainWindow(gtk.Window):
         self.statusbar = gtk.Statusbar()
         table.attach(self.statusbar, 0, 1, 2, 3, gtk.EXPAND | gtk.FILL, 0, 0, 0)
         self.connect("window_state_event", self.update_resize_grip)
-        self.show_all()
+        #self.show_all()
 
     def __icon_menu(self, icon, event_button, event_time):
         menu = gtk.Menu()
 
         quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+        update  = gtk.CheckMenuItem('Enable Updates')
+        if self.do_update == True:
+            update.set_active(True)
+
+        menu.append(update)
         menu.append(quit)
         quit.connect('activate', lambda *w: gtk.main_quit())
+        update.connect('toggled', self.toggle_update)
 
         menu.show_all()
         menu.popup(None, None, gtk.status_icon_position_menu, event_button, event_time, icon)
@@ -247,7 +256,7 @@ class MainWindow(gtk.Window):
     def __char_tab(self, char):
         vbox = gtk.VBox(False, 20)
 
-        table = gtk.Table(2, 2, False)
+        table = gtk.Table(2, 3, False)
         table.set_row_spacings(0)
         table.set_col_spacings(0)
 
@@ -260,25 +269,26 @@ class MainWindow(gtk.Window):
 
         tbuffer.create_tag("x-large", scale=pango.SCALE_X_LARGE)
         tbuffer.create_tag("bold", weight=pango.WEIGHT_BOLD)
+        tbuffer.create_tag("spacing", left_margin=10, right_margin=10)
 
         table.attach(tview, 1, 2, 0, 1)
 
-        tbuffer.insert_with_tags_by_name(iter, "%s\n" % char.character, 'x-large', 'bold')
-        tbuffer.insert(iter, "%s %s %s\n" % (char.gender, char.race, char.bloodLine))
-        tbuffer.insert(iter, "Corporation: %s\n" % char.corporationName)
-        tbuffer.insert(iter, "Balance: " + locale.format("%.2f", float(char.balance), True) + " ISK\n\n")
+        tbuffer.insert_with_tags_by_name(iter, "%s\n" % char.character, 'x-large', "bold", "spacing")
+        tbuffer.insert_with_tags_by_name(iter, "%s %s %s\n" % (char.gender, char.race, char.bloodLine), "spacing")
+        tbuffer.insert_with_tags_by_name(iter, "Corporation: %s\n" % char.corporationName, "spacing")
+        tbuffer.insert_with_tags_by_name(iter, "Balance: " + locale.format("%.2f", float(char.balance), True) + " ISK\n\n", "spacing")
 
         for name in ('intelligence', 'charisma', 'perception', 'memory', 'willpower'):
-            tbuffer.insert(iter, name.capitalize() + ": %.2f\n" % float(getattr(char, name)))
+            tbuffer.insert_with_tags_by_name(iter, name.capitalize() + ": %.2f\n" % float(getattr(char, name)), "spacing")
 
         img = gtk.Image()
         try:
             imgfile = char.DATADIR + '/' + char.charlist[char.character] + '-256.jpg'
-            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 140, 140)
+            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
             img.set_from_pixbuf(pixbuf)
         except:
             imgfile = sys.prefix + '/share/EveTimer/portrait.jpg'
-            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 60, 60)
+            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
             img.set_from_pixbuf(pixbuf)
 
         imgevbox = gtk.EventBox()
@@ -286,21 +296,28 @@ class MainWindow(gtk.Window):
         table.attach(imgevbox, 0, 1, 0, 1, gtk.SHRINK, gtk.SHRINK)
         #imgevbox.connect('button-press-event', self.reload_image_popup)
 
-        vbox.pack_start(table)
+        vbox.pack_start(table, expand=False)
 
         # Skill Trivia
+        trivia = gtk.TextView()
+        trivia.set_editable(False)
+        trivia.set_cursor_visible(False)
+        tbuffer = trivia.get_buffer()
+        tbuffer.create_tag("bold", weight=pango.WEIGHT_BOLD)
+        iter = tbuffer.get_iter_at_offset(0)
         tbuffer.insert_with_tags_by_name(iter, "%s Known Skills\n" % char.skillcount, 'bold')
         tbuffer.insert_with_tags_by_name(iter, "%s Total SP\n" % locale.format("%.d", int(char.skillpoints), True), 'bold')
         tbuffer.insert_with_tags_by_name(iter, "%s Skills at Level V\n" % char.skillsmaxed, 'bold')
+        table.attach(trivia, 0, 2, 1, 2)
 
         # Currently Training, if any
-        if char.currently_training != None:
-            tbuffer.insert_with_tags_by_name(iter, "Currently Training:\n", 'bold')
-            tbuffer.insert(iter, "%s %s\n" % (char.currently_training, char.currently_training_to_level))
-            if char.training_ends == None:
-                tbuffer.insert(iter, "Not Training\n")
-            else:
-                tbuffer.insert(iter, "%s EVE Time\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
+        training_info = gtk.TextView()
+        training_info.set_editable(False)
+        training_info.set_cursor_visible(False)
+        self.training_info[char.character] = training_info.get_buffer()
+        self.training_info[char.character].create_tag("bold", weight=pango.WEIGHT_BOLD)
+        iter = self.training_info[char.character].get_iter_at_offset(0)
+        table.attach(training_info, 0, 2, 2, 3)
 
         return vbox
 
@@ -314,13 +331,21 @@ class MainWindow(gtk.Window):
 
         return
 
+    def toggle_update(self, button):
+        if self.do_update == True:
+            self.do_update = False
+        else:
+            self.do_update = True
+        taskq.put(['do_update',self.do_update])
+
+
     def add_char(self, action):
         char = AddChar(self).get_added()
         if char != None:
             taskq.put(['add_char', char[0], char[1], char[2]])
+   
 
     def remove_char(self, action):
-
         page_num = self.char_notebook.get_current_page()
         if page_num == -1:
             # not a single char
@@ -328,7 +353,6 @@ class MainWindow(gtk.Window):
 
         page = self.char_notebook.get_nth_page(page_num)
         char =  self.char_notebook.get_tab_label(page).get_text()
-        #+dialog = gtk.Dialog("Are you Sure=", self, 0, (gtk.STOCK_REMOVE, gtk.RESPONSE_OK, gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL))
         dialog = gtk.MessageDialog(self, 0, gtk.MESSAGE_QUESTION, gtk.BUTTONS_OK_CANCEL, "Are you sure you want to remove '%s' from EveTimer?" % char)
 
         dialog.show_all()
@@ -365,6 +389,28 @@ class MainWindow(gtk.Window):
         self.statusbar.push(0, 'Status: %s' % status)
 
     def wakeup(self):
+        tooltip = ''
+        for char in chars.get():
+            try:
+                _tooltip = "%s - %s %s - %s\n" % (char.character, char.currently_training, char.currently_training_to_level, char.training_ends_tooltip)
+            except:
+                pass
+            else:
+                tooltip = "%s %s" % (tooltip, _tooltip)
+
+            if char.character in self.training_info and not self.window == None and not self.window.get_state() & gtk.gdk.WINDOW_STATE_WITHDRAWN:
+                self.training_info[char.character].set_text('')
+                iter = self.training_info[char.character].get_iter_at_offset(0)
+                self.training_info[char.character].insert_with_tags_by_name(iter, "Currently Training:\n", "bold")
+                if char.training_ends == None:
+                    self.training_info[char.character].insert(iter, "Not Training!\n")
+                else:
+                    self.training_info[char.character].insert(iter, "%s %s\n" % (char.currently_training, char.currently_training_to_level))
+                    self.training_info[char.character].insert(iter, "%s\n" % char.training_ends_tooltip)
+                    self.training_info[char.character].insert(iter, "%s EVE Time\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
+
+        self.icon.set_tooltip(tooltip.rstrip())
+
         try:
             cmd = guiq.get(False)
         except Queue.Empty:
@@ -372,14 +418,11 @@ class MainWindow(gtk.Window):
         else:
             if cmd[0] in ('completing'):
                 self.icon.set_from_icon_name('gnome-run')
-                self.icon.set_tooltip(cmd[1])
                 self.icon.set_blinking(False)
             elif cmd[0] in ('completed'):
                 self.icon.set_from_stock(gtk.STOCK_DIALOG_WARNING)
-                self.icon.set_tooltip(cmd[1])
                 self.icon.set_blinking(False)
             elif cmd[0] in ('tooltip'):
-                self.icon.set_tooltip(cmd[1])
                 self.icon.set_from_stock(gtk.STOCK_DIALOG_INFO)
                 self.icon.set_blinking(False)
             elif cmd[0] in ('updating'):
@@ -390,6 +433,11 @@ class MainWindow(gtk.Window):
                     self.do_update = True
                 else:
                     self.do_update = False
+            elif cmd[0] in ['char_added']:
+                label = gtk.Label(cmd[1])
+                self.char_notebook.append_page(self.__char_tab(chars.get(cmd[1])), label)
+                self.char_notebook.show_all()
+                self.char_notebook.queue_draw_area(0,0,-1,-1)
 
         return True
 
@@ -420,6 +468,8 @@ class EveChars:
         except:
             pass
 
+        _char.training_ends_tooltip = None
+
         return True
 
     def remove(self, character):
@@ -429,8 +479,16 @@ class EveChars:
         return True
 
 
-    def get(self):
-        return self.chars
+    def get(self, name=None):
+        if name == None:
+            return self.chars
+        else:
+            for char in self.chars:
+                if char.character == name:
+                    return char
+            else:
+                return False
+
 
     def save(self):
         cfg = ConfigParser.ConfigParser()
@@ -486,6 +544,9 @@ class EveDataThread(threading.Thread):
                        chars.save()
                     except:
                         guiq.put(['error', 'Unable to add Character "%s"' % cmd[3]])
+                    else:
+                        guiq.put(['char_added', cmd[3]])
+
                 elif cmd[0] in ('terminate'):
                     terminate = True
                 elif cmd[0] in ('remove'):
@@ -500,14 +561,12 @@ class EveDataThread(threading.Thread):
                     else:
                         do_update = False
 
-
-            _tooltip = ''
-            _cmd = 'tooltip'
-
+            _cmd = None 
             for char in chars.get():
                 if char.next_update < time.time() and do_update:
                     #FIXME:  Updating and Downloading should really be in the EveAccount or EveChar class, not here
                     guiq.put(['updating'])
+                    _cmd = 'tooltip'
 
                     try:
                         char.currently_training = evexml.skillIdToName(char.getCurrentlyTrainingID())
@@ -526,7 +585,7 @@ class EveDataThread(threading.Thread):
                     tdelta = char.training_ends - datetime.utcnow()
                     tend = tdelta.days*24*60*60 + tdelta.seconds
 
-                    _endtime = " - %s" % char.deltaToString(char.training_ends - datetime.utcnow())
+                    _endtime = "%s" % char.deltaToString(char.training_ends - datetime.utcnow())
                     if  tend < 1800 and tend > 0:
                         _cmd = 'completing'
                     elif tend <= 0:
@@ -535,9 +594,11 @@ class EveDataThread(threading.Thread):
                 else:
                     _cmd = 'completed'
                     _endtime = ''
-                _tooltip = "%s %s - %s %s %s\n" % (_tooltip, char.character, char.currently_training, char.currently_training_to_level, _endtime)
+                char.training_ends_tooltip = _endtime
 
-            guiq.put([_cmd, _tooltip.rstrip()])
+            if _cmd != None:
+                guiq.put([_cmd])
+
             time.sleep(0.1) # dont burn cpu cycles
 
 
