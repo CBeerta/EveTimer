@@ -198,8 +198,8 @@ class EveChar(EveAccount):
 
         if download == True:
             try:
-                url = 'http://myeve.eve-online.com/character/xml.asp?characterID=' + self.charlist[self.character]
-                xml = self.opener.open(url)
+                url = 'http://api.eve-online.com/char/CharacterSheet.xml.aspx'
+                xml = self.opener.open(url, 'userId=%s&apiKey=%s&characterID=%s' % (self.eveusername, self.evepassword, self.charlist[self.character]))
                 open(destfile, 'w').write(xml.read())
             except:
                 raise
@@ -236,7 +236,7 @@ class EveChar(EveAccount):
         datenode = node.getElementsByTagName('trainingEndTime')
         if len(datenode) == 1:
             # python2.4 hackery, no datetime.datetime.strptime available there
-            _ts = time.mktime(time.strptime(datenode[0].childNodes[0].data, "%m/%d/%Y %I:%M:%S %p"))
+            _ts = time.mktime(time.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S"))
             to_date = datetime.fromtimestamp(_ts)
             return to_date
         return None
