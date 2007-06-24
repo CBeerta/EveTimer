@@ -647,15 +647,6 @@ class EveDataThread(threading.Thread):
 
 
 
-def detect_screensaver(enabled):
-    if enabled == 1:
-        taskq.put(['do_update', False])
-        guiq.put(['do_update', False])
-    else:
-        taskq.put(['do_update',True])
-        guiq.put(['do_update', True])
-
-
 chars = EveChars()
 taskq = Queue.Queue(0) # gui -> datathread commands
 guiq = Queue.Queue(0) # datathread -> gui errors/notifications
@@ -691,12 +682,6 @@ class Base:
     def main(self):
         if HAVE_DBUS:
             session_bus = dbus.SessionBus()
-            try:
-                screensaver = session_bus.get_object('org.gnome.ScreenSaver', '/org/gnome/ScreenSaver')
-                screensaver.connect_to_signal('ActiveChanged', detect_screensaver)
-            except:
-                pass
-
             name = dbus.service.BusName("org.EveTimer", bus=session_bus)
             object = EveTimerDBus(name, "/org/EveTimer")
             
