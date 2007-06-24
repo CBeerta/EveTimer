@@ -255,8 +255,9 @@ class MainWindow(gtk.Window):
 
     def __char_tab(self, char):
         vbox = gtk.VBox(False, 10)
+        vbox.set_border_width(5)
 
-        tophbox = gtk.HBox(False, 10)
+        tophbox = gtk.HBox(False, 5)
         img = gtk.Image()
         try:
             imgfile = char.DATADIR + '/' + char.charlist[char.character] + '-256.jpg'
@@ -344,80 +345,10 @@ class MainWindow(gtk.Window):
         self.ctwlabel[char.character].set_alignment(0,0)
         currvbox.pack_start(self.ctwlabel[char.character], False, False)
 
-
         currhbox.pack_start(currvbox, False, False)
         vbox.pack_start(currhbox)
         return vbox
 
-
-    def __char_tab_old(self, char):
-        vbox = gtk.VBox(False, 20)
-
-        table = gtk.Table(2, 3, False)
-        table.set_row_spacings(10)
-        table.set_col_spacings(10)
-
-        # General Overview
-        tview = gtk.TextView()
-        tview.set_editable(False)
-        tview.set_cursor_visible(False)
-        tbuffer = tview.get_buffer()
-        iter = tbuffer.get_iter_at_offset(0)
-
-        tbuffer.create_tag("x-large", scale=pango.SCALE_X_LARGE)
-        tbuffer.create_tag("bold", weight=pango.WEIGHT_BOLD)
-        tbuffer.create_tag("spacing", left_margin=10, right_margin=10)
-
-        table.attach(tview, 1, 2, 0, 1)
-
-        tbuffer.insert_with_tags_by_name(iter, "%s\n" % char.character, 'x-large', "bold", "spacing")
-        tbuffer.insert_with_tags_by_name(iter, "%s %s %s\n" % (char.gender, char.race, char.bloodLine), "spacing")
-        tbuffer.insert_with_tags_by_name(iter, "Corporation: %s\n" % char.corporationName, "spacing")
-        tbuffer.insert_with_tags_by_name(iter, "Balance: " + locale.format("%.2f", float(char.balance), True) + " ISK\n\n", "spacing")
-
-        for name in ('intelligence', 'charisma', 'perception', 'memory', 'willpower'):
-            level = float(getattr(char, name)) * (1 + (char.learning * 0.02))
-            tbuffer.insert_with_tags_by_name(iter, name.capitalize() + ": %.2f\n" % level, "spacing")
-
-        img = gtk.Image()
-        try:
-            imgfile = char.DATADIR + '/' + char.charlist[char.character] + '-256.jpg'
-            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
-            img.set_from_pixbuf(pixbuf)
-        except:
-            imgfile = find_file('portrait.jpg')
-            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
-            img.set_from_pixbuf(pixbuf)
-
-        imgevbox = gtk.EventBox()
-        imgevbox.add(img)
-        table.attach(imgevbox, 0, 1, 0, 1, gtk.SHRINK, gtk.SHRINK)
-        #imgevbox.connect('button-press-event', self.reload_image_popup)
-
-        vbox.pack_start(table, expand=False)
-
-        # Skill Trivia
-        trivia = gtk.TextView()
-        trivia.set_editable(False)
-        trivia.set_cursor_visible(False)
-        tbuffer = trivia.get_buffer()
-        tbuffer.create_tag("bold", weight=pango.WEIGHT_BOLD)
-        iter = tbuffer.get_iter_at_offset(0)
-        tbuffer.insert_with_tags_by_name(iter, "%s Known Skills\n" % char.skillcount, 'bold')
-        tbuffer.insert_with_tags_by_name(iter, "%s Total SP\n" % locale.format("%.d", int(char.skillpoints), True), 'bold')
-        tbuffer.insert_with_tags_by_name(iter, "%s Skills at Level V\n" % char.skillsmaxed, 'bold')
-        table.attach(trivia, 0, 2, 1, 2)
-
-        # Currently Training, if any
-        training_info = gtk.TextView()
-        training_info.set_editable(False)
-        training_info.set_cursor_visible(False)
-        self.training_info[char.character] = training_info.get_buffer()
-        self.training_info[char.character].create_tag("bold", weight=pango.WEIGHT_BOLD)
-        iter = self.training_info[char.character].get_iter_at_offset(0)
-        table.attach(training_info, 0, 2, 2, 3)
-
-        return vbox
 
     def status_icon_activate(self, icon = None):
         if self.window == None:
