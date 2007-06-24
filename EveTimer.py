@@ -220,7 +220,7 @@ class MainWindow(gtk.Window):
         self.statusbar = gtk.Statusbar()
         table.attach(self.statusbar, 0, 1, 2, 3, gtk.EXPAND | gtk.FILL, 0, 0, 0)
         self.connect("window_state_event", self.update_resize_grip)
-        #self.show_all()
+        self.show_all()
 
     def __icon_menu(self, icon, event_button, event_time):
         menu = gtk.Menu()
@@ -251,11 +251,81 @@ class MainWindow(gtk.Window):
         return action_group
 
     def __char_tab(self, char):
+        vbox = gtk.VBox(False, 10)
+
+        tophbox = gtk.HBox(False, 10)
+        img = gtk.Image()
+        try:
+            imgfile = char.DATADIR + '/' + char.charlist[char.character] + '-256.jpg'
+            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
+            img.set_from_pixbuf(pixbuf)
+        except:
+            imgfile = find_file('portrait.jpg')
+            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
+            img.set_from_pixbuf(pixbuf)
+
+        tophbox.pack_start(img, False, False, 2)
+        vbox.pack_start(tophbox)
+
+        charinfo = gtk.VBox()
+
+        charlabel = gtk.Label()
+        charlabel.set_markup('<b><span size="x-large">' + char.character + "</span></b>")
+        charlabel.set_alignment(0,0)
+        charinfo.pack_start(charlabel, False, False)
+
+        chardesc = gtk.Label()
+        chardesc.set_markup("%s %s %s" % (char.gender, char.race, char.bloodLine))
+        chardesc.set_alignment(0,0)
+        charinfo.pack_start(chardesc, False, False)
+
+        charcorp = gtk.Label()
+        charcorp.set_markup("Corporation: %s" % char.corporationName)
+        charcorp.set_alignment(0,0)
+        charinfo.pack_start(charcorp, False, False)
+
+        charbalance = gtk.Label()
+        charbalance.set_markup("Balance: " + locale.format("%.2f", float(char.balance), True) + " ISK")
+        charbalance.set_alignment(0,0)
+        charinfo.pack_start(charbalance, False, False)
+
+        charinfo.pack_start(gtk.HSeparator())
+        tophbox.pack_start(charinfo, False, False, 2)
+
+        attribs = {}
+        for name in ('intelligence', 'charisma', 'perception', 'memory', 'willpower'):
+            level = float(getattr(char, name)) * (1 + (char.learning * 0.02))
+            attribs[name] = gtk.Label()
+            attribs[name].set_markup(name.capitalize() + ": %.2f" % level)
+            attribs[name].set_alignment(0,0)
+            charinfo.pack_start(attribs[name], False, False)
+
+        spvbox = gtk.VBox(False, 0)
+        sclabel = gtk.Label()
+        sclabel.set_alignment(0,0)
+        sclabel.set_markup("<b>%s Known Skills</b>" % char.skillcount)
+
+        splabel = gtk.Label()
+        splabel.set_alignment(0,0)
+        splabel.set_markup("<b>%s Total SP</b>" % locale.format("%.d", int(char.skillpoints), True))
+
+        s5label = gtk.Label()
+        s5label.set_alignment(0,0)
+        s5label.set_markup("<b>%s SKills at Level V</b>" % char.skillsmaxed)
+
+        spvbox.pack_start(sclabel, False, False)
+        spvbox.pack_start(splabel, False, False)
+        spvbox.pack_start(s5label, False, False)
+        vbox.pack_start(spvbox, False, False)
+        return vbox
+
+
+    def __char_tab_old(self, char):
         vbox = gtk.VBox(False, 20)
 
         table = gtk.Table(2, 3, False)
-        table.set_row_spacings(0)
-        table.set_col_spacings(0)
+        table.set_row_spacings(10)
+        table.set_col_spacings(10)
 
         # General Overview
         tview = gtk.TextView()
