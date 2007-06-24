@@ -647,8 +647,11 @@ class Base:
     def main(self):
         if HAVE_DBUS:
             session_bus = dbus.SessionBus()
-            screensaver = session_bus.get_object('org.gnome.ScreenSaver', '/org/gnome/ScreenSaver')
-            screensaver.connect_to_signal('ActiveChanged', detect_screensaver)
+            try:
+                screensaver = session_bus.get_object('org.gnome.ScreenSaver', '/org/gnome/ScreenSaver')
+                screensaver.connect_to_signal('ActiveChanged', detect_screensaver)
+            except:
+                pass
 
             name = dbus.service.BusName("org.EveTimer", bus=session_bus)
             object = EveTimerDBus(name, "/org/EveTimer")
