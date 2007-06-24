@@ -178,7 +178,10 @@ class MainWindow(gtk.Window):
             </toolbar>
             </ui>'''
 
-    training_info = {}
+    ctlabel = {}
+    ctflabel = {}
+    ctwlabel = {} 
+
     do_update = True
     prev_command = None # Store the last command we got from the Datathread, so we don't flash around with the status icon
 
@@ -265,9 +268,8 @@ class MainWindow(gtk.Window):
             img.set_from_pixbuf(pixbuf)
 
         tophbox.pack_start(img, False, False, 2)
-        vbox.pack_start(tophbox)
 
-        charinfo = gtk.VBox()
+        charinfo = gtk.VBox(False)
 
         charlabel = gtk.Label()
         charlabel.set_markup('<b><span size="x-large">' + char.character + "</span></b>")
@@ -291,6 +293,7 @@ class MainWindow(gtk.Window):
 
         charinfo.pack_start(gtk.HSeparator())
         tophbox.pack_start(charinfo, False, False, 2)
+        vbox.pack_start(tophbox, False, False)
 
         attribs = {}
         for name in ('intelligence', 'charisma', 'perception', 'memory', 'willpower'):
@@ -317,6 +320,33 @@ class MainWindow(gtk.Window):
         spvbox.pack_start(splabel, False, False)
         spvbox.pack_start(s5label, False, False)
         vbox.pack_start(spvbox, False, False)
+
+        currhbox = gtk.HBox(False, 10)
+        currtraining = gtk.Label()
+        currtraining.set_markup("<b>Currently Training:</b>")
+        currtraining.set_alignment(0,0)
+        currhbox.pack_start(currtraining, False, False)
+
+        currvbox = gtk.VBox()
+
+        self.ctlabel[char.character] = gtk.Label()
+        self.ctlabel[char.character].set_markup("")
+        self.ctlabel[char.character].set_alignment(0,0)
+        currvbox.pack_start(self.ctlabel[char.character], False, False)
+
+        self.ctflabel[char.character] = gtk.Label()
+        self.ctflabel[char.character].set_markup("")
+        self.ctflabel[char.character].set_alignment(0,0)
+        currvbox.pack_start(self.ctflabel[char.character], False, False)
+
+        self.ctwlabel[char.character] = gtk.Label()
+        self.ctwlabel[char.character].set_markup("")
+        self.ctwlabel[char.character].set_alignment(0,0)
+        currvbox.pack_start(self.ctwlabel[char.character], False, False)
+
+
+        currhbox.pack_start(currvbox, False, False)
+        vbox.pack_start(currhbox)
         return vbox
 
 
@@ -466,17 +496,13 @@ class MainWindow(gtk.Window):
             else:
                 tooltip = "%s %s" % (tooltip, _tooltip)
 
-            if char.character in self.training_info and not self.window == None and not self.window.get_state() & gtk.gdk.WINDOW_STATE_WITHDRAWN:
-                self.training_info[char.character].set_text('')
-                iter = self.training_info[char.character].get_iter_at_offset(0)
-                self.training_info[char.character].insert_with_tags_by_name(iter, "Currently Training:\n", "bold")
+            if char.character in self.ctlabel and not self.window == None and not self.window.get_state() & gtk.gdk.WINDOW_STATE_WITHDRAWN:
                 if char.training_ends == None:
-                    self.training_info[char.character].insert(iter, "Not Training!\n")
+                    self.ctlabel[char.character].set_markup( "Not Training!")
                 else:
-                    self.training_info[char.character].insert(iter, "%s %s\n" % (char.currently_training, char.currently_training_to_level))
-                    self.training_info[char.character].insert(iter, "%s\n" % char.training_ends_tooltip)
-                    self.training_info[char.character].insert(iter, "%s EVE Time\n" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
-
+                    self.ctlabel[char.character].set_markup("%s %s" % (char.currently_training, char.currently_training_to_level))
+                    self.ctflabel[char.character].set_markup("%s" % char.training_ends_tooltip)
+                    self.ctwlabel[char.character].set_markup("%s EVE Time" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
 
         try:
             cmd = guiq.get(False)

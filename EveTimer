@@ -49,6 +49,7 @@ Usage: EveTimer <option>
 
 if __name__ == "__main__":
     status_icon = True
+    already_running = False
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hng:qr", ["help", "noicon", "quit", "refresh"])
