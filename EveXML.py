@@ -18,7 +18,12 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA.
 
 from xml.dom import minidom, Node
-import sys
+import sys, os
+
+def find_file(filename):
+    for dir in [os.path.join(sys.prefix,'share','EveTimer'), os.path.join(os.environ["HOME"], '.config', 'EveTimer'), '']:
+        if os.path.isfile(os.path.join(dir, filename)):
+            return os.path.join(dir, filename)
 
 class EveXML:
 
@@ -26,7 +31,7 @@ class EveXML:
     
     def __init__(self):
         try:
-            skilldom = minidom.parse(sys.prefix + '/share/EveTimer/eve-skills2.xml')
+            skilldom = minidom.parse(find_file('eve-skills2.xml'))
         except IOError:
             print "Unable to load %s, check for correct installation and permissios. " % (sys.prefix + '/share/EveTimer/eve-skills2.xml')
         else:

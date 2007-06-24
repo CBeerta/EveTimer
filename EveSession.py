@@ -43,7 +43,7 @@ class EveAccount:
         self.eveusername = username
         self.evepassword = password
 
-        self.DATADIR = os.path.join(os.environ["HOME"], ".config/EveTimer/")
+        self.DATADIR = os.path.join(os.environ["HOME"], ".config", "EveTimer")
 
         if not os.path.isdir(self.DATADIR):
             os.mkdir(self.DATADIR)

@@ -32,7 +32,7 @@ import ConfigParser
 import locale
 
 import EveSession
-from EveXML import EveXML
+from EveXML import EveXML, find_file
 
 try:
 	import gtk
@@ -285,7 +285,7 @@ class MainWindow(gtk.Window):
             pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
             img.set_from_pixbuf(pixbuf)
         except:
-            imgfile = sys.prefix + '/share/EveTimer/portrait.jpg'
+            imgfile = find_file('portrait.jpg')
             pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
             img.set_from_pixbuf(pixbuf)
 
