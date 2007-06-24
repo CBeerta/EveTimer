@@ -6,6 +6,11 @@ REQUIREMENTS:
     - GTK 2.6.0 or newer
     - Python 2.4 or newer
 
+Optional but adviced:
+    - pytz (http://pytz.sourceforge.net/) if you want Skill end timings in your current localtime
+    - dbus-python
+
+
 INSTALLATION:
     run 'python setup.py install' as root
 

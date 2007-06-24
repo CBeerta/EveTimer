@@ -51,6 +51,15 @@ try:
 except:
 	HAVE_DBUS = False
 
+try:
+    from pytz import common_timezones, timezone
+    import pytz
+except:
+    HAVE_PYTZ = False
+else:
+    HAVE_PYTZ = True
+
+
 
 
 class AddChar(gtk.Dialog):
@@ -223,7 +232,7 @@ class MainWindow(gtk.Window):
         self.statusbar = gtk.Statusbar()
         table.attach(self.statusbar, 0, 1, 2, 3, gtk.EXPAND | gtk.FILL, 0, 0, 0)
         self.connect("window_state_event", self.update_resize_grip)
-        self.show_all()
+        #self.show_all()
 
     def __icon_menu(self, icon, event_button, event_time):
         menu = gtk.Menu()
@@ -434,7 +443,10 @@ class MainWindow(gtk.Window):
                 else:
                     self.ctlabel[char.character].set_markup("%s %s" % (char.currently_training, char.currently_training_to_level))
                     self.ctflabel[char.character].set_markup("%s" % char.training_ends_tooltip)
-                    self.ctwlabel[char.character].set_markup("%s EVE Time" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
+                    try:
+                        self.ctwlabel[char.character].set_markup("%s" % char.training_ends.astimezone(timezone(time.tzname[0])).strftime("%a, %d %b %Y %H:%M:%S"))
+                    except:
+                        self.ctwlabel[char.character].set_markup("%s EVE Time" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
 
         try:
             cmd = guiq.get(False)
@@ -609,10 +621,14 @@ class EveDataThread(threading.Thread):
                     char.next_update = time.time() + char.update_interval
 
                 if char.training_ends != None:
-                    tdelta = char.training_ends - datetime.utcnow()
+                    if HAVE_PYTZ:
+                        tdelta = char.training_ends - datetime.utcnow().replace(tzinfo=pytz.utc)
+                    else:
+                        tdelta = char.training_ends - datetime.utcnow()
+                    
                     tend = tdelta.days*24*60*60 + tdelta.seconds
 
-                    _endtime = "%s" % char.deltaToString(char.training_ends - datetime.utcnow())
+                    _endtime = "%s" % char.deltaToString(tdelta)
                     if  tend < 1800 and tend > 0 and _cmd != 'completed':
                         _cmd = 'completing'
                     elif tend <= 0:

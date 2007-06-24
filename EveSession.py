@@ -26,6 +26,13 @@ from xml.dom import minidom, Node
 from datetime import datetime
 
 
+try:
+    from pytz import common_timezones
+    import pytz
+except:
+    HAVE_PYTZ = False
+else:
+    HAVE_PYTZ = True
 
 class EveAccount:
     
@@ -249,7 +256,10 @@ class EveChar(EveAccount):
         if len(datenode) == 1:
             # python2.4 hackery, no datetime.datetime.strptime available there
             _ts = time.mktime(time.strptime(datenode[0].childNodes[0].data, "%Y-%m-%d %H:%M:%S"))
-            to_date = datetime.fromtimestamp(_ts)
+            if HAVE_PYTZ:
+                to_date = datetime.fromtimestamp(_ts).replace(tzinfo=pytz.utc)
+            else:
+                to_date = datetime.fromtimestamp(_ts)
             return to_date
         return None
 
