@@ -178,13 +178,18 @@ class MainWindow(gtk.Window):
     ui_info = \
             '''
             <ui>
-            <toolbar name='ToolBar'>
-                <toolitem action='AddCharacter' />
-                <toolitem action='RemoveCharacter' />
-                <toolitem action='Refresh' />
-                <separator />
-                <toolitem action='About' />
-            </toolbar>
+            <menubar name='MenuBar'>
+                <menu action='FileMenu'>
+                   <menuitem action='AddCharacter' />
+                   <menuitem action='RemoveCharacter' />
+                   <menuitem action='Refresh' />
+                   <separator />
+                   <menuitem action='Quit' />
+                </menu>
+                <menu action='HelpMenu'>
+                    <menuitem action='About' />
+                </menu>
+            </menubar>
             </ui>'''
 
     ctlabel = {}
@@ -195,7 +200,7 @@ class MainWindow(gtk.Window):
     prev_command = None # Store the last command we got from the Datathread, so we don't flash around with the status icon
 
     def __init__(self, parent = None, status_icon=True):
-        gobject.timeout_add(500, self.wakeup)
+        gobject.timeout_add(1000, self.wakeup)
 
         self.icon = gtk.status_icon_new_from_stock(gtk.STOCK_DIALOG_INFO)
         self.icon.set_visible(status_icon)
@@ -219,8 +224,7 @@ class MainWindow(gtk.Window):
         table = gtk.Table(1, 3, False)
         self.add(table)
 
-        bar = merge.get_widget("/ToolBar")
-        bar.set_tooltips(True)
+        bar = merge.get_widget("/MenuBar")
         table.attach(bar, 0, 1, 0, 1, gtk.EXPAND | gtk.FILL, 0, 0, 0)
 
         self.char_notebook = gtk.Notebook()
@@ -232,7 +236,7 @@ class MainWindow(gtk.Window):
         self.statusbar = gtk.Statusbar()
         table.attach(self.statusbar, 0, 1, 2, 3, gtk.EXPAND | gtk.FILL, 0, 0, 0)
         self.connect("window_state_event", self.update_resize_grip)
-        #self.show_all()
+        self.show_all()
 
     def __icon_menu(self, icon, event_button, event_time):
         menu = gtk.Menu()
@@ -252,10 +256,13 @@ class MainWindow(gtk.Window):
 
     def __create_action_group(self):
         entries = (
+                ( "FileMenu", None, "_File" ),
+                ( "HelpMenu", None, "_Help"),
                 ( "AddCharacter", gtk.STOCK_ADD, "Add a _Character", "<control>A", "Add a Character", self.add_char),
                 ( "RemoveCharacter", gtk.STOCK_DELETE, "R_emove a Character", "<control>E", "Remove a Character", self.remove_char),
                 ( "Refresh", gtk.STOCK_REFRESH, "Refresh", None, "Update from EVE-Online", self.refresh),
                 ( "About", gtk.STOCK_ABOUT, "About", None, "About", self.about),
+                ( "Quit", gtk.STOCK_QUIT, "Quit", None, "Quit", lambda *w: gtk.main_quit()),
             )
         action_group = gtk.ActionGroup("MainWindowActions")
         action_group.add_actions(entries)
@@ -643,7 +650,7 @@ class EveDataThread(threading.Thread):
             if _cmd != None:
                 guiq.put([_cmd])
 
-            time.sleep(0.1)
+            time.sleep(0.5)
 
 
 
