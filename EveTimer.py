@@ -268,7 +268,8 @@ class MainWindow(gtk.Window):
             pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(imgfile, 160, 160)
             img.set_from_pixbuf(pixbuf)
 
-        tophbox.pack_start(img, False, False, 2)
+        img.set_padding(5,5)
+        tophbox.pack_start(img, False, False)
 
         charinfo = gtk.VBox(False)
 
@@ -292,7 +293,7 @@ class MainWindow(gtk.Window):
         charbalance.set_alignment(0,0)
         charinfo.pack_start(charbalance, False, False)
 
-        charinfo.pack_start(gtk.HSeparator())
+        charinfo.pack_start(gtk.Label())
         tophbox.pack_start(charinfo, False, False, 2)
         vbox.pack_start(tophbox, False, False)
 
