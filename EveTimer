@@ -61,11 +61,12 @@ if __name__ == "__main__":
         try:
             session_bus = dbus.SessionBus()
             dbus_evetimer = session_bus.get_object("org.EveTimer", "/org/EveTimer")
+            dbus_iface = dbus.Interface(dbus_evetimer, "org.EveTimer")
+            dbus_iface.version()
         except:
             already_running = False
         else:
             already_running = True
-            dbus_iface = dbus.Interface(dbus_evetimer, "org.EveTimer")
 
 
     for o,a in opts:
@@ -80,7 +81,6 @@ if __name__ == "__main__":
             dbus_iface.quit()
         if o in ("-r", "--refresh"):
             dbus_iface.refresh()
-
 
     if already_running:
         sys.exit()

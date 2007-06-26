@@ -499,14 +499,14 @@ class EveChars:
     def __init__(self):
         self.DATADIR = os.path.join(os.environ["HOME"], ".config/EveTimer/")
 
-
     def add(self, username, password, char):
         # TODO: check for dublicates
         try:
             _char = EveSession.EveChar(username, password, char)
             _char.DATADIR = self.DATADIR
         except:
-            raise
+            print "Unable to get Character ID for %s" % char
+            return False
 
         self.chars.append(_char)
         try:
@@ -524,7 +524,6 @@ class EveChars:
             if char.character == character:
                 self.chars.pop(i)
         return True
-
 
     def get(self, name=None):
         if name == None:
@@ -677,6 +676,11 @@ if HAVE_DBUS:
         def refresh(self):
             taskq.put(['refresh'])
 
+        @dbus.service.method("org.EveTimer")
+        def version(self):
+            return  __version__
+
+
 
 
 class Base:
@@ -691,7 +695,7 @@ class Base:
             session_bus = dbus.SessionBus()
             name = dbus.service.BusName("org.EveTimer", bus=session_bus)
             object = EveTimerDBus(name, "/org/EveTimer")
-            
+
         EveDataThread().start()
         MainWindow(None, self.status_icon)
         gtk.quit_add(0, taskq.put, ['terminate'])
