@@ -20,7 +20,7 @@
 
 __author__      = "Claus Beerta"
 __copyright__   = "Copyright (C) 2007 Claus Beerta"
-__version__     = "0.9.1beta"
+__version__     = "0.9.2"
 
 import sys
 import os
@@ -236,7 +236,7 @@ class MainWindow(gtk.Window):
         self.statusbar = gtk.Statusbar()
         table.attach(self.statusbar, 0, 1, 2, 3, gtk.EXPAND | gtk.FILL, 0, 0, 0)
         self.connect("window_state_event", self.update_resize_grip)
-        self.show_all()
+        #self.show_all()
 
     def __icon_menu(self, icon, event_button, event_time):
         menu = gtk.Menu()
@@ -260,7 +260,7 @@ class MainWindow(gtk.Window):
                 ( "HelpMenu", None, "_Help"),
                 ( "AddCharacter", gtk.STOCK_ADD, "Add a _Character", "<control>A", "Add a Character", self.add_char),
                 ( "RemoveCharacter", gtk.STOCK_DELETE, "R_emove a Character", "<control>E", "Remove a Character", self.remove_char),
-                ( "Refresh", gtk.STOCK_REFRESH, "Refresh", None, "Update from EVE-Online", self.refresh),
+                ( "Refresh", gtk.STOCK_REFRESH, "Refresh", "<control>R", "Update from EVE-Online", self.refresh),
                 ( "About", gtk.STOCK_ABOUT, "About", None, "About", self.about),
                 ( "Quit", gtk.STOCK_QUIT, "Quit", None, "Quit", lambda *w: gtk.main_quit()),
             )
@@ -455,35 +455,33 @@ class MainWindow(gtk.Window):
                     except:
                         self.ctwlabel[char.character].set_markup("%s EVE Time" % char.training_ends.strftime("%a, %d %b %Y %H:%M:%S"))
 
-        try:
-            cmd = guiq.get(False)
-        except Queue.Empty:
-            pass
-        else:
-            if self.prev_command != cmd[0]:
-                self.prev_command = cmd[0]
-                if cmd[0] in ('completing'):
-                    self.icon.set_from_icon_name('gnome-run')
-                    self.icon.set_blinking(False)
-                elif cmd[0] in ('completed'):
-                    self.icon.set_from_stock(gtk.STOCK_DIALOG_WARNING)
-                    self.icon.set_blinking(False)
-                elif cmd[0] in ('tooltip'):
-                    self.icon.set_from_stock(gtk.STOCK_DIALOG_INFO)
-                    self.icon.set_blinking(False)
-                elif cmd[0] in ('updating'):
-                    self.icon.set_from_stock(gtk.STOCK_REFRESH)
-                    self.icon.set_blinking(True)
-                elif cmd[0] in ('do_update'):
-                    if cmd[1]:
-                        self.do_update = True
-                    else:
-                        self.do_update = False
-                elif cmd[0] in ('char_added'):
-                    label = gtk.Label(cmd[1])
-                    self.char_notebook.append_page(self.__char_tab(chars.get(cmd[1])), label)
-                    self.char_notebook.show_all()
-                    self.char_notebook.queue_draw_area(0,0,-1,-1)
+        while True:
+            try:
+                cmd = guiq.get(False)
+            except Queue.Empty:
+                break
+            else:
+                if self.prev_command != cmd[0]:
+                    self.prev_command = cmd[0]
+                    if cmd[0] in ('completing'):
+                        self.icon.set_from_icon_name('gnome-run')
+                        self.icon.set_blinking(False)
+                    elif cmd[0] in ('completed'):
+                        self.icon.set_from_stock(gtk.STOCK_DIALOG_WARNING)
+                        self.icon.set_blinking(False)
+                    elif cmd[0] in ('tooltip'):
+                        self.icon.set_from_stock(gtk.STOCK_DIALOG_INFO)
+                        self.icon.set_blinking(False)
+                    elif cmd[0] in ('do_update'):
+                        if cmd[1]:
+                            self.do_update = True
+                        else:
+                            self.do_update = False
+                    elif cmd[0] in ('char_added'):
+                        label = gtk.Label(cmd[1])
+                        self.char_notebook.append_page(self.__char_tab(chars.get(cmd[1])), label)
+                        self.char_notebook.show_all()
+                        self.char_notebook.queue_draw_area(0,0,-1,-1)
 
         self.icon.set_tooltip(tooltip.rstrip())
         return True
@@ -576,43 +574,42 @@ class EveDataThread(threading.Thread):
         do_update = True # set to false in case of screensaver 
 
         while terminate == False:
-            try:
-                cmd = taskq.get(False)
-            except Queue.Empty:
-                pass
-            else:
-                if cmd[0] in ('refresh'):
-                    for char in chars.get():
-                        char.next_update = time.time() - 1
-                elif cmd[0] in ('add_char'):
-                    try: 
-                       chars.add(cmd[1], cmd[2], cmd[3])
-                       chars.save()
-                    except:
-                        guiq.put(['error', 'Unable to add Character "%s"' % cmd[3]])
-                    else:
-                        guiq.put(['char_added', cmd[3]])
 
-                elif cmd[0] in ('terminate'):
-                    terminate = True
-                elif cmd[0] in ('remove'):
-                    try:
-                        chars.remove(cmd[1])
-                        chars.save()
-                    except:
-                        guiq.put(['error', 'Unable to remove Character "%s"' % cmd[1]])
-                elif cmd[0] in ('do_update'):
-                    if cmd[1]:
-                        do_update = True
-                    else:
-                        do_update = False
+            while True:
+                try:
+                    cmd = taskq.get(False)
+                except Queue.Empty:
+                    break
+                else:
+                    if cmd[0] in ('refresh'):
+                        for char in chars.get():
+                            char.next_update = time.time() - 1
+                    elif cmd[0] in ('add_char'):
+                        try: 
+                           chars.add(cmd[1], cmd[2], cmd[3])
+                           chars.save()
+                        except:
+                            guiq.put(['error', 'Unable to add Character "%s"' % cmd[3]])
+                        else:
+                            guiq.put(['char_added', cmd[3]])
 
-            _cmd = None 
+                    elif cmd[0] in ('terminate'):
+                        terminate = True
+                    elif cmd[0] in ('remove'):
+                        try:
+                            chars.remove(cmd[1])
+                            chars.save()
+                        except:
+                            guiq.put(['error', 'Unable to remove Character "%s"' % cmd[1]])
+                    elif cmd[0] in ('do_update'):
+                        if cmd[1]:
+                            do_update = True
+                        else:
+                            do_update = False
+
+            _cmd = 'tooltip' 
             for char in chars.get():
                 if char.next_update < time.time() and do_update:
-                    guiq.put(['updating'])
-                    _cmd = 'tooltip'
-
                     try:
                         char.currently_training = evexml.skillIdToName(char.getCurrentlyTrainingID())
                         char.currently_training_to_level = char.getCurrentlyTrainingToLevel()
@@ -623,7 +620,6 @@ class EveDataThread(threading.Thread):
                         print "ERROR Updating :" + msg
                     except:
                         raise
-
                     char.next_update = time.time() + char.update_interval
 
                 if char.training_ends != None:
@@ -645,10 +641,7 @@ class EveDataThread(threading.Thread):
                     _endtime = ''
                 char.training_ends_tooltip = _endtime
 
-
-            if _cmd != None:
-                guiq.put([_cmd])
-
+            guiq.put([_cmd])
             time.sleep(0.5)
 
 

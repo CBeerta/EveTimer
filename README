@@ -2,8 +2,8 @@ EveTimer is a tool to monitor your Skill Training times in EVE-Online
 Copyright 2007 Claus Beerta <claus@beerta.de>
 
 REQUIREMENTS:
-    - PyGTK 2.6.0 or newer
-    - GTK 2.6.0 or newer
+    - PyGTK 2.10.0 or newer
+    - GTK 2.8.0 or newer
     - Python 2.4 or newer
 
 Optional but adviced:
